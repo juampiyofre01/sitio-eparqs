@@ -188,12 +188,6 @@ const DATOS_EPARQ = {
   // ===== INICIO: socios (no toques esta línea) =====
   socios: [
     {
-      nombre: "Mariano Migone",
-      titulo: "Ingeniero Civil — UCA, 1986",
-      rol: "Lidera los proyectos desde lo estructural; especialista en análisis de propuestas y proveedores.",
-      foto: "img/equipo/mariano-migone.jpg",
-    },
-    {
       nombre: "Diego Escarrá",
       titulo: "Arquitecto — UBA, 1980",
       rol: "Diseño de edificios de distinta escala; apasionado por la sustentabilidad, el paisajismo y el medio ambiente.",
@@ -204,6 +198,12 @@ const DATOS_EPARQ = {
       titulo: "Arquitecta — UBA, 1984",
       rol: "Lidera el equipo de interiorismo; experiencia en diseño arquitectónico, funcionalidad y estética.",
       foto: "img/equipo/marlene-pradier.jpg",
+    },
+    {
+      nombre: "Mariano Migone",
+      titulo: "Ingeniero Civil — UCA, 1986",
+      rol: "Lidera los proyectos desde lo estructural; especialista en análisis de propuestas y proveedores.",
+      foto: "img/equipo/mariano-migone.jpg",
     },
   ],
   // ===== FIN: socios =====

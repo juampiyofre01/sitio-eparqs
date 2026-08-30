@@ -41,7 +41,12 @@
 
     // --- Hero ---
     const elHeroTitulo = document.querySelector("[data-hero-titulo]");
-    if (elHeroTitulo) elHeroTitulo.innerHTML = conAcentoItalica(c.hero.titulo);
+    if (elHeroTitulo) {
+      elHeroTitulo.innerHTML = conAcentoItalica(c.hero.titulo);
+      elHeroTitulo.classList.remove("hero__titulo--chico", "hero__titulo--grande");
+      if (c.hero.tamanioTitulo === "chico") elHeroTitulo.classList.add("hero__titulo--chico");
+      if (c.hero.tamanioTitulo === "grande") elHeroTitulo.classList.add("hero__titulo--grande");
+    }
     setTexto("[data-hero-bajada]", c.hero.bajada);
     const listaServiciosHero = document.querySelector("[data-hero-servicios]");
     if (listaServiciosHero) {

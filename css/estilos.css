@@ -370,6 +370,18 @@ textarea:focus-visible {
   max-width: 780px;
 }
 
+/* Tamaños alternativos del título, elegibles desde contenido.hero.tamanioTitulo
+   (o desde el editor visual) sin tener que tocar CSS */
+.hero__titulo--chico {
+  font-size: clamp(1.9rem, 5vw, 3.4rem);
+  max-width: 680px;
+}
+
+.hero__titulo--grande {
+  font-size: clamp(2.8rem, 7.6vw, 5.4rem);
+  max-width: 900px;
+}
+
 /* La palabra marcada con *asteriscos* en contenido.hero.titulo se
    convierte en <em> y se muestra en la serif itálica de acento */
 .hero__titulo em {

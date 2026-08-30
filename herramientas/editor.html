@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Editor de proyectos — EPARQS (uso local)</title>
+<title>Editor de contenido — EPARQS (uso local)</title>
 <!--
   ============================================================================
   EDITOR VISUAL DE PROYECTOS — herramienta de uso LOCAL, no se sube al hosting.
@@ -29,8 +29,8 @@
     --color-texto: #1a1a18;
     --color-texto-suave: #5c5b57;
     --color-borde: #dedcd7;
-    --color-acento: #6b5d4f;
-    --color-acento-suave: #efe9e2;
+    --color-acento: #2d3693;
+    --color-acento-suave: #e8e9f5;
     --color-ok: #2f6b3a;
     --color-ok-suave: #e8f0e9;
     --fuente: "Segoe UI", Arial, Helvetica, sans-serif;
@@ -171,24 +171,285 @@
   }
   details.manual { margin-top: 1.5rem; }
   details.manual summary { cursor: pointer; font-size: 0.9rem; color: var(--color-texto-suave); }
+
+  /* --- Panel "Contenido general del sitio" --- */
+  details.panel-contenido {
+    background: var(--color-fondo);
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  details.panel-contenido > summary {
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 0.25rem 0;
+  }
+  details.panel-contenido > summary + p {
+    font-size: 0.85rem;
+    color: var(--color-texto-suave);
+    margin: 0.5rem 0 1.25rem;
+  }
+  .grid-secciones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  fieldset.seccion-form {
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    padding: 0.9rem 1rem 1.1rem;
+  }
+  fieldset.seccion-form legend {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-acento);
+    padding: 0 0.4rem;
+  }
+  .campo-form { margin-bottom: 0.8rem; }
+  .campo-form:last-child { margin-bottom: 0; }
+  .campo-form label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-texto-suave);
+    margin-bottom: 0.25rem;
+  }
+  .campo-form small {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--color-texto-suave);
+    margin-top: 0.25rem;
+  }
+  .campo-form input[type="text"],
+  .campo-form textarea,
+  .campo-form select {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.5rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 3px;
+    background: var(--color-fondo);
+    color: var(--color-texto);
+  }
+  .campo-form textarea { resize: vertical; min-height: 4.5rem; font-family: inherit; }
+  .fila-repetible {
+    border-top: 1px dashed var(--color-borde);
+    padding-top: 0.7rem;
+    margin-top: 0.7rem;
+  }
+  .fila-repetible:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
 </style>
 </head>
 <body>
   <div class="contenedor">
     <header>
-      <h1>Editor de proyectos — EPARQS</h1>
+      <h1>Editor de contenido — EPARQS</h1>
       <div class="aviso" id="aviso-navegador" style="display:none;">
         Tu navegador no soporta guardado directo (esto funciona en Chrome o Edge). Podés seguir usando esta página,
         pero vas a tener que usar "Generar código" y pegarlo vos mismo en <code>datos-proyectos.js</code> — abrí el
         detalle "Opción manual" más abajo.
       </div>
       <div class="aviso" id="aviso-normal">
-        Editá lo que necesites en la tabla — para las fotos de un proyecto (nuevo o existente), usá el campo
-        "Fotos" de su fila para elegir las que quieras agregar. Cuando termines, apretá <strong>Guardar cambios</strong>:
+        Editá lo que necesites: los textos generales del sitio (portada, "El estudio", servicios, equipo) en el
+        panel de acá abajo, y las obras en la tabla — para las fotos de un proyecto (nuevo o existente), usá el
+        campo "Fotos" de su fila. Cuando termines, apretá <strong>Guardar cambios</strong> (guarda todo junto):
         la primera vez te va a pedir elegir la carpeta <code>sitio-web</code> y confirmar el permiso (es normal, es
         el navegador pidiendo permiso para escribir ahí). Esta página es solo para uso local, no se sube al hosting.
       </div>
     </header>
+
+    <details class="panel-contenido" open>
+      <summary>Contenido general del sitio (portada, estudio, servicios, equipo)</summary>
+      <p>
+        Estos textos se guardan con el mismo botón <strong>"Guardar cambios"</strong> de más abajo, junto con los
+        proyectos — un solo clic actualiza todo.
+      </p>
+      <div class="grid-secciones">
+        <fieldset class="seccion-form">
+          <legend>Datos del estudio</legend>
+          <div class="campo-form">
+            <label>Nombre completo</label>
+            <input type="text" data-c="estudio.nombre" />
+          </div>
+          <div class="campo-form">
+            <label>Dirección</label>
+            <input type="text" data-c="estudio.direccion" />
+          </div>
+          <div class="campo-form">
+            <label>Teléfono (como se muestra)</label>
+            <input type="text" data-c="estudio.telefono" />
+          </div>
+          <div class="campo-form">
+            <label>Teléfono para el link "llamar" (formato +54...)</label>
+            <input type="text" data-c="estudio.telefonoHref" />
+          </div>
+          <div class="campo-form">
+            <label>Email</label>
+            <input type="text" data-c="estudio.email" />
+          </div>
+        </fieldset>
+
+        <fieldset class="seccion-form">
+          <legend>Portada (Home)</legend>
+          <div class="campo-form">
+            <label>Título</label>
+            <input type="text" data-c="contenido.hero.titulo" />
+            <small>Poné *asteriscos* alrededor de una palabra para mostrarla en la cursiva de acento (ej. "que construye *futuro*.")</small>
+          </div>
+          <div class="campo-form">
+            <label>Tamaño del título</label>
+            <select data-c="contenido.hero.tamanioTitulo">
+              <option value="chico">Chico</option>
+              <option value="normal">Normal</option>
+              <option value="grande">Grande</option>
+            </select>
+          </div>
+          <div class="campo-form">
+            <label>Bajada</label>
+            <textarea data-c="contenido.hero.bajada"></textarea>
+          </div>
+          <div class="campo-form">
+            <label>Texto del botón (vacío = sin botón)</label>
+            <input type="text" data-c="contenido.hero.cta" />
+          </div>
+        </fieldset>
+
+        <fieldset class="seccion-form">
+          <legend>El estudio</legend>
+          <div class="campo-form">
+            <label>Etiqueta pequeña</label>
+            <input type="text" data-c="contenido.estudio.eyebrow" />
+          </div>
+          <div class="campo-form">
+            <label>Título</label>
+            <input type="text" data-c="contenido.estudio.titulo" />
+          </div>
+          <div class="campo-form">
+            <label>Párrafos (uno por línea)</label>
+            <textarea data-c="contenido.estudio.parrafos" data-tipo="lineas" style="min-height:7rem"></textarea>
+          </div>
+          <div class="fila-repetible">
+            <label>Dato destacado 1</label>
+            <input type="text" placeholder="Título (ej. Fundado en)" data-c="contenido.estudio.datosDestacados.0.titulo" />
+            <input type="text" placeholder="Valor (ej. 1996)" data-c="contenido.estudio.datosDestacados.0.valor" style="margin-top:0.3rem" />
+            <input type="text" placeholder="Nota chica (opcional)" data-c="contenido.estudio.datosDestacados.0.nota" style="margin-top:0.3rem" />
+          </div>
+          <div class="fila-repetible">
+            <label>Dato destacado 2</label>
+            <input type="text" placeholder="Título" data-c="contenido.estudio.datosDestacados.1.titulo" />
+            <input type="text" placeholder="Valor" data-c="contenido.estudio.datosDestacados.1.valor" style="margin-top:0.3rem" />
+            <input type="text" placeholder="Nota chica (opcional)" data-c="contenido.estudio.datosDestacados.1.nota" style="margin-top:0.3rem" />
+          </div>
+          <div class="fila-repetible">
+            <label>Dato destacado 3</label>
+            <input type="text" placeholder="Título" data-c="contenido.estudio.datosDestacados.2.titulo" />
+            <input type="text" placeholder="Valor" data-c="contenido.estudio.datosDestacados.2.valor" style="margin-top:0.3rem" />
+            <input type="text" placeholder="Nota chica (opcional)" data-c="contenido.estudio.datosDestacados.2.nota" style="margin-top:0.3rem" />
+          </div>
+          <div class="fila-repetible">
+            <label>Dato destacado 4</label>
+            <input type="text" placeholder="Título" data-c="contenido.estudio.datosDestacados.3.titulo" />
+            <input type="text" placeholder="Valor" data-c="contenido.estudio.datosDestacados.3.valor" style="margin-top:0.3rem" />
+            <input type="text" placeholder="Nota chica (opcional)" data-c="contenido.estudio.datosDestacados.3.nota" style="margin-top:0.3rem" />
+          </div>
+        </fieldset>
+
+        <fieldset class="seccion-form">
+          <legend>Servicios</legend>
+          <div class="campo-form">
+            <label>Etiqueta pequeña</label>
+            <input type="text" data-c="contenido.servicios.eyebrow" />
+          </div>
+          <div class="campo-form">
+            <label>Título</label>
+            <input type="text" data-c="contenido.servicios.titulo" />
+          </div>
+          <div class="campo-form">
+            <label>Bajada</label>
+            <textarea data-c="contenido.servicios.bajada"></textarea>
+          </div>
+          <div class="fila-repetible">
+            <label>Servicio 1</label>
+            <input type="text" placeholder="Título (ej. Proyecto)" data-c="contenido.servicios.items.0.titulo" />
+            <textarea placeholder="Descripción" data-c="contenido.servicios.items.0.descripcion" style="margin-top:0.3rem"></textarea>
+          </div>
+          <div class="fila-repetible">
+            <label>Servicio 2</label>
+            <input type="text" placeholder="Título" data-c="contenido.servicios.items.1.titulo" />
+            <textarea placeholder="Descripción" data-c="contenido.servicios.items.1.descripcion" style="margin-top:0.3rem"></textarea>
+          </div>
+          <div class="fila-repetible">
+            <label>Servicio 3</label>
+            <input type="text" placeholder="Título" data-c="contenido.servicios.items.2.titulo" />
+            <textarea placeholder="Descripción" data-c="contenido.servicios.items.2.descripcion" style="margin-top:0.3rem"></textarea>
+          </div>
+          <div class="fila-repetible">
+            <label>Servicio 4</label>
+            <input type="text" placeholder="Título" data-c="contenido.servicios.items.3.titulo" />
+            <textarea placeholder="Descripción" data-c="contenido.servicios.items.3.descripcion" style="margin-top:0.3rem"></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset class="seccion-form">
+          <legend>Encabezados de Obras / Equipo / Contacto</legend>
+          <div class="campo-form">
+            <label>Obras — etiqueta pequeña</label>
+            <input type="text" data-c="contenido.obras.eyebrow" />
+          </div>
+          <div class="campo-form">
+            <label>Obras — título</label>
+            <input type="text" data-c="contenido.obras.titulo" />
+          </div>
+          <div class="campo-form">
+            <label>Obras — bajada</label>
+            <textarea data-c="contenido.obras.bajada"></textarea>
+          </div>
+          <div class="campo-form">
+            <label>Equipo — etiqueta pequeña</label>
+            <input type="text" data-c="contenido.equipo.eyebrow" />
+          </div>
+          <div class="campo-form">
+            <label>Equipo — título</label>
+            <input type="text" data-c="contenido.equipo.titulo" />
+          </div>
+          <div class="campo-form">
+            <label>Contacto — etiqueta pequeña</label>
+            <input type="text" data-c="contenido.contacto.eyebrow" />
+          </div>
+          <div class="campo-form">
+            <label>Contacto — título</label>
+            <input type="text" data-c="contenido.contacto.titulo" />
+          </div>
+        </fieldset>
+
+        <fieldset class="seccion-form">
+          <legend>Equipo (los 3 socios)</legend>
+          <div class="fila-repetible">
+            <label>Socio 1</label>
+            <input type="text" placeholder="Nombre" data-c="socios.0.nombre" />
+            <input type="text" placeholder="Título (ej. Arquitecto — UBA, 1980)" data-c="socios.0.titulo" style="margin-top:0.3rem" />
+            <textarea placeholder="Rol / descripción" data-c="socios.0.rol" style="margin-top:0.3rem"></textarea>
+          </div>
+          <div class="fila-repetible">
+            <label>Socio 2</label>
+            <input type="text" placeholder="Nombre" data-c="socios.1.nombre" />
+            <input type="text" placeholder="Título" data-c="socios.1.titulo" style="margin-top:0.3rem" />
+            <textarea placeholder="Rol / descripción" data-c="socios.1.rol" style="margin-top:0.3rem"></textarea>
+          </div>
+          <div class="fila-repetible">
+            <label>Socio 3</label>
+            <input type="text" placeholder="Nombre" data-c="socios.2.nombre" />
+            <input type="text" placeholder="Título" data-c="socios.2.titulo" style="margin-top:0.3rem" />
+            <textarea placeholder="Rol / descripción" data-c="socios.2.rol" style="margin-top:0.3rem"></textarea>
+          </div>
+          <small style="margin-top:0.7rem;">Las fotos de cada socio se cambian reemplazando el archivo en <code>img/equipo/</code>, no acá.</small>
+        </fieldset>
+      </div>
+    </details>
 
     <div class="barra-acciones">
       <button id="btn-agregar" type="button">+ Agregar proyecto</button>
@@ -223,10 +484,11 @@
       <summary>Opción manual (copiar y pegar) — para cuando no se puede guardar directo</summary>
       <div class="salida">
         <p>
-          Generá el código y copiá todo el texto de acá abajo. En <code>js/datos-proyectos.js</code>, buscá el comentario
-          <code>===== INICIO: proyectos =====</code> y <code>===== FIN: proyectos =====</code>, seleccioná todo lo que
-          está entre esas dos líneas (inclusive) y pegá esto en su lugar. Esta opción NO sube fotos por vos — para
-          proyectos nuevos, vas a tener que crear su carpeta en <code>img/proyectos/</code> a mano.
+          Generá el código: te arma 4 bloques (estudio, contenido, socios y proyectos), cada uno con su propio
+          comentario <code>===== INICIO: ... =====</code> / <code>===== FIN: ... =====</code>. En
+          <code>js/datos-proyectos.js</code>, por cada bloque buscá esas dos líneas (con el mismo nombre) y
+          reemplazá todo lo que está entre ellas (inclusive) por el bloque que corresponda. Esta opción NO sube
+          fotos por vos — para proyectos nuevos, vas a tener que crear su carpeta en <code>img/proyectos/</code> a mano.
         </p>
         <div class="barra-acciones">
           <button id="btn-generar" type="button">Generar código</button>
@@ -255,6 +517,109 @@
     // tal cual estaban cargados, sin que la tabla los muestre ni los edite
     // directamente (eso lo maneja el sistema de fotos, más abajo).
     let proyectos = (typeof DATOS_EPARQ !== "undefined" ? DATOS_EPARQ.proyectos : []).map((p) => ({ ...p }));
+
+    // Copia de trabajo del resto del contenido editable (todo menos los
+    // proyectos), para el formulario "Contenido general del sitio".
+    const contenidoEditable =
+      typeof DATOS_EPARQ !== "undefined"
+        ? {
+            estudio: JSON.parse(JSON.stringify(DATOS_EPARQ.estudio)),
+            contenido: JSON.parse(JSON.stringify(DATOS_EPARQ.contenido)),
+            socios: JSON.parse(JSON.stringify(DATOS_EPARQ.socios)),
+          }
+        : { estudio: {}, contenido: {}, socios: [] };
+
+    /* ------------------------------------------------------------------
+       ACCESO POR "RUTA" (ej. "contenido.hero.titulo" o "socios.0.nombre")
+       Se usa para leer/escribir el formulario de contenido general sin
+       tener que escribir a mano el get/set de cada campo.
+       ------------------------------------------------------------------ */
+    function obtenerPorRuta(raiz, ruta) {
+      return ruta.split(".").reduce((actual, clave) => (actual == null ? actual : actual[clave]), raiz);
+    }
+    function asignarPorRuta(raiz, ruta, valor) {
+      const partes = ruta.split(".");
+      let actual = raiz;
+      for (let i = 0; i < partes.length - 1; i++) actual = actual[partes[i]];
+      actual[partes[partes.length - 1]] = valor;
+    }
+
+    /** Carga los valores de contenidoEditable en todos los campos [data-c] del formulario */
+    function renderizarFormularioContenido() {
+      document.querySelectorAll("[data-c]").forEach((el) => {
+        const valor = obtenerPorRuta(contenidoEditable, el.dataset.c);
+        if (el.dataset.tipo === "lineas") {
+          el.value = Array.isArray(valor) ? valor.join("\n") : "";
+        } else {
+          el.value = valor === null || valor === undefined ? "" : valor;
+        }
+      });
+    }
+
+    /** Vuelca lo que esté escrito en el formulario de vuelta a contenidoEditable */
+    function leerFormularioHaciaContenido() {
+      document.querySelectorAll("[data-c]").forEach((el) => {
+        if (el.dataset.tipo === "lineas") {
+          const lineas = el.value
+            .split("\n")
+            .map((l) => l.trim())
+            .filter((l) => l.length > 0);
+          asignarPorRuta(contenidoEditable, el.dataset.c, lineas);
+        } else {
+          asignarPorRuta(contenidoEditable, el.dataset.c, el.value.trim());
+        }
+      });
+    }
+
+    /* ------------------------------------------------------------------
+       SERIALIZADOR GENÉRICO — convierte cualquier valor (objeto, arreglo,
+       string, número) en texto JS prolijo, con la misma indentación que
+       el resto de datos-proyectos.js. Los campos vacíos ("" o undefined)
+       se omiten, así los opcionales (como "nota") no quedan como "".
+       ------------------------------------------------------------------ */
+    function sangria(nivel) {
+      return "  ".repeat(nivel);
+    }
+    function jsPretty(valor, nivel) {
+      if (valor === null || valor === undefined) return "null";
+      if (typeof valor === "number") return String(valor);
+      if (typeof valor === "string") return JSON.stringify(valor);
+      if (Array.isArray(valor)) {
+        if (valor.length === 0) return "[]";
+        // Solo los arreglos de números cortos van en una línea; el resto
+        // (textos, objetos) va uno por línea para que sea legible.
+        const soloNumeros = valor.every((v) => typeof v === "number");
+        if (soloNumeros) return `[${valor.map((v) => jsPretty(v, nivel)).join(", ")}]`;
+        const items = valor.map((v) => sangria(nivel + 1) + jsPretty(v, nivel + 1)).join(",\n");
+        return `[\n${items},\n${sangria(nivel)}]`;
+      }
+      const claves = Object.keys(valor).filter((k) => valor[k] !== undefined && valor[k] !== "");
+      if (claves.length === 0) return "{}";
+      const campos = claves.map((k) => `${sangria(nivel + 1)}${k}: ${jsPretty(valor[k], nivel + 1)}`).join(",\n");
+      return `{\n${campos},\n${sangria(nivel)}}`;
+    }
+
+    function bloqueEstudio() {
+      return `  // ===== INICIO: estudio (no toques esta línea) =====\n  estudio: ${jsPretty(contenidoEditable.estudio, 1)},\n  // ===== FIN: estudio =====`;
+    }
+    function bloqueContenidoGeneral() {
+      return `  // ===== INICIO: contenido (no toques esta línea) =====\n  contenido: ${jsPretty(contenidoEditable.contenido, 1)},\n  // ===== FIN: contenido =====`;
+    }
+    function bloqueSocios() {
+      return `  // ===== INICIO: socios (no toques esta línea) =====\n  socios: ${jsPretty(contenidoEditable.socios, 1)},\n  // ===== FIN: socios =====`;
+    }
+
+    /** Reemplaza el texto entre dos comentarios marcadores (inclusive) por uno nuevo */
+    function reemplazarBloque(textoOriginal, marcaInicio, marcaFin, bloqueNuevo) {
+      const idxInicioMarca = textoOriginal.indexOf(marcaInicio);
+      const idxFinMarca = textoOriginal.indexOf(marcaFin);
+      if (idxInicioMarca === -1 || idxFinMarca === -1) {
+        throw new Error(`No encontré las líneas "${marcaInicio}" / "${marcaFin}" en el archivo.`);
+      }
+      const inicioReal = textoOriginal.lastIndexOf("\n", idxInicioMarca) + 1;
+      const finReal = idxFinMarca + marcaFin.length;
+      return textoOriginal.slice(0, inicioReal) + bloqueNuevo + textoOriginal.slice(finReal);
+    }
 
     // Fotos nuevas elegidas para cada proyecto, pendientes de escribir al
     // guardar. Se indexa por el OBJETO del proyecto (no por posición en la
@@ -508,6 +873,7 @@
        ------------------------------------------------------------------ */
     document.getElementById("btn-generar").addEventListener("click", () => {
       leerTablaHaciaProyectos();
+      leerFormularioHaciaContenido();
       if (!validarObligatorios()) return;
 
       const carpetasNuevas = [];
@@ -519,7 +885,12 @@
         }
       });
 
-      document.getElementById("salida-codigo").value = armarBloqueCodigo();
+      document.getElementById("salida-codigo").value = [
+        bloqueEstudio(),
+        bloqueContenidoGeneral(),
+        bloqueSocios(),
+        armarBloqueCodigo(),
+      ].join("\n\n");
 
       if (carpetasNuevas.length) {
         alert(
@@ -620,6 +991,7 @@
     document.getElementById("btn-guardar").addEventListener("click", async () => {
       const btn = document.getElementById("btn-guardar");
       leerTablaHaciaProyectos();
+      leerFormularioHaciaContenido();
       if (!validarObligatorios()) return;
 
       if (!dirHandleSitio) {
@@ -656,27 +1028,23 @@
           }
         }
 
-        const bloqueNuevo = armarBloqueCodigo();
-
         const jsDir = await dirHandleSitio.getDirectoryHandle("js");
         const datosHandle = await jsDir.getFileHandle("datos-proyectos.js");
         const archivoActual = await datosHandle.getFile();
-        const textoActual = await archivoActual.text();
+        let textoNuevo = await archivoActual.text();
 
-        const marcaInicio = "// ===== INICIO: proyectos";
-        const marcaFin = "// ===== FIN: proyectos =====";
-        const idxInicioMarca = textoActual.indexOf(marcaInicio);
-        const idxFinMarca = textoActual.indexOf(marcaFin);
-        if (idxInicioMarca === -1 || idxFinMarca === -1) {
+        try {
+          textoNuevo = reemplazarBloque(textoNuevo, "// ===== INICIO: estudio", "// ===== FIN: estudio =====", bloqueEstudio());
+          textoNuevo = reemplazarBloque(textoNuevo, "// ===== INICIO: contenido", "// ===== FIN: contenido =====", bloqueContenidoGeneral());
+          textoNuevo = reemplazarBloque(textoNuevo, "// ===== INICIO: socios", "// ===== FIN: socios =====", bloqueSocios());
+          textoNuevo = reemplazarBloque(textoNuevo, "// ===== INICIO: proyectos", "// ===== FIN: proyectos =====", armarBloqueCodigo());
+        } catch (e) {
           alert(
-            'No encontré los comentarios "INICIO: proyectos" / "FIN: proyectos" en datos-proyectos.js — ¿se borraron sin querer? ' +
-              'Restaurá esas líneas o usá la opción manual ("Generar código") y pegalo vos mismo.'
+            e.message +
+              "\n\n¿Se borraron esas líneas de comentario en datos-proyectos.js sin querer? Restauralas, o usá la opción manual (\"Generar código\") como alternativa."
           );
           return;
         }
-        const inicioReal = textoActual.lastIndexOf("\n", idxInicioMarca) + 1;
-        const finReal = idxFinMarca + marcaFin.length;
-        const textoNuevo = textoActual.slice(0, inicioReal) + bloqueNuevo + textoActual.slice(finReal);
 
         const writable = await datosHandle.createWritable();
         await writable.write(textoNuevo);
@@ -685,6 +1053,7 @@
         fotosNuevasPorProyecto.clear();
         await escanearConteosFotos();
         renderizarTabla();
+        renderizarFormularioContenido();
 
         alert(
           "Listo — se guardaron los cambios en datos-proyectos.js" +
@@ -700,6 +1069,7 @@
     });
 
     renderizarTabla();
+    renderizarFormularioContenido();
   </script>
 </body>
 </html>

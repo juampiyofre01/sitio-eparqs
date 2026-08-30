@@ -75,6 +75,7 @@
 const DATOS_EPARQ = {
 
   // Datos generales del estudio, usados en el header, footer y sección "Contacto"
+  // ===== INICIO: estudio (no toques esta línea) =====
   estudio: {
     nombre: "Escarrá Pradier & Asociados",
     abreviatura: "EPARQS",
@@ -88,12 +89,16 @@ const DATOS_EPARQ = {
     descripcion:
       "Estudio de arquitectura establecido desde 1996, dedicado al diseño arquitectónico, la ingeniería y el interiorismo para clientes locales e internacionales. Nuestra obra abarca edificios industriales, centros logísticos, oficinas corporativas y desarrollos residenciales y náuticos. Somos miembros de Sustainable Development Advisors (SDA) y contamos con una extensa trayectoria en edificios certificados LEED por el USGBC.",
   },
+  // ===== FIN: estudio =====
 
   // ---------------------------------------------------------------------
   // CONTENIDO DE CADA SECCIÓN — textos e imágenes de encabezado.
   // Este es el lugar más probable donde vas a querer hacer cambios
-  // después de mostrarle el sitio a alguien más.
+  // después de mostrarle el sitio a alguien más. Más simple todavía:
+  // herramientas/editor.html también tiene un formulario para todo esto,
+  // con "Guardar cambios" para no tener que editar este archivo a mano.
   // ---------------------------------------------------------------------
+  // ===== INICIO: contenido (no toques esta línea) =====
   contenido: {
 
     // Sección "Home" — lo primero que se ve, a pantalla completa.
@@ -103,8 +108,9 @@ const DATOS_EPARQ = {
     // quede natural. Si no querés ese efecto, simplemente no uses asteriscos.
     hero: {
       titulo: "Arquitectura e ingeniería para la industria que construye *futuro*.",
-      bajada: "Proyecto, dirección de obra y gerenciamiento para el desarrollo industrial, logístico y corporativo. Desde 1996.",
+      bajada: "Desde 1996 proyectamos y dirigimos obras industriales, logísticas y coorporativas con visión integral, compromiso y excelencia técnica.",
       cta: "Conocé nuestro estudio", // texto del botón; dejalo vacío ("") para no mostrar botón
+      tamanioTitulo: "normal", // "chico" | "normal" | "grande"
     },
 
     // Sección "El estudio" — reseña institucional
@@ -163,8 +169,11 @@ const DATOS_EPARQ = {
       titulo: "Hablemos de tu proyecto",
     },
   },
+  // ===== FIN: contenido =====
 
-  // Los tres socios del estudio — sección "Equipo"
+  // Los tres socios del estudio — sección "Equipo". La foto de cada uno
+  // se cambia reemplazando el archivo en img/equipo/ (ver LEEME ahí).
+  // ===== INICIO: socios (no toques esta línea) =====
   socios: [
     {
       nombre: "Mariano Migone",
@@ -185,6 +194,7 @@ const DATOS_EPARQ = {
       foto: "img/equipo/marlene-pradier.jpg",
     },
   ],
+  // ===== FIN: socios =====
 
   // ---------------------------------------------------------------------
   // PROYECTOS — un solo arreglo con los 51 proyectos. El campo "categoria"

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Editor de proyectos — EPARQS (uso local)</title>
+<!--
+  ============================================================================
+  EDITOR VISUAL DE PROYECTOS — herramienta de uso LOCAL, no se sube al hosting.
+
+  Qué hace: carga los 51 proyectos desde js/datos-proyectos.js (el mismo
+  archivo que usa el sitio), los muestra en una tabla editable, y con el
+  botón "Guardar cambios" escribe los cambios DIRECTO en ese archivo —
+  incluidas las fotos nuevas que subas desde acá para un proyecto. No hace
+  falta copiar y pegar nada.
+
+  Cómo guarda: usa la File System Access API del navegador (funciona en
+  Chrome/Edge; en otros navegadores no está disponible y esta página cae
+  automáticamente al modo "Generar código" para copiar y pegar a mano).
+  La primera vez que apretás "Guardar cambios", el navegador te va a pedir
+  que elijas la carpeta "sitio-web" y que confirmes el permiso — es un
+  permiso normal del navegador, no se manda nada a ningún lado.
+  ============================================================================
+-->
+<style>
+  :root {
+    --color-fondo: #ffffff;
+    --color-fondo-alterno: #f4f3f1;
+    --color-texto: #1a1a18;
+    --color-texto-suave: #5c5b57;
+    --color-borde: #dedcd7;
+    --color-acento: #6b5d4f;
+    --color-acento-suave: #efe9e2;
+    --color-ok: #2f6b3a;
+    --color-ok-suave: #e8f0e9;
+    --fuente: "Segoe UI", Arial, Helvetica, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--fuente);
+    color: var(--color-texto);
+    background: var(--color-fondo-alterno);
+    padding: 1.5rem;
+  }
+  .contenedor {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  header {
+    margin-bottom: 1.5rem;
+  }
+  h1 {
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem;
+  }
+  .aviso {
+    background: var(--color-acento-suave);
+    border: 1px solid var(--color-acento);
+    color: var(--color-acento);
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  .estado-conexion {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-borde);
+    color: var(--color-texto-suave);
+  }
+  .estado-conexion.conectado {
+    border-color: var(--color-ok);
+    background: var(--color-ok-suave);
+    color: var(--color-ok);
+  }
+  .barra-acciones {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+  button {
+    font-family: inherit;
+    cursor: pointer;
+    border: 1px solid var(--color-texto);
+    background: var(--color-fondo);
+    color: var(--color-texto);
+    padding: 0.55rem 1.1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  button:hover { background: var(--color-texto); color: #fff; }
+  button.primario { background: var(--color-texto); color: #fff; }
+  button.primario:hover { background: var(--color-acento); border-color: var(--color-acento); }
+  button.peligro { border-color: #a33; color: #a33; }
+  button.peligro:hover { background: #a33; color: #fff; }
+  button:disabled { opacity: 0.45; cursor: not-allowed; }
+  button:disabled:hover { background: var(--color-fondo); color: var(--color-texto); }
+  .secundario { font-size: 0.82rem; text-decoration: underline; border: none; background: none; padding: 0.3rem 0; color: var(--color-texto-suave); }
+  .secundario:hover { background: none; color: var(--color-texto); }
+  .contador { font-size: 0.85rem; color: var(--color-texto-suave); margin-left: auto; }
+
+  .tabla-wrap {
+    overflow-x: auto;
+    background: var(--color-fondo);
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+  }
+  table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+  th, td {
+    border-bottom: 1px solid var(--color-borde);
+    padding: 0.5rem 0.5rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    position: sticky;
+    top: 0;
+    background: var(--color-fondo-alterno);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-texto-suave);
+    white-space: nowrap;
+  }
+  input[type="text"], input[type="number"], select {
+    width: 100%;
+    min-width: 90px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 0.35rem 0.4rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 3px;
+    background: var(--color-fondo);
+    color: var(--color-texto);
+  }
+  input:focus, select:focus { outline: 2px solid var(--color-acento); outline-offset: 1px; }
+  td.col-obra input, td.col-ubicacion input, td.col-rol input { min-width: 170px; }
+  td.col-m2 input, td.col-anio input { min-width: 65px; }
+  td.col-eliminar { text-align: center; }
+  td.col-eliminar button { padding: 0.35rem 0.6rem; font-size: 0.78rem; }
+
+  td.col-fotos { min-width: 170px; }
+  .fotos-carpeta { font-size: 0.72rem; color: var(--color-texto-suave); margin-bottom: 0.3rem; word-break: break-all; }
+  .fotos-conteo { font-size: 0.78rem; margin-bottom: 0.3rem; }
+  .fotos-pendientes { font-size: 0.75rem; color: var(--color-acento); margin-top: 0.3rem; }
+  input[type="file"] { font-size: 0.75rem; width: 100%; }
+
+  .salida {
+    margin-top: 1.5rem;
+  }
+  .salida h2 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .salida p { font-size: 0.88rem; color: var(--color-texto-suave); margin-top: 0; }
+  textarea {
+    width: 100%;
+    height: 320px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 0.78rem;
+    padding: 0.75rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    background: #fbfaf8;
+    color: var(--color-texto);
+    white-space: pre;
+  }
+  details.manual { margin-top: 1.5rem; }
+  details.manual summary { cursor: pointer; font-size: 0.9rem; color: var(--color-texto-suave); }
+</style>
+</head>
+<body>
+  <div class="contenedor">
+    <header>
+      <h1>Editor de proyectos — EPARQS</h1>
+      <div class="aviso" id="aviso-navegador" style="display:none;">
+        Tu navegador no soporta guardado directo (esto funciona en Chrome o Edge). Podés seguir usando esta página,
+        pero vas a tener que usar "Generar código" y pegarlo vos mismo en <code>datos-proyectos.js</code> — abrí el
+        detalle "Opción manual" más abajo.
+      </div>
+      <div class="aviso" id="aviso-normal">
+        Editá lo que necesites en la tabla — para las fotos de un proyecto (nuevo o existente), usá el campo
+        "Fotos" de su fila para elegir las que quieras agregar. Cuando termines, apretá <strong>Guardar cambios</strong>:
+        la primera vez te va a pedir elegir la carpeta <code>sitio-web</code> y confirmar el permiso (es normal, es
+        el navegador pidiendo permiso para escribir ahí). Esta página es solo para uso local, no se sube al hosting.
+      </div>
+    </header>
+
+    <div class="barra-acciones">
+      <button id="btn-agregar" type="button">+ Agregar proyecto</button>
+      <button id="btn-guardar" type="button" class="primario">Guardar cambios</button>
+      <span class="estado-conexion" id="estado-conexion">No conectado</span>
+      <span class="contador" id="contador"></span>
+    </div>
+
+    <div class="tabla-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Categoría</th>
+            <th>Cliente</th>
+            <th>Obra</th>
+            <th>Ubicación</th>
+            <th>m²</th>
+            <th>Nota m²</th>
+            <th>Rol</th>
+            <th>Año</th>
+            <th>Tipo</th>
+            <th>LEED</th>
+            <th>Fotos</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+
+    <details class="manual">
+      <summary>Opción manual (copiar y pegar) — para cuando no se puede guardar directo</summary>
+      <div class="salida">
+        <p>
+          Generá el código y copiá todo el texto de acá abajo. En <code>js/datos-proyectos.js</code>, buscá el comentario
+          <code>===== INICIO: proyectos =====</code> y <code>===== FIN: proyectos =====</code>, seleccioná todo lo que
+          está entre esas dos líneas (inclusive) y pegá esto en su lugar. Esta opción NO sube fotos por vos — para
+          proyectos nuevos, vas a tener que crear su carpeta en <code>img/proyectos/</code> a mano.
+        </p>
+        <div class="barra-acciones">
+          <button id="btn-generar" type="button">Generar código</button>
+          <button id="btn-copiar" type="button">Copiar al portapapeles</button>
+        </div>
+        <textarea id="salida-codigo" readonly placeholder="Apretá &quot;Generar código&quot; para verlo acá."></textarea>
+      </div>
+    </details>
+  </div>
+
+  <!-- Cargamos el mismo archivo de datos que usa el sitio, para partir de los proyectos actuales -->
+  <script src="../js/datos-proyectos.js"></script>
+  <script>
+    "use strict";
+
+    const CATEGORIAS = ["En ejecución", "Últimos concluidos", "Terminados"];
+    const TIPOS = [
+      { valor: "industrial", etiqueta: "Industrial" },
+      { valor: "logistico", etiqueta: "Logístico" },
+      { valor: "oficinas", etiqueta: "Oficinas" },
+      { valor: "residencial-nautico", etiqueta: "Residencial / Náutico" },
+    ];
+    const CAMPOS_ORDEN = ["cliente", "obra", "ubicacion", "m2", "nota_m2", "rol", "anio", "tipo", "categoria", "leed", "imagen", "imagenes"];
+
+    // Copia de trabajo de los proyectos. Cada uno conserva "imagen"/"imagenes"
+    // tal cual estaban cargados, sin que la tabla los muestre ni los edite
+    // directamente (eso lo maneja el sistema de fotos, más abajo).
+    let proyectos = (typeof DATOS_EPARQ !== "undefined" ? DATOS_EPARQ.proyectos : []).map((p) => ({ ...p }));
+
+    // Fotos nuevas elegidas para cada proyecto, pendientes de escribir al
+    // guardar. Se indexa por el OBJETO del proyecto (no por posición en la
+    // tabla), para que no se desalinee si se agrega o elimina una fila.
+    const fotosNuevasPorProyecto = new Map();
+
+    // Conteo de fotos ya existentes por carpeta (se llena al conectar)
+    const conteoFotosPorCarpeta = new Map();
+
+    let dirHandleSitio = null; // FileSystemDirectoryHandle de la carpeta "sitio-web", una vez conectada
+
+    const cuerpoTabla = document.getElementById("cuerpo-tabla");
+    const contador = document.getElementById("contador");
+    const estadoConexion = document.getElementById("estado-conexion");
+
+    const soportaGuardadoDirecto = typeof window.showDirectoryPicker === "function";
+    if (!soportaGuardadoDirecto) {
+      document.getElementById("aviso-navegador").style.display = "block";
+      document.getElementById("aviso-normal").style.display = "none";
+      document.getElementById("btn-guardar").disabled = true;
+      estadoConexion.textContent = "Guardado directo no disponible";
+    }
+
+    function crearSelect(opciones, valorActual) {
+      const select = document.createElement("select");
+      opciones.forEach((op) => {
+        const option = document.createElement("option");
+        const valor = typeof op === "string" ? op : op.valor;
+        const etiqueta = typeof op === "string" ? op : op.etiqueta;
+        option.value = valor;
+        option.textContent = etiqueta;
+        if (valor === valorActual) option.selected = true;
+        select.appendChild(option);
+      });
+      return select;
+    }
+
+    function crearInputTexto(valor, claseColumna) {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = valor === null || valor === undefined ? "" : valor;
+      if (claseColumna) input.dataset.campo = claseColumna;
+      return input;
+    }
+
+    function slugify(texto) {
+      return (texto || "")
+        .normalize("NFD")
+        .replace(/[̀-ͯ]/g, "") // saca los acentos (tildes, diéresis)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
+
+    function anioInicio(anioTexto) {
+      const m = (anioTexto || "").match(/\d{4}/);
+      return m ? m[0] : new Date().getFullYear().toString();
+    }
+
+    /** Carpeta de fotos de un proyecto: la que ya tiene, o una sugerida por año+obra si es nuevo */
+    function carpetaDe(proyecto) {
+      if (proyecto.imagen) {
+        const partes = proyecto.imagen.split("/"); // "img/proyectos/<carpeta>/archivo"
+        return partes[2];
+      }
+      return `${anioInicio(proyecto.anio)}-${slugify(proyecto.obra) || "obra-sin-nombre"}`;
+    }
+
+    function renderizarFila(proyecto, indice) {
+      const fila = document.createElement("tr");
+      fila.dataset.indice = indice;
+
+      const tdCategoria = document.createElement("td");
+      tdCategoria.appendChild(crearSelect(CATEGORIAS, proyecto.categoria));
+      fila.appendChild(tdCategoria);
+
+      const columnasTexto = [
+        ["cliente", "col-cliente"],
+        ["obra", "col-obra"],
+        ["ubicacion", "col-ubicacion"],
+        ["m2", "col-m2"],
+        ["nota_m2", "col-nota"],
+        ["rol", "col-rol"],
+        ["anio", "col-anio"],
+      ];
+      columnasTexto.forEach(([campo, clase]) => {
+        const td = document.createElement("td");
+        td.className = clase;
+        td.appendChild(crearInputTexto(proyecto[campo], campo));
+        fila.appendChild(td);
+      });
+
+      const tdTipo = document.createElement("td");
+      tdTipo.appendChild(crearSelect(TIPOS, proyecto.tipo));
+      fila.appendChild(tdTipo);
+
+      const tdLeed = document.createElement("td");
+      const inputLeed = crearInputTexto(proyecto.leed, "leed");
+      inputLeed.placeholder = "(vacío = sin LEED)";
+      tdLeed.appendChild(inputLeed);
+      fila.appendChild(tdLeed);
+
+      // --- Columna de fotos ---
+      const tdFotos = document.createElement("td");
+      tdFotos.className = "col-fotos";
+      const carpeta = carpetaDe(proyecto);
+
+      const spanCarpeta = document.createElement("div");
+      spanCarpeta.className = "fotos-carpeta";
+      spanCarpeta.textContent = carpeta;
+      tdFotos.appendChild(spanCarpeta);
+
+      const spanConteo = document.createElement("div");
+      spanConteo.className = "fotos-conteo";
+      if (dirHandleSitio) {
+        const n = conteoFotosPorCarpeta.get(carpeta) || 0;
+        spanConteo.textContent = n === 0 ? "Sin fotos todavía" : `${n} foto(s) ya cargada(s)`;
+      } else {
+        spanConteo.textContent = "Conectá la carpeta para ver cuántas tiene";
+      }
+      tdFotos.appendChild(spanConteo);
+
+      if (soportaGuardadoDirecto) {
+        const inputFile = document.createElement("input");
+        inputFile.type = "file";
+        inputFile.accept = "image/*";
+        inputFile.multiple = true;
+        inputFile.addEventListener("change", () => {
+          fotosNuevasPorProyecto.set(proyecto, Array.from(inputFile.files));
+          actualizarPendientes(proyecto, indice);
+        });
+        tdFotos.appendChild(inputFile);
+      }
+
+      const spanPendientes = document.createElement("div");
+      spanPendientes.className = "fotos-pendientes";
+      spanPendientes.id = `pendientes-${indice}`;
+      tdFotos.appendChild(spanPendientes);
+
+      fila.appendChild(tdFotos);
+
+      const tdEliminar = document.createElement("td");
+      tdEliminar.className = "col-eliminar";
+      const btnEliminar = document.createElement("button");
+      btnEliminar.type = "button";
+      btnEliminar.className = "peligro";
+      btnEliminar.textContent = "Eliminar";
+      btnEliminar.addEventListener("click", () => {
+        if (!confirm(`¿Eliminar "${proyecto.obra || "este proyecto"}"? Esto no borra sus fotos, solo lo saca de la lista.`)) return;
+        leerTablaHaciaProyectos(); // no perder ediciones sin guardar en las otras filas
+        proyectos.splice(indice, 1);
+        fotosNuevasPorProyecto.delete(proyecto);
+        renderizarTabla();
+      });
+      tdEliminar.appendChild(btnEliminar);
+      fila.appendChild(tdEliminar);
+
+      return fila;
+    }
+
+    function actualizarPendientes(proyecto, indice) {
+      const span = document.getElementById(`pendientes-${indice}`);
+      if (!span) return;
+      const archivos = fotosNuevasPorProyecto.get(proyecto) || [];
+      span.textContent = archivos.length ? `${archivos.length} nueva(s): ${archivos.map((f) => f.name).join(", ")}` : "";
+    }
+
+    function renderizarTabla() {
+      cuerpoTabla.innerHTML = "";
+      proyectos.forEach((proyecto, indice) => {
+        cuerpoTabla.appendChild(renderizarFila(proyecto, indice));
+      });
+      proyectos.forEach((proyecto, indice) => actualizarPendientes(proyecto, indice));
+      contador.textContent = `${proyectos.length} proyecto(s)`;
+    }
+
+    function leerTablaHaciaProyectos() {
+      // Antes de guardar/generar, volcamos lo que esté escrito en los
+      // inputs/selects de vuelta al arreglo "proyectos" en memoria.
+      Array.from(cuerpoTabla.querySelectorAll("tr")).forEach((fila) => {
+        const indice = parseInt(fila.dataset.indice, 10);
+        const proyecto = proyectos[indice];
+        proyecto.categoria = fila.querySelector("td:nth-child(1) select").value;
+        proyecto.cliente = fila.querySelector('input[data-campo="cliente"]').value.trim();
+        proyecto.obra = fila.querySelector('input[data-campo="obra"]').value.trim();
+        proyecto.ubicacion = fila.querySelector('input[data-campo="ubicacion"]').value.trim();
+        const m2Texto = fila.querySelector('input[data-campo="m2"]').value.trim();
+        proyecto.m2 = m2Texto === "" ? null : parseInt(m2Texto.replace(/[^\d]/g, ""), 10);
+        const notaM2 = fila.querySelector('input[data-campo="nota_m2"]').value.trim();
+        if (notaM2) proyecto.nota_m2 = notaM2; else delete proyecto.nota_m2;
+        proyecto.rol = fila.querySelector('input[data-campo="rol"]').value.trim();
+        proyecto.anio = fila.querySelector('input[data-campo="anio"]').value.trim();
+        proyecto.tipo = fila.querySelector("td:nth-child(9) select").value;
+        const leed = fila.querySelector('input[data-campo="leed"]').value.trim();
+        if (leed) proyecto.leed = leed; else delete proyecto.leed;
+      });
+    }
+
+    function validarObligatorios() {
+      const incompletos = proyectos.filter((p) => !p.cliente || !p.obra || !p.ubicacion || !p.rol || !p.anio);
+      if (incompletos.length) {
+        alert(
+          `Hay ${incompletos.length} proyecto(s) con "Cliente", "Obra", "Ubicación", "Rol" o "Año" vacío (son obligatorios). ` +
+            `Completalos antes de continuar.`
+        );
+        return false;
+      }
+      return true;
+    }
+
+    document.getElementById("btn-agregar").addEventListener("click", () => {
+      leerTablaHaciaProyectos(); // no perder ediciones sin guardar en las otras filas
+      proyectos.push({
+        cliente: "",
+        obra: "",
+        ubicacion: "",
+        m2: null,
+        rol: "",
+        anio: new Date().getFullYear().toString(),
+        tipo: "industrial",
+        categoria: "En ejecución",
+        imagen: "", // se completa solo, según la carpeta de fotos
+      });
+      renderizarTabla();
+      const filas = cuerpoTabla.querySelectorAll("tr");
+      const ultima = filas[filas.length - 1];
+      if (ultima) ultima.querySelector('input[data-campo="cliente"]').focus();
+    });
+
+    function jsValor(valor) {
+      if (valor === null) return "null";
+      if (typeof valor === "number") return String(valor);
+      if (Array.isArray(valor)) return `[${valor.map(jsValor).join(", ")}]`;
+      return JSON.stringify(valor);
+    }
+
+    function lineaProyecto(p) {
+      const partes = CAMPOS_ORDEN.filter((campo) => p[campo] !== undefined && p[campo] !== "").map(
+        (campo) => `${campo}: ${jsValor(p[campo])}`
+      );
+      return `    { ${partes.join(", ")} },`;
+    }
+
+    function armarBloqueCodigo() {
+      const lineas = proyectos.map(lineaProyecto).join("\n");
+      return `  // ===== INICIO: proyectos (no toques esta línea) =====\n  proyectos: [\n${lineas}\n  ],\n  // ===== FIN: proyectos =====`;
+    }
+
+    /* ------------------------------------------------------------------
+       OPCIÓN MANUAL: generar código para copiar y pegar
+       ------------------------------------------------------------------ */
+    document.getElementById("btn-generar").addEventListener("click", () => {
+      leerTablaHaciaProyectos();
+      if (!validarObligatorios()) return;
+
+      const carpetasNuevas = [];
+      proyectos.forEach((p) => {
+        if (!p.imagen) {
+          const carpeta = carpetaDe(p);
+          p.imagen = `img/proyectos/${carpeta}/1.jpg`;
+          carpetasNuevas.push(`img/proyectos/${carpeta}/  (${p.obra})`);
+        }
+      });
+
+      document.getElementById("salida-codigo").value = armarBloqueCodigo();
+
+      if (carpetasNuevas.length) {
+        alert(
+          "Código generado. Como agregaste proyecto(s) nuevo(s), creá también estas carpetas dentro de img/proyectos/ y poné sus fotos ahí (después corré Actualizar fotos.bat):\n\n" +
+            carpetasNuevas.join("\n")
+        );
+      }
+    });
+
+    document.getElementById("btn-copiar").addEventListener("click", async () => {
+      const texto = document.getElementById("salida-codigo").value;
+      if (!texto) {
+        alert('Primero apretá "Generar código".');
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(texto);
+        const boton = document.getElementById("btn-copiar");
+        const textoOriginal = boton.textContent;
+        boton.textContent = "¡Copiado!";
+        setTimeout(() => (boton.textContent = textoOriginal), 1500);
+      } catch (e) {
+        alert("No se pudo copiar automáticamente. Seleccioná el texto manualmente (Ctrl+A dentro del cuadro) y copialo con Ctrl+C.");
+      }
+    });
+
+    /* ------------------------------------------------------------------
+       GUARDADO DIRECTO — conecta la carpeta "sitio-web" y escribe ahí
+       ------------------------------------------------------------------ */
+
+    async function conectarCarpeta() {
+      let handle;
+      try {
+        handle = await window.showDirectoryPicker({ mode: "readwrite" });
+      } catch (e) {
+        return false; // el usuario canceló el selector de carpeta
+      }
+      try {
+        await handle.getDirectoryHandle("js").then((h) => h.getFileHandle("datos-proyectos.js"));
+        await handle.getDirectoryHandle("img").then((h) => h.getDirectoryHandle("proyectos"));
+      } catch (e) {
+        alert('Esa no parece ser la carpeta correcta. Elegí la carpeta "sitio-web" (la que tiene adentro las carpetas "js", "css", "img").');
+        return false;
+      }
+      dirHandleSitio = handle;
+      estadoConexion.textContent = "Conectado: sitio-web ✓";
+      estadoConexion.classList.add("conectado");
+      await escanearConteosFotos();
+      renderizarTabla();
+      return true;
+    }
+
+    async function escanearConteosFotos() {
+      if (!dirHandleSitio) return;
+      const imgDir = await dirHandleSitio.getDirectoryHandle("img");
+      const proyectosDir = await imgDir.getDirectoryHandle("proyectos");
+      conteoFotosPorCarpeta.clear();
+      for (const proyecto of proyectos) {
+        const carpeta = carpetaDe(proyecto);
+        if (conteoFotosPorCarpeta.has(carpeta)) continue;
+        const fotos = await listarFotosDeCarpeta(proyectosDir, carpeta);
+        conteoFotosPorCarpeta.set(carpeta, fotos.length);
+      }
+    }
+
+    async function listarFotosDeCarpeta(proyectosDirHandle, nombreCarpeta) {
+      let carpetaHandle;
+      try {
+        carpetaHandle = await proyectosDirHandle.getDirectoryHandle(nombreCarpeta);
+      } catch (e) {
+        return []; // todavía no existe esa carpeta
+      }
+      const archivos = [];
+      for await (const [nombre, entrada] of carpetaHandle.entries()) {
+        if (entrada.kind === "file" && /\.(jpe?g|png|webp)$/i.test(nombre)) archivos.push(nombre);
+      }
+      archivos.sort((a, b) => a.localeCompare(b, "es", { numeric: true }));
+      return archivos;
+    }
+
+    async function escribirFotosNuevas(proyectosDirHandle, nombreCarpeta, archivos) {
+      const carpetaHandle = await proyectosDirHandle.getDirectoryHandle(nombreCarpeta, { create: true });
+      const existentes = [];
+      for await (const [nombre, entrada] of carpetaHandle.entries()) {
+        if (entrada.kind === "file") existentes.push(nombre);
+      }
+      let siguiente = existentes.length + 1;
+      for (const archivo of archivos) {
+        const ext = (archivo.name.match(/\.[^.]+$/) || [".jpg"])[0].toLowerCase();
+        const fileHandle = await carpetaHandle.getFileHandle(`${siguiente}${ext}`, { create: true });
+        const writable = await fileHandle.createWritable();
+        await writable.write(archivo);
+        await writable.close();
+        siguiente++;
+      }
+    }
+
+    document.getElementById("btn-guardar").addEventListener("click", async () => {
+      const btn = document.getElementById("btn-guardar");
+      leerTablaHaciaProyectos();
+      if (!validarObligatorios()) return;
+
+      if (!dirHandleSitio) {
+        const conectado = await conectarCarpeta();
+        if (!conectado) return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Guardando…";
+      try {
+        const imgDir = await dirHandleSitio.getDirectoryHandle("img");
+        const proyectosDir = await imgDir.getDirectoryHandle("proyectos");
+
+        let huboFotosNuevas = false;
+
+        for (let i = 0; i < proyectos.length; i++) {
+          const p = proyectos[i];
+          const carpeta = carpetaDe(p);
+
+          const archivosNuevos = fotosNuevasPorProyecto.get(p);
+          if (archivosNuevos && archivosNuevos.length) {
+            await escribirFotosNuevas(proyectosDir, carpeta, archivosNuevos);
+            huboFotosNuevas = true;
+          }
+
+          const fotos = await listarFotosDeCarpeta(proyectosDir, carpeta);
+          if (fotos.length > 0) {
+            p.imagen = `img/proyectos/${carpeta}/${fotos[0]}`;
+            if (fotos.length > 1) p.imagenes = fotos.map((f) => `img/proyectos/${carpeta}/${f}`);
+            else delete p.imagenes;
+          } else {
+            p.imagen = `img/proyectos/${carpeta}/1.jpg`;
+            delete p.imagenes;
+          }
+        }
+
+        const bloqueNuevo = armarBloqueCodigo();
+
+        const jsDir = await dirHandleSitio.getDirectoryHandle("js");
+        const datosHandle = await jsDir.getFileHandle("datos-proyectos.js");
+        const archivoActual = await datosHandle.getFile();
+        const textoActual = await archivoActual.text();
+
+        const marcaInicio = "// ===== INICIO: proyectos";
+        const marcaFin = "// ===== FIN: proyectos =====";
+        const idxInicioMarca = textoActual.indexOf(marcaInicio);
+        const idxFinMarca = textoActual.indexOf(marcaFin);
+        if (idxInicioMarca === -1 || idxFinMarca === -1) {
+          alert(
+            'No encontré los comentarios "INICIO: proyectos" / "FIN: proyectos" en datos-proyectos.js — ¿se borraron sin querer? ' +
+              'Restaurá esas líneas o usá la opción manual ("Generar código") y pegalo vos mismo.'
+          );
+          return;
+        }
+        const inicioReal = textoActual.lastIndexOf("\n", idxInicioMarca) + 1;
+        const finReal = idxFinMarca + marcaFin.length;
+        const textoNuevo = textoActual.slice(0, inicioReal) + bloqueNuevo + textoActual.slice(finReal);
+
+        const writable = await datosHandle.createWritable();
+        await writable.write(textoNuevo);
+        await writable.close();
+
+        fotosNuevasPorProyecto.clear();
+        await escanearConteosFotos();
+        renderizarTabla();
+
+        alert(
+          "Listo — se guardaron los cambios en datos-proyectos.js" +
+            (huboFotosNuevas ? " y se copiaron las fotos nuevas." : ".") +
+            "\n\nAbrí (o recargá) index.html para verlo. Si el sitio ya está publicado en un hosting, volvé a subir la carpeta sitio-web para que se actualice ahí también."
+        );
+      } catch (e) {
+        alert("Hubo un problema al guardar: " + e.message + "\n\nProbá de nuevo, o usá la opción manual (\"Generar código\") como alternativa.");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Guardar cambios";
+      }
+    });
+
+    renderizarTabla();
+  </script>
+</body>
+</html>

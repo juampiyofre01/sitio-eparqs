@@ -1,0 +1,19 @@
+FOTO DE PORTADA (hero)
+=======================
+
+Guardá acá la foto principal de la home con el nombre exacto:
+
+    portada.jpg
+
+Recomendaciones:
+- Formato horizontal (apaisada), una foto de obra con buena luz.
+- Tamaño sugerido: 1920x1080 px o más grande, en esa proporción (16:9).
+- Peso del archivo: idealmente menos de 500 KB (comprimida en formato
+  JPG de buena calidad) para que la web cargue rápido.
+- Mientras el archivo no exista, la home muestra automáticamente un
+  fondo oscuro prolijo en su lugar — no hace falta borrar nada, con
+  copiar el archivo "portada.jpg" acá alcanza.
+
+Si preferís usar otro nombre de archivo, también hay que actualizar la
+ruta en index.html (buscar "img/hero/portada.jpg", hay dos apariciones:
+una en el <img> del hero y otra en la etiqueta og:image del <head>).

@@ -1,0 +1,41 @@
+FOTOS DE LAS OBRAS
+====================
+
+Cada obra tiene su PROPIA CARPETA acá adentro, nombrada así:
+
+    <año>-<nombre de la obra>
+
+Por ejemplo: "2025-ocasa-centro-distribucion-pilar" o
+"2023-mercedes-benz-camiones-buses-zarate". El año es el año en que
+arrancó la obra. La lista completa de carpetas está en
+"listado-de-fotos.txt", en esta misma carpeta.
+
+CÓMO AGREGAR O SACAR FOTOS
+----------------------------
+1. Entrá a la carpeta de la obra que quieras editar.
+2. Copiá ahí las fotos que quieras agregar (cualquier nombre de archivo
+   sirve: "1.jpg", "foto-tapa.jpg", "IMG_2044.jpg", da igual). Para sacar
+   una foto que no te gusta, borrá el archivo directamente.
+3. La PRIMERA foto en orden alfabético es la que se usa como portada de
+   la tarjeta en el portfolio. Si querés controlar cuál va primero,
+   nombrá los archivos "1.jpg", "2.jpg", "3.jpg", etc.
+4. Cuando termines, volvé a la carpeta principal del sitio y hacé doble
+   clic en "Actualizar fotos.bat". Eso revisa todas las carpetas y
+   actualiza automáticamente js/datos-proyectos.js — no hace falta tocar
+   ese archivo a mano. Podés correrlo las veces que quieras.
+
+Formatos que sirven: .jpg, .jpeg, .png, .webp
+Proporción sugerida: horizontal, 4:3 (por ejemplo 1200x900 px)
+Peso sugerido: menos de 400 KB por foto, para que el sitio cargue rápido
+
+Si una carpeta no tiene ninguna foto todavía, esa obra muestra
+automáticamente un placeholder gris prolijo con su nombre — no hace
+falta hacer nada para eso, es automático.
+
+¿AGREGÁS UNA OBRA NUEVA?
+---------------------------
+Creá su carpeta acá con el mismo formato ("<año>-<nombre-de-la-obra>",
+en minúscula y sin tildes ni espacios — guiones en su lugar), metele las
+fotos, y agregá el proyecto en js/datos-proyectos.js (a mano, o con
+herramientas/editor.html) apuntando su campo "imagen" a esa carpeta.
+Después corré "Actualizar fotos.bat" para que tome las fotos.

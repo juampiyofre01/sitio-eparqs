@@ -1,0 +1,19 @@
+FOTOS DEL EQUIPO
+==================
+
+Cada socio tiene, en js/datos-proyectos.js (bloque "socios"), un campo
+"foto" con la ruta exacta que va a buscar:
+
+    Mariano Migone  -> img/equipo/mariano-migone.jpg
+    Diego Escarrá   -> img/equipo/diego-escarra.jpg
+    Marlene Pradier -> img/equipo/marlene-pradier.jpg
+
+Guardá cada foto acá con ese nombre exacto y listo. Mientras el
+archivo no exista, se muestra automáticamente un placeholder con las
+iniciales de la persona.
+
+Recomendaciones:
+- Formato vertical (retrato), proporción 3:4 (por ejemplo 900x1200 px).
+- Foto de rostro/medio cuerpo, fondo simple y prolijo — el sitio es
+  sobrio, así que conviene evitar fondos muy cargados.
+- Peso sugerido: menos de 300 KB por foto.

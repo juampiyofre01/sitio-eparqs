@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================
+       SEO básico — editá estos textos si cambia el enfoque del sitio
+       ============================================================ -->
+  <title>EPARQS — Escarrá Pradier & Asociados | Estudio de Arquitectura</title>
+  <meta name="description" content="Estudio de arquitectura de Buenos Aires desde 1996. Proyecto, dirección de obra, gerenciamiento e interiorismo para obra industrial, logística, oficinas corporativas y residencial. Amplia trayectoria en certificación LEED." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph: cómo se ve el sitio al compartirlo en redes / WhatsApp -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="EPARQS — Escarrá Pradier & Asociados" />
+  <meta property="og:description" content="Estudio de arquitectura de Buenos Aires desde 1996. Obra industrial, logística, oficinas corporativas y residencial. Trayectoria en certificación LEED." />
+  <meta property="og:image" content="img/hero/portada.jpg" />
+  <meta property="og:locale" content="es_AR" />
+
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
+  <link rel="stylesheet" href="css/estilos.css" />
+
+  <!-- Tipografía (Google Fonts). Si el sitio se abre sin internet, el CSS
+       ya tiene una pila de fuentes de sistema como respaldo. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Link de accesibilidad: solo aparece al navegar con teclado (Tab) -->
+  <a href="#contenido" class="enlace-saltar">Saltar al contenido</a>
+
+  <!-- ================================================================
+       HEADER / NAVEGACIÓN
+       ================================================================ -->
+  <header class="header" data-header>
+    <!-- Logo: si existe img/logo.png (con fondo transparente) se usa esa
+         imagen directo sobre el fondo del header; si el archivo no carga,
+         se muestra el texto "EPARQS" como respaldo automático. El CSS le
+         oscurece un poco el color cuando el header pasa a blanco, para que
+         siga leyéndose bien (ver img/LEEME-logo.txt). -->
+    <a href="#inicio" class="header__marca">
+      <img
+        src="img/logo.png"
+        alt="EPARQS — Escarrá Pradier & Asociados"
+        class="header__logo-img"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+      />
+      <span class="header__logo-texto" style="display:none;">EPARQS</span>
+    </a>
+
+    <nav class="nav" data-nav>
+      <ul class="nav__lista">
+        <li><a class="nav__link" href="#estudio">El estudio</a></li>
+        <li><a class="nav__link" href="#servicios">Servicios</a></li>
+        <li><a class="nav__link" href="#obras">Obras</a></li>
+        <li><a class="nav__link" href="#equipo">Equipo</a></li>
+        <li><a class="nav__link" href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <button type="button" class="nav__toggle" data-nav-toggle aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+      <span class="nav__toggle-barra"></span>
+      <span class="nav__toggle-barra"></span>
+      <span class="nav__toggle-barra"></span>
+    </button>
+  </header>
+
+  <main id="contenido">
+
+    <!-- ================================================================
+         HERO — foto de obra a pantalla completa + nombre + bajada
+         Para poner la foto real: guardar el archivo como
+         img/hero/portada.jpg (ver img/hero/LEEME.txt)
+         ================================================================ -->
+    <section id="inicio" class="hero">
+      <div class="hero__fondo">
+        <!-- El onerror es inline (no depende de main.js) para que el placeholder
+             aparezca aunque la imagen falle antes de que cargue el JavaScript. -->
+        <img
+          src="img/hero/portada.jpg"
+          alt="Obra industrial proyectada por EPARQS"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="hero__fondo--placeholder" style="display:none;">
+          <span>Foto de portada — reemplazar en img/hero/portada.jpg</span>
+        </div>
+      </div>
+      <div class="hero__overlay"></div>
+
+      <div class="hero__contenido">
+        <h1 class="hero__titulo" data-hero-titulo></h1>
+        <div class="hero__divisor" aria-hidden="true"></div>
+        <p class="hero__bajada" data-hero-bajada></p>
+        <a class="hero__cta" href="#estudio" data-hero-cta>
+          <span data-hero-cta-texto></span>
+          <span class="hero__cta-flecha" aria-hidden="true">&rarr;</span>
+        </a>
+        <ul class="hero__servicios" data-hero-servicios></ul>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         EL ESTUDIO — reseña institucional. Todo el texto de acá abajo
+         (eyebrow, título, párrafos y los 4 datos destacados) se completa
+         solo desde js/datos-proyectos.js → contenido.estudio
+         ================================================================ -->
+    <section id="estudio" class="seccion">
+      <div class="contenedor estudio__grid">
+        <div class="estudio__texto">
+          <div class="encabezado-seccion">
+            <span class="eyebrow" data-estudio-eyebrow></span>
+            <h2 data-estudio-titulo></h2>
+          </div>
+          <div data-estudio-parrafos></div>
+        </div>
+
+        <dl class="estudio__datos" data-estudio-datos></dl>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         SERVICIOS — encabezado y las 4 tarjetas se completan solos desde
+         js/datos-proyectos.js → contenido.servicios
+         ================================================================ -->
+    <section id="servicios" class="seccion seccion--alterna">
+      <div class="contenedor">
+        <div class="encabezado-seccion">
+          <span class="eyebrow" data-servicios-eyebrow></span>
+          <h2 data-servicios-titulo></h2>
+          <p data-servicios-bajada></p>
+        </div>
+
+        <div class="servicios__grid" data-servicios-grilla></div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         OBRAS / PORTFOLIO — generado dinámicamente desde js/datos-proyectos.js
+         ================================================================ -->
+    <section id="obras" class="seccion">
+      <div class="contenedor">
+        <div class="encabezado-seccion">
+          <span class="eyebrow" data-obras-eyebrow></span>
+          <h2 data-obras-titulo></h2>
+          <p data-obras-bajada></p>
+        </div>
+
+        <div class="portfolio__filtros">
+          <div class="grupo-filtros">
+            <div class="grupo-filtros__titulo">Categoría</div>
+            <div class="grupo-filtros__botones" data-filtros-categoria></div>
+          </div>
+          <div class="grupo-filtros">
+            <div class="grupo-filtros__titulo">Tipo de obra</div>
+            <div class="grupo-filtros__botones" data-filtros-tipo></div>
+          </div>
+        </div>
+
+        <!-- Acá portfolio.js inyecta las categorías y tarjetas -->
+        <div data-portfolio-grilla></div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         EQUIPO — los 3 socios. Generado desde js/datos-proyectos.js
+         ================================================================ -->
+    <section id="equipo" class="seccion seccion--alterna">
+      <div class="contenedor">
+        <div class="encabezado-seccion">
+          <span class="eyebrow" data-equipo-eyebrow></span>
+          <h2 data-equipo-titulo></h2>
+        </div>
+
+        <div class="equipo__grilla" data-equipo-grilla></div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         CONTACTO
+         ================================================================ -->
+    <section id="contacto" class="seccion">
+      <div class="contenedor contacto__grid">
+        <div>
+          <div class="encabezado-seccion">
+            <span class="eyebrow" data-contacto-eyebrow></span>
+            <h2 data-contacto-titulo></h2>
+          </div>
+
+          <!-- Dirección, teléfono y mail salen de "estudio" en
+               js/datos-proyectos.js — se editan ahí, una sola vez, y
+               se actualizan solos acá y en el pie de página. -->
+          <dl class="contacto__datos-lista" data-contacto-datos></dl>
+
+          <!-- Mapa embebido de Google Maps, sin necesidad de API key.
+               La ubicación del pin sale de estudio.direccionParaMapa -->
+          <div class="contacto__mapa">
+            <iframe
+              data-contacto-mapa
+              title="Ubicación de EPARQS en el mapa"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+        <div>
+          <!--
+            FORMULARIO DE CONTACTO
+            Sin backend: al enviar, abre el cliente de mail del usuario con
+            el mensaje prellenado (lo maneja js/main.js). Para recibir los
+            mensajes directo en una bandeja sin depender del cliente de mail
+            del visitante, ver la sección "Formulario de contacto" del
+            README.md — ahí se explica cómo conectar un servicio como
+            Formspree en un par de pasos.
+          -->
+          <form class="formulario" data-formulario-contacto>
+            <div class="campo">
+              <label for="campo-nombre">Nombre</label>
+              <input id="campo-nombre" name="nombre" type="text" required />
+            </div>
+            <div class="campo">
+              <label for="campo-email">Email</label>
+              <input id="campo-email" name="email" type="email" required />
+            </div>
+            <div class="campo">
+              <label for="campo-mensaje">Mensaje</label>
+              <textarea id="campo-mensaje" name="mensaje" required></textarea>
+            </div>
+            <button type="submit" class="boton">Enviar consulta</button>
+            <p class="formulario__nota">Al enviar se abre tu programa de mail habitual con el mensaje ya redactado.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================================================================
+       MODAL / FICHA AMPLIADA DE UNA OBRA (oculto hasta que se abre)
+       ================================================================ -->
+  <div class="modal" data-modal aria-hidden="true">
+    <div class="modal__caja" role="dialog" aria-modal="true" aria-label="Ficha de la obra">
+      <button type="button" class="modal__cerrar" aria-label="Cerrar">&times;</button>
+
+      <div class="modal__imagen-wrap" data-modal-imagen-wrap></div>
+      <div class="modal__galeria-miniaturas" data-modal-miniaturas></div>
+
+      <div class="modal__cuerpo">
+        <p class="modal__cliente" data-modal-cliente></p>
+        <h3 class="modal__titulo" data-modal-titulo></h3>
+
+        <dl class="modal__ficha">
+          <div>
+            <dt>Ubicación</dt>
+            <dd data-modal-ubicacion></dd>
+          </div>
+          <div>
+            <dt>Superficie</dt>
+            <dd data-modal-m2></dd>
+          </div>
+          <div>
+            <dt>Rol de EPARQS</dt>
+            <dd data-modal-rol></dd>
+          </div>
+          <div>
+            <dt>Año</dt>
+            <dd data-modal-anio></dd>
+          </div>
+          <div>
+            <dt>Estado</dt>
+            <dd data-modal-categoria></dd>
+          </div>
+          <div data-modal-fila-leed>
+            <dt>Certificación</dt>
+            <dd data-modal-leed></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       FOOTER
+       ================================================================ -->
+  <footer class="footer">
+    <div class="contenedor">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__marca">EPARQS</div>
+          <p data-footer-nombre></p>
+        </div>
+        <ul class="footer__datos" data-footer-datos></ul>
+      </div>
+      <div class="footer__linea">
+        <span>&copy; <span data-anio-actual></span> EPARQS — <span data-footer-nombre-copy></span></span>
+        <span>Buenos Aires, Argentina</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Los tres scripts se cargan en orden: primero los datos, después la
+       lógica que los usa. "defer" hace que se ejecuten recién cuando el
+       HTML terminó de cargar, sin bloquear el render de la página. -->
+  <script src="js/datos-proyectos.js" defer></script>
+  <script src="js/portfolio.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

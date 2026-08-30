@@ -1,0 +1,31 @@
+LOGO DEL HEADER
+=================
+
+El logo real está puesto: img/logo.png, con fondo transparente, sin ninguna
+tarjeta blanca detrás — va directo sobre la foto de portada.
+
+Cómo se mantiene legible en los dos estados del header:
+- Arriba de todo (sobre la foto, header transparente): el CSS le agrega una
+  sombra suave (drop-shadow) para que se distinga incluso sobre partes
+  claras de la foto.
+- Al scrollear (header con fondo blanco sólido): el gris del logo se
+  oscurece un poco automáticamente (con un filtro CSS), porque un gris
+  clarito se lava contra el blanco y cuesta leerlo. Es solo un ajuste
+  visual — el archivo de imagen no cambia.
+
+Si en algún momento reemplazás el logo por otra versión:
+
+1. Guardalo en esta carpeta como "logo.png" (con fondo transparente —
+   si tu archivo nuevo tiene fondo blanco sólido, avisame o volvé a poner
+   la tarjeta blanca en el CSS, si no va a quedar un rectángulo feo).
+2. Tamaño recomendado: que se vea bien a una altura de unos 32px.
+3. Si tu logo nuevo ya es oscuro (no gris clarito), probablemente no haga
+   falta el oscurecido automático al scrollear — podés borrar este bloque
+   de css/estilos.css:
+
+     .header.header--con-fondo .header__logo-img {
+       filter: brightness(0.5);
+     }
+
+Si el archivo no existe o no carga, el sitio muestra automáticamente el
+texto "EPARQS" en su lugar.

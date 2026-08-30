@@ -1,0 +1,169 @@
+LISTADO DE CARPETAS POR OBRA
+==============================
+
+Referencia rápida de qué carpeta le corresponde a cada obra dentro de
+img/proyectos/. El detalle de cómo agregar o sacar fotos está en
+LEEME.txt, en esta misma carpeta.
+
+--------------------------------------------------------------------
+EN EJECUCIÓN
+--------------------------------------------------------------------
+OCASA — Centro de distribución (2025)
+  -> img/proyectos/2025-ocasa-centro-distribucion-pilar/
+
+Mercedes-Benz Camiones y Buses — Nueva planta de producción de camiones y buses — Warehouse (2023-2025)
+  -> img/proyectos/2023-mercedes-benz-camiones-buses-zarate/
+
+Yazaki Group — Expansión centro de autopartes (2025)
+  -> img/proyectos/2025-yazaki-expansion-autopartes/
+
+Grupo Corven — Nueva planta automotriz (KD) — Etapa 1 (2026)
+  -> img/proyectos/2026-corven-planta-automotriz-otamendi/
+
+Grupo Corven / Galletitas Trío — Nueva planta de producción de galletitas (2026)
+  -> img/proyectos/2026-corven-galletitas-trio-ezeiza/
+
+El Yacht — Residencia privada y cochera (2025)
+  -> img/proyectos/2025-el-yacht-residencia-nordelta/
+
+--------------------------------------------------------------------
+ÚLTIMOS CONCLUIDOS
+--------------------------------------------------------------------
+MSU Agro S.A. — Planta de acopio y producción de maní (2024)
+  -> img/proyectos/2024-msu-agro-planta-mani-rufino/
+
+MSU Agro S.A. — Planta de clasificación de semillas (2024)
+  -> img/proyectos/2024-msu-agro-clasificacion-semillas-villa-canas/
+
+PBB Polisur S.A. (DOW Chemical) — Centro logístico — Naves 1 y 2 (2024)
+  -> img/proyectos/2024-pbb-polisur-centro-logistico-naves-1-2/
+
+PBB Polisur S.A. (DOW Chemical) — Centro logístico (2024)
+  -> img/proyectos/2024-pbb-polisur-centro-logistico-pilar/
+
+PBB Polisur S.A. (DOW Chemical) — Nuevas oficinas corporativas — Interiorismo (2024)
+  -> img/proyectos/2024-pbb-polisur-oficinas-puerto-madero/
+
+Plaza Logística S.A. — Ampliación centro de distribución — Naves 5 y 6 (2023-2024)
+  -> img/proyectos/2023-plaza-logistica-ampliacion-naves-5-6/
+
+Surfrigo — Ampliación cámara frigorífica y antecámara de acopio (2024)
+  -> img/proyectos/2024-surfrigo-ampliacion-camara-frigorifica/
+
+Surfrigo — Nuevo centro de distribución y cámara frigorífica (2024)
+  -> img/proyectos/2024-surfrigo-centro-distribucion-rosario/
+
+Pradecon Racing — Salón recreativo — Interiorismo (2023-2024)
+  -> img/proyectos/2023-pradecon-racing-salon-recreativo/
+
+--------------------------------------------------------------------
+TERMINADOS
+--------------------------------------------------------------------
+Grupo Govan — Edificio corporativo (2023)
+  -> img/proyectos/2023-grupo-govan-edificio-corporativo/
+
+Vanges S.A. para CCU — Nuevo centro logístico para CCU (2023)
+  -> img/proyectos/2023-vanges-ccu-centro-logistico/
+
+Grupo Simpa — Complejo de oficinas Lumina San Isidro (2018-2023)
+  -> img/proyectos/2018-simpa-lumina-san-isidro/
+
+MSU Agro S.A. — Nuevo centro de clasificación y acopio de semillas (2022)
+  -> img/proyectos/2022-msu-agro-clasificacion-acopio-chaco/
+
+Grupo J. N. Royo S.A. — Centro logístico integral — Etapa 2 (2022)
+  -> img/proyectos/2022-royo-centro-logistico-etapa-2/
+
+Grupo Simpa — Nuevo centro logístico Lumina Pilar (2018-2021)
+  -> img/proyectos/2018-simpa-lumina-pilar/
+
+Garbarino S.A. — Master plan y proyecto ejecutivo — Etapas 1 y 2 (2016-2019)
+  -> img/proyectos/2016-garbarino-master-plan-la-tablada/
+
+Cervecería y Maltería Quilmes — Ampliación del centro de distribución Mercado Central (2018)
+  -> img/proyectos/2018-quilmes-ampliacion-mercado-central/
+
+Grupo Simpa — Complejo de oficinas Lumina Olivos Office (2017)
+  -> img/proyectos/2017-simpa-lumina-olivos-office/
+
+Grupo Simpa — Complejo de oficinas Florida Office Center (2017)
+  -> img/proyectos/2017-simpa-florida-office-center/
+
+Cervecería y Maltería Quilmes — Centro operativo, ampliación de depósitos y edificios anexos (2016)
+  -> img/proyectos/2016-quilmes-centro-operativo-acheral/
+
+Mitre Construcciones (Grupo Marby S.A.) — Centro de operaciones para empresa Ashira (2016)
+  -> img/proyectos/2016-mitre-ashira-barracas/
+
+IPS S.A.I.C.F.I. — Ampliación del centro de distribución (2016)
+  -> img/proyectos/2016-ips-ampliacion-centro-distribucion/
+
+Cervecería y Maltería Quilmes — Ampliación y refuncionalización de la planta operativa (2015)
+  -> img/proyectos/2015-quilmes-planta-operativa-godoy-cruz/
+
+Fideicomiso Prima Office — Proyecto mixto de oficinas y estudios (2015)
+  -> img/proyectos/2015-fideicomiso-prima-office/
+
+Grupo J. N. Royo S.A. — Centro logístico integral — Etapa 1 (2015)
+  -> img/proyectos/2015-royo-centro-logistico-etapa-1/
+
+Cervecería y Maltería Quilmes — Nuevo centro de distribución central y oficinas corporativas (2013)
+  -> img/proyectos/2013-quilmes-centro-distribucion-oficinas/
+
+Marinas H — Villas Náuticas — Barrio privado náutico (2014-2020)
+  -> img/proyectos/2014-marinas-h-villas-nauticas/
+
+Grupo Simpa — Complejo de oficinas Lumina Thames Office (2012)
+  -> img/proyectos/2012-simpa-lumina-thames-office/
+
+Unilever S.A. — Centro operativo Montevideo (2012)
+  -> img/proyectos/2012-unilever-centro-operativo-montevideo/
+
+Marine Park — Guardería náutica (2012)
+  -> img/proyectos/2012-marine-park-guarderia-nautica/
+
+Greending Ugarte — Complejo de oficinas corporativas (2011)
+  -> img/proyectos/2011-greending-ugarte-oficinas/
+
+Grupo Simpa — Complejo de oficinas Lumina Panamericana (2011)
+  -> img/proyectos/2011-simpa-lumina-panamericana/
+
+Colony Park — Barrio náutico (2011)
+  -> img/proyectos/2011-colony-park-barrio-nautico/
+
+Grupo Simpa — Complejo de oficinas Lumina Puerto de Olivos (2009)
+  -> img/proyectos/2009-simpa-lumina-puerto-olivos/
+
+Grupo Simpa — Complejo de oficinas Lumina Thames 333 (2007)
+  -> img/proyectos/2007-simpa-lumina-thames-333/
+
+Grupo Simpa — Nuevo centro de distribución (2007)
+  -> img/proyectos/2007-simpa-centro-distribucion-garin/
+
+Videolar — Warehouse y acopio de materiales plásticos — Unidad I Manaos (2006)
+  -> img/proyectos/2006-videolar-warehouse-manaos/
+
+Torres Atlántico — Edificio de oficinas corporativas (2005)
+  -> img/proyectos/2005-torres-atlantico-luanda/
+
+Grupo Simpa — Nuevo centro de distribución (2005)
+  -> img/proyectos/2005-simpa-centro-distribucion-munro/
+
+Videolar — Videolar Multimedios de Argentina S.A. (2004)
+  -> img/proyectos/2004-videolar-multimedios-olivos/
+
+Clark Construction International USA — Diveo Data Center — Brasil HQ (2002)
+  -> img/proyectos/2002-clark-diveo-data-center-brasil/
+
+Grupo Simpa — Complejo de oficinas Libertador Park (2001)
+  -> img/proyectos/2001-simpa-libertador-park/
+
+Clark Construction International USA — Diveo Data Center (2001)
+  -> img/proyectos/2001-clark-diveo-data-center-san-telmo/
+
+Clark Construction International USA — Diveo Data Center (2001)
+  -> img/proyectos/2001-clark-diveo-data-center-mexico/
+
+Videolar — Planta industrial (1999)
+  -> img/proyectos/1999-videolar-planta-industrial-tdf/
+

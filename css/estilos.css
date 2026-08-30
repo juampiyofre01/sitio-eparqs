@@ -1,0 +1,1094 @@
+/* ============================================================================
+   ESTILOS DEL SITIO — EPARQS
+   ============================================================================
+   Organización del archivo:
+   1. Variables (colores, tipografía, espaciados) — TODO lo que quieras
+      cambiar de aspecto general del sitio se edita ACÁ ARRIBA.
+   2. Reset básico y estilos generales
+   3. Utilidades (contenedor, botones, etc.)
+   4. Header / navegación
+   5. Cada sección del sitio, en el mismo orden en que aparecen en index.html
+   6. Footer
+   7. Media queries grandes (si hace falta algún ajuste que no entró arriba)
+   ========================================================================= */
+
+/* ----------------------------------------------------------------------
+   1. VARIABLES — editá acá los colores y tipografías del sitio entero
+   ---------------------------------------------------------------------- */
+:root {
+  /* Paleta: escala de grises + un único acento sutil.
+     Para cambiar el "look" del sitio, alcanza con tocar estos valores. */
+  --color-fondo: #ffffff;
+  --color-fondo-alterno: #f4f3f1;       /* gris muy claro, para secciones alternadas */
+  --color-texto: #1a1a18;               /* negro cálido, no negro puro */
+  --color-texto-suave: #5c5b57;         /* gris medio, para bajadas y textos secundarios */
+  --color-borde: #dedcd7;
+  --color-acento: #2d3693;              /* azul del logo real — hover de links, badges, filtro activo */
+  --color-acento-suave: #e8e9f5;        /* fondo del acento (badges, etc.) */
+  --color-overlay-hero: rgba(20, 19, 17, 0.45); /* oscurece la foto de portada para legibilidad */
+
+  /* Tipografía: una sola familia, variando el peso entre títulos y cuerpo.
+     Se carga "Work Sans" desde Google Fonts, con una pila de respaldo por
+     si el sitio se abre sin conexión a internet. */
+  --fuente-principal: "Work Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* Serif itálica para la palabra de acento del título del hero (*así*) */
+  --fuente-acento: "Playfair Display", Georgia, "Times New Roman", serif;
+  --tracking-titulos: 0.01em;
+
+  /* Espaciados y medidas reutilizables */
+  --ancho-maximo: 1180px;
+  --radio-borde: 2px;
+  --sombra-tarjeta: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --transicion: 0.2s ease;
+}
+
+/* ----------------------------------------------------------------------
+   2. RESET BÁSICO Y ESTILOS GENERALES
+   ---------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--fuente-principal);
+  color: var(--color-texto);
+  background: var(--color-fondo);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 500;
+  letter-spacing: var(--tracking-titulos);
+  line-height: 1.2;
+}
+
+/* Link "saltar al contenido", solo visible al navegar con teclado (accesibilidad) */
+.enlace-saltar {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--color-texto);
+  color: var(--color-fondo);
+  padding: 0.75rem 1.25rem;
+  z-index: 200;
+}
+.enlace-saltar:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+/* Estado de foco visible y consistente en todo el sitio */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------------
+   3. UTILIDADES
+   ---------------------------------------------------------------------- */
+.contenedor {
+  max-width: var(--ancho-maximo);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.seccion {
+  padding: 5rem 0;
+}
+
+.seccion--alterna {
+  background: var(--color-fondo-alterno);
+}
+
+.encabezado-seccion {
+  max-width: 640px;
+  margin-bottom: 3rem;
+}
+
+.encabezado-seccion .eyebrow {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-acento);
+  margin-bottom: 0.75rem;
+}
+
+.encabezado-seccion h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 1rem;
+}
+
+.encabezado-seccion p {
+  color: var(--color-texto-suave);
+  font-size: 1.05rem;
+}
+
+.boton {
+  display: inline-block;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid var(--color-texto);
+  border-radius: var(--radio-borde);
+  font-size: 0.95rem;
+  transition: background var(--transicion), color var(--transicion);
+}
+
+.boton:hover {
+  background: var(--color-texto);
+  color: var(--color-fondo);
+}
+
+.boton--claro {
+  border-color: var(--color-fondo);
+  color: var(--color-fondo);
+}
+
+.boton--claro:hover {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+/* ----------------------------------------------------------------------
+   4. HEADER / NAVEGACIÓN
+   ---------------------------------------------------------------------- */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  background: rgba(255, 255, 255, 0);
+  transition: background var(--transicion), box-shadow var(--transicion), padding var(--transicion);
+}
+
+/* Franja oscura fija detrás del header, independiente de la foto de
+   portada: así el logo y el menú se leen bien sin importar qué imagen
+   uses de fondo (no depende de que esa zona de la foto sea oscura). */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 170px;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+  pointer-events: none;
+  transition: opacity var(--transicion);
+}
+
+.header.header--con-fondo::before {
+  opacity: 0;
+}
+
+/* Cuando el usuario scrollea, JS agrega esta clase para que el header
+   pase a tener fondo blanco sólido y no se confunda con la foto del hero */
+.header.header--con-fondo {
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 1px 0 var(--color-borde);
+  padding: 0.75rem 1.5rem;
+}
+
+.header__marca {
+  display: flex;
+  align-items: center;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-texto);
+}
+
+/* Tarjeta blanca detrás del logo: como el logo es a color (no monocromático),
+   en vez de invertirlo a blanco sobre la foto de portada le damos un fondo
+   blanco propio, así se lee igual de bien en los dos estados del header. */
+.header__logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+  /* Sombra suave en vez de una tarjeta de fondo: ayuda a que se lea sobre
+     zonas claras de la foto, sin encerrar el logo en una caja. */
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+  transition: filter var(--transicion);
+}
+
+/* El logo tiene el texto en gris claro (pensado para ir sobre la foto).
+   Cuando el header pasa a fondo blanco sólido, ese gris se lava y cuesta
+   leerlo — lo oscurecemos un poco acá para que se siga viendo bien. */
+.header.header--con-fondo .header__logo-img {
+  filter: brightness(0.5);
+}
+
+/* En el hero (fondo oscuro) la marca se ve blanca; JS controla la clase */
+.header:not(.header--con-fondo) .header__marca,
+.header:not(.header--con-fondo) .nav__link {
+  color: #fff;
+}
+
+.nav__lista {
+  display: flex;
+  gap: 2.1rem;
+}
+
+.nav__link {
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transicion), color var(--transicion);
+}
+
+.nav__link:hover {
+  border-color: currentColor;
+}
+
+.nav__toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.4rem;
+}
+
+.nav__toggle-barra {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: currentColor;
+  margin: 5px 0;
+  transition: transform var(--transicion), opacity var(--transicion);
+}
+
+.header:not(.header--con-fondo) .nav__toggle {
+  color: #fff;
+}
+
+/* ----------------------------------------------------------------------
+   5. HERO
+   ---------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  color: #fff;
+  overflow: hidden;
+}
+
+.hero__fondo {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.hero__fondo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder del hero: gradiente prolijo en escala de grises, mientras
+   no haya una foto real en img/hero/portada.jpg (ver img/hero/LEEME.txt) */
+.hero__fondo--placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(155deg, #3a3834 0%, #201f1d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero__fondo--placeholder span {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  max-width: 320px;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  /* Viñeta: oscuro arriba (para que el logo se lea sin importar qué haya
+     en la foto justo ahí), más clarito en el medio (para que la foto
+     respire), y oscuro de nuevo abajo (para el título y el botón). */
+  background:
+    linear-gradient(90deg, rgba(10,10,9,0.1) 0%, rgba(10,10,9,0.4) 100%),
+    linear-gradient(
+      180deg,
+      rgba(8,8,7,0.72) 0%,
+      rgba(8,8,7,0.32) 18%,
+      rgba(10,10,9,0.38) 55%,
+      rgba(8,8,7,0.85) 100%
+    );
+}
+
+.hero__contenido {
+  padding: 3.5rem 1.5rem 5.5rem;
+  max-width: var(--ancho-maximo);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero__titulo {
+  font-size: clamp(2.4rem, 6.4vw, 4.4rem);
+  font-weight: 500;
+  line-height: 1.1;
+  max-width: 780px;
+}
+
+/* La palabra marcada con *asteriscos* en contenido.hero.titulo se
+   convierte en <em> y se muestra en la serif itálica de acento */
+.hero__titulo em {
+  font-family: var(--fuente-acento);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hero__divisor {
+  width: 64px;
+  height: 3px;
+  margin-top: 1.5rem;
+  background: var(--color-fondo);
+  opacity: 0.85;
+}
+
+.hero__bajada {
+  margin-top: 1.4rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 540px;
+}
+
+.hero__cta {
+  margin-top: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background var(--transicion), border-color var(--transicion), color var(--transicion);
+}
+
+.hero__cta:hover {
+  background: var(--color-fondo);
+  border-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+.hero__cta-flecha {
+  transition: transform var(--transicion);
+}
+
+.hero__cta:hover .hero__cta-flecha {
+  transform: translateX(3px);
+}
+
+.hero__servicios {
+  margin-top: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.hero__servicios li {
+  display: flex;
+  align-items: center;
+}
+
+/* Puntito de acento entre cada servicio, en vez de separador de texto */
+.hero__servicios li + li::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-acento);
+  margin: 0 0.9rem;
+  flex-shrink: 0;
+}
+
+/* ----------------------------------------------------------------------
+   5.1 EL ESTUDIO
+   ---------------------------------------------------------------------- */
+.estudio__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+.estudio__texto p {
+  color: var(--color-texto-suave);
+  margin-bottom: 1.1rem;
+  font-size: 1.05rem;
+}
+
+.estudio__datos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2rem;
+  padding: 2rem;
+  background: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+}
+
+.estudio__dato dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-texto-suave);
+  margin-bottom: 0.35rem;
+}
+
+.estudio__dato dd {
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.estudio__dato dd small {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--color-texto-suave);
+  display: block;
+}
+
+/* ----------------------------------------------------------------------
+   5.2 SERVICIOS
+   ---------------------------------------------------------------------- */
+.servicios__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--color-borde);
+  border: 1px solid var(--color-borde);
+}
+
+.servicio {
+  background: var(--color-fondo);
+  padding: 2.5rem 2rem;
+}
+
+.servicio__numero {
+  font-size: 0.85rem;
+  color: var(--color-acento);
+  letter-spacing: 0.08em;
+  margin-bottom: 1.25rem;
+  display: block;
+}
+
+.servicio h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.servicio p {
+  color: var(--color-texto-suave);
+  font-size: 0.98rem;
+}
+
+/* ----------------------------------------------------------------------
+   5.3 PORTFOLIO / OBRAS
+   ---------------------------------------------------------------------- */
+.portfolio__filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  margin-bottom: 2.75rem;
+}
+
+.grupo-filtros__titulo {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-texto-suave);
+  margin-bottom: 0.6rem;
+}
+
+.grupo-filtros__botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filtro-btn {
+  background: transparent;
+  border: 1px solid var(--color-borde);
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+  transition: all var(--transicion);
+}
+
+.filtro-btn:hover {
+  border-color: var(--color-texto);
+  color: var(--color-texto);
+}
+
+.filtro-btn.activo {
+  background: var(--color-texto);
+  border-color: var(--color-texto);
+  color: var(--color-fondo);
+}
+
+.portfolio__categoria {
+  margin-bottom: 3.5rem;
+}
+
+.portfolio__categoria-titulo {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-texto-suave);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--color-borde);
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.portfolio__categoria-titulo .cantidad {
+  font-size: 0.85rem;
+  color: var(--color-acento);
+}
+
+.portfolio__grilla {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+}
+
+.tarjeta-obra {
+  background: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+  cursor: pointer;
+  transition: box-shadow var(--transicion), transform var(--transicion);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: 100%;
+}
+
+.tarjeta-obra:hover {
+  box-shadow: var(--sombra-tarjeta);
+  transform: translateY(-2px);
+}
+
+.tarjeta-obra__imagen-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #e9e7e3;
+}
+
+.tarjeta-obra__imagen-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder de una imagen de obra: se muestra cuando la foto del proyecto
+   todavía no existe (ver el sistema de fallback en portfolio.js). Se usa
+   tanto en las tarjetas de la grilla como en la imagen grande del modal. */
+.placeholder-imagen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  text-align: center;
+  background: repeating-linear-gradient(
+    135deg,
+    #e9e7e3,
+    #e9e7e3 10px,
+    #e2dfda 10px,
+    #e2dfda 20px
+  );
+}
+
+.placeholder-imagen span {
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+  font-weight: 500;
+}
+
+.tarjeta-obra__leed {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: var(--color-fondo);
+  color: var(--color-acento);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--color-acento);
+}
+
+.tarjeta-obra__cuerpo {
+  padding: 1.25rem 1.4rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.tarjeta-obra__cliente {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-texto-suave);
+  margin-bottom: 0.4rem;
+}
+
+.tarjeta-obra__titulo {
+  font-size: 1.08rem;
+  margin-bottom: 0.6rem;
+}
+
+.tarjeta-obra__ubicacion {
+  font-size: 0.9rem;
+  color: var(--color-texto-suave);
+  margin-bottom: 0.9rem;
+}
+
+.tarjeta-obra__meta {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.85rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--color-borde);
+  color: var(--color-texto-suave);
+}
+
+.tarjeta-obra__meta strong {
+  color: var(--color-texto);
+  font-weight: 500;
+}
+
+.portfolio__vacio {
+  color: var(--color-texto-suave);
+  padding: 2rem 0;
+  font-size: 0.95rem;
+}
+
+/* ----------------------------------------------------------------------
+   5.4 MODAL DE FICHA DE OBRA (lightbox)
+   ---------------------------------------------------------------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 2.5rem 1.25rem;
+  background: rgba(15, 14, 13, 0.72);
+}
+
+.modal.abierto {
+  display: flex;
+}
+
+.modal__caja {
+  background: var(--color-fondo);
+  max-width: 780px;
+  width: 100%;
+  position: relative;
+  margin: auto;
+}
+
+.modal__cerrar {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 1.3rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal__imagen-wrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #e9e7e3;
+}
+
+.modal__imagen-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal__galeria-miniaturas {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--color-fondo-alterno);
+  overflow-x: auto;
+}
+
+.modal__galeria-miniaturas img {
+  width: 84px;
+  height: 60px;
+  object-fit: cover;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity var(--transicion);
+  flex-shrink: 0;
+}
+
+.modal__galeria-miniaturas img:hover,
+.modal__galeria-miniaturas img.activa {
+  opacity: 1;
+}
+
+.modal__cuerpo {
+  padding: 2rem 2.25rem 2.25rem;
+}
+
+.modal__cliente {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-acento);
+  margin-bottom: 0.5rem;
+}
+
+.modal__titulo {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.modal__ficha {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.1rem 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-borde);
+}
+
+.modal__ficha dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-texto-suave);
+  margin-bottom: 0.3rem;
+}
+
+.modal__ficha dd {
+  font-size: 1rem;
+}
+
+/* ----------------------------------------------------------------------
+   5.5 EQUIPO
+   ---------------------------------------------------------------------- */
+.equipo__grilla {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+.persona__foto-wrap {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: #e9e7e3;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+
+.persona__foto-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.persona__foto-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ece9e4;
+}
+
+.persona__foto-placeholder span {
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: #c9c5bd;
+}
+
+.persona__nombre {
+  font-size: 1.15rem;
+  margin-bottom: 0.3rem;
+}
+
+.persona__titulo {
+  font-size: 0.9rem;
+  color: var(--color-acento);
+  margin-bottom: 0.75rem;
+}
+
+.persona__rol {
+  font-size: 0.95rem;
+  color: var(--color-texto-suave);
+}
+
+/* ----------------------------------------------------------------------
+   5.6 CONTACTO
+   ---------------------------------------------------------------------- */
+.contacto__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+.contacto__datos-lista {
+  margin-bottom: 2rem;
+}
+
+.contacto__datos-lista > div {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.contacto__datos-lista dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-texto-suave);
+  margin-bottom: 0.3rem;
+}
+
+.contacto__datos-lista dd a:hover {
+  color: var(--color-acento);
+}
+
+.contacto__mapa {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--color-borde);
+}
+
+.contacto__mapa iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.formulario label {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-texto-suave);
+  margin-bottom: 0.4rem;
+}
+
+.formulario .campo {
+  margin-bottom: 1.4rem;
+}
+
+.formulario input,
+.formulario textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  font-family: inherit;
+  font-size: 0.98rem;
+  background: var(--color-fondo);
+}
+
+.formulario textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.formulario input:focus,
+.formulario textarea:focus {
+  border-color: var(--color-acento);
+}
+
+.formulario__nota {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+}
+
+/* ----------------------------------------------------------------------
+   6. FOOTER
+   ---------------------------------------------------------------------- */
+.footer {
+  background: var(--color-texto);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 3.5rem 0 2rem;
+}
+
+.footer__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.footer__marca {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.footer__datos li {
+  margin-bottom: 0.4rem;
+  font-size: 0.92rem;
+}
+
+.footer__datos a:hover {
+  color: #fff;
+}
+
+.footer__linea {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.55);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
+}
+
+/* ============================================================================
+   7. RESPONSIVE — mobile-first: lo de arriba ya es la versión mobile.
+      Acá se agranda la grilla a partir de tablet/desktop.
+   ========================================================================= */
+
+/* Tablet en adelante (>= 700px) */
+@media (min-width: 700px) {
+  .seccion { padding: 6.5rem 0; }
+
+  .servicios__grid { grid-template-columns: repeat(2, 1fr); }
+  .portfolio__grilla { grid-template-columns: repeat(2, 1fr); }
+  .equipo__grilla { grid-template-columns: repeat(3, 1fr); }
+  .contacto__grid { grid-template-columns: 1.1fr 1fr; }
+}
+
+/* Desktop en adelante (>= 960px) */
+@media (min-width: 960px) {
+  .nav__toggle { display: none !important; }
+
+  .estudio__grid { grid-template-columns: 1.2fr 1fr; align-items: start; }
+  .servicios__grid { grid-template-columns: repeat(4, 1fr); }
+  .portfolio__grilla { grid-template-columns: repeat(3, 1fr); }
+  .footer__grid { flex-direction: row; justify-content: space-between; }
+  .modal__ficha { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Mobile (< 960px): menú hamburguesa */
+@media (max-width: 959px) {
+  .nav__toggle {
+    display: block;
+  }
+
+  .nav {
+    position: fixed;
+    inset: 0;
+    top: 0;
+    background: var(--color-fondo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-100%);
+    transition: transform var(--transicion);
+    z-index: 90;
+  }
+
+  .nav.nav--abierto {
+    transform: translateY(0);
+  }
+
+  .nav__lista {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.75rem;
+  }
+
+  .nav__link {
+    color: var(--color-texto) !important;
+    font-size: 1.3rem;
+  }
+
+  /* Cuando el menú mobile está abierto, la marca y el botón de menú
+     quedan siempre oscuros para verse sobre el fondo blanco del menú */
+  body.menu-abierto .header__marca,
+  body.menu-abierto .nav__toggle {
+    color: var(--color-texto) !important;
+  }
+
+  /* Ícono hamburguesa -> X cuando el menú está abierto */
+  .nav__toggle.activo .nav__toggle-barra:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav__toggle.activo .nav__toggle-barra:nth-child(2) {
+    opacity: 0;
+  }
+  .nav__toggle.activo .nav__toggle-barra:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}

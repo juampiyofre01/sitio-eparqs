@@ -81,13 +81,17 @@ const DATOS_EPARQ = {
     abreviatura: "EPARQS",
     desde: 1996,
     direccion: "Maure 1687, piso 8B (C1426), Ciudad Autónoma de Buenos Aires",
-    direccionParaMapa: "Maure 1687, Buenos Aires, Argentina", // versión simple, para ubicar el pin en Google Maps
+    direccionParaMapa: "Maure 1687, Buenos Aires, Argentina",
     telefono: "+54 11 4774-3069",
-    telefonoHref: "+541147743069", // mismo teléfono, formato para el link tel:
+    telefonoHref: "+541147743069",
     email: "estudio@eparquitectos.com.ar",
-    servicios: ["Proyecto", "Dirección de obra", "Gerenciamiento", "Interiorismo"],
-    descripcion:
-      "Estudio de arquitectura establecido desde 1996, dedicado al diseño arquitectónico, la ingeniería y el interiorismo para clientes locales e internacionales. Nuestra obra abarca edificios industriales, centros logísticos, oficinas corporativas y desarrollos residenciales y náuticos. Somos miembros de Sustainable Development Advisors (SDA) y contamos con una extensa trayectoria en edificios certificados LEED por el USGBC.",
+    servicios: [
+      "Proyecto",
+      "Dirección de obra",
+      "Gerenciamiento",
+      "Interiorismo",
+    ],
+    descripcion: "Estudio de arquitectura establecido desde 1996, dedicado al diseño arquitectónico, la ingeniería y el interiorismo para clientes locales e internacionales. Nuestra obra abarca edificios industriales, centros logísticos, oficinas corporativas y desarrollos residenciales y náuticos. Somos miembros de Sustainable Development Advisors (SDA) y contamos con una extensa trayectoria en edificios certificados LEED por el USGBC.",
   },
   // ===== FIN: estudio =====
 
@@ -100,70 +104,78 @@ const DATOS_EPARQ = {
   // ---------------------------------------------------------------------
   // ===== INICIO: contenido (no toques esta línea) =====
   contenido: {
-
-    // Sección "Home" — lo primero que se ve, a pantalla completa.
-    // En "titulo", una palabra entre *asteriscos* se muestra en la
-    // tipografía serif itálica de acento (como la palabra "futuro" acá
-    // abajo) — usalo para UNA sola palabra o frase corta, al final o donde
-    // quede natural. Si no querés ese efecto, simplemente no uses asteriscos.
     hero: {
       titulo: "Arquitectura e ingeniería para la industria que construye *futuro*.",
-      bajada: "Desde 1996 proyectamos y dirigimos obras industriales, logísticas y coorporativas con visión integral, compromiso y excelencia técnica.",
-      cta: "Conocé nuestro estudio", // texto del botón; dejalo vacío ("") para no mostrar botón
-      tamanioTitulo: "normal", // "chico" | "normal" | "grande"
+      bajada: "Desde 1996 proyectamos y dirigimos obras industriales, logísticas y corporativas con visión integral, compromiso y excelencia técnica.",
+      cta: "Conocé nuestro estudio",
+      tamanioTitulo: "chico",
     },
-
-    // Sección "El estudio" — reseña institucional
     estudio: {
       eyebrow: "El estudio",
       titulo: "Más de 25 años de trayectoria en obra industrial y corporativa",
-      // Cada elemento del arreglo es un párrafo. Para agregar un párrafo
-      // nuevo, copiá una línea con texto entre comillas y sumale una coma.
       parrafos: [
         "Somos un estudio de arquitectura con sede en Buenos Aires, establecido desde 1996. Proyectamos y dirigimos edificios industriales, centros logísticos, oficinas corporativas y desarrollos residenciales y náuticos para clientes locales e internacionales.",
         "Nuestro trabajo integra el diseño arquitectónico, la ingeniería y el interiorismo bajo un mismo equipo, lo que nos permite acompañar cada obra desde el anteproyecto hasta su puesta en marcha.",
         "Somos miembros de Sustainable Development Advisors (SDA) y contamos con una extensa trayectoria en edificios certificados LEED por el USGBC, reflejo de un compromiso sostenido con la sustentabilidad en cada proyecto.",
       ],
-      // Los 4 datos destacados de la cajita de la derecha. "nota" es opcional
-      // (el texto chico debajo del valor grande) — se puede omitir.
       datosDestacados: [
-        { titulo: "Fundado en", valor: "1996" },
-        { titulo: "Certificación", valor: "LEED Gold", nota: "trayectoria en varias obras" },
-        { titulo: "Membresía", valor: "SDA", nota: "Sustainable Development Advisors" },
-        { titulo: "Áreas", valor: "4", nota: "Proyecto · Dirección · Gerenciamiento · Interiorismo" },
+        {
+          titulo: "Fundado en",
+          valor: "1996",
+        },
+        {
+          titulo: "Certificación",
+          valor: "LEED Gold",
+          nota: "trayectoria en varias obras",
+        },
+        {
+          titulo: "Membresía",
+          valor: "SDA",
+          nota: "Sustainable Development Advisors",
+        },
+        {
+          titulo: "Áreas",
+          valor: "4",
+          nota: "Proyecto · Dirección · Gerenciamiento · Interiorismo",
+        },
       ],
     },
-
-    // Sección "Servicios" — las 4 tarjetas. Para agregar un quinto servicio,
-    // copiá un bloque { ... } entero y sumale una coma al anterior.
     servicios: {
       eyebrow: "Servicios",
       titulo: "Cuatro áreas, un mismo equipo",
       bajada: "Acompañamos la obra en las etapas que el cliente necesite, de forma integral o independiente.",
       items: [
-        { numero: "01", titulo: "Proyecto", descripcion: "Desarrollo del proyecto arquitectónico y de ingeniería, desde el anteproyecto hasta la documentación ejecutiva necesaria para construir." },
-        { numero: "02", titulo: "Dirección de obra", descripcion: "Supervisión técnica en el sitio para asegurar que la obra se ejecute conforme al proyecto, en tiempo, calidad y presupuesto." },
-        { numero: "03", titulo: "Gerenciamiento", descripcion: "Coordinación integral de proveedores, contratistas y cronograma, representando los intereses del cliente durante toda la obra." },
-        { numero: "04", titulo: "Interiorismo", descripcion: "Diseño de espacios interiores corporativos y residenciales, con foco en funcionalidad, estética y experiencia de uso." },
+        {
+          numero: "01",
+          titulo: "Proyecto",
+          descripcion: "Desarrollo del proyecto arquitectónico y de ingeniería, desde el anteproyecto hasta la documentación ejecutiva necesaria para construir.",
+        },
+        {
+          numero: "02",
+          titulo: "Dirección de obra",
+          descripcion: "Supervisión técnica en el sitio para asegurar que la obra se ejecute conforme al proyecto, en tiempo, calidad y presupuesto.",
+        },
+        {
+          numero: "03",
+          titulo: "Gerenciamiento",
+          descripcion: "Coordinación integral de proveedores, contratistas y cronograma, representando los intereses del cliente durante toda la obra.",
+        },
+        {
+          numero: "04",
+          titulo: "Interiorismo",
+          descripcion: "Diseño de espacios interiores corporativos y residenciales, con foco en funcionalidad, estética y experiencia de uso.",
+        },
       ],
     },
-
-    // Sección "Obras" — el encabezado de arriba del portfolio (las tarjetas
-    // se arman solas desde "proyectos", más abajo)
     obras: {
       eyebrow: "Portfolio",
       titulo: "Obras",
       bajada: "Una selección de proyectos en ejecución y concluidos, para clientes como Mercedes-Benz, Quilmes, DOW, CCU, Unilever, Garbarino, MSU Agro y Grupo Simpa, entre otros.",
     },
-
-    // Sección "Equipo" — el encabezado de arriba (las tarjetas de los
-    // socios se arman solas desde "socios", más abajo)
     equipo: {
       eyebrow: "Equipo",
       titulo: "Socios",
     },
-
-    // Sección "Contacto"
     contacto: {
       eyebrow: "Contacto",
       titulo: "Hablemos de tu proyecto",
@@ -218,17 +230,17 @@ const DATOS_EPARQ = {
     { cliente: "Yazaki Group", obra: "Expansión centro de autopartes", ubicacion: "Loma Verde / Escobar, Buenos Aires", m2: 6000, rol: "Proyecto y dirección ejecutiva", anio: "2025", tipo: "industrial", categoria: "En ejecución", imagen: "img/proyectos/2025-yazaki-expansion-autopartes/1.jpg" },
     { cliente: "Grupo Corven", obra: "Nueva planta automotriz (KD) — Etapa 1", ubicacion: "Otamendi, Campana, Buenos Aires", m2: 43000, rol: "Proyecto y dirección ejecutiva", anio: "2026", tipo: "industrial", categoria: "En ejecución", imagen: "img/proyectos/2026-corven-planta-automotriz-otamendi/1.jpg", imagenes: ["img/proyectos/2026-corven-planta-automotriz-otamendi/1.jpg", "img/proyectos/2026-corven-planta-automotriz-otamendi/2.jpg", "img/proyectos/2026-corven-planta-automotriz-otamendi/3.jpg"] },
     { cliente: "Galletitas Trío", obra: "Nueva planta de producción de galletitas", ubicacion: "Polo Industrial Ezeiza, Buenos Aires", m2: 21000, rol: "Proyecto y dirección ejecutiva", anio: "2026", tipo: "industrial", categoria: "En ejecución", imagen: "img/proyectos/2026-corven-galletitas-trio-ezeiza/Render aereo 1.png", imagenes: ["img/proyectos/2026-corven-galletitas-trio-ezeiza/Render aereo 1.png", "img/proyectos/2026-corven-galletitas-trio-ezeiza/Render aereo 2.png", "img/proyectos/2026-corven-galletitas-trio-ezeiza/Render docks.png", "img/proyectos/2026-corven-galletitas-trio-ezeiza/Render peatonal.png"] },
-    { cliente: "El Yacht", obra: "Residencia privada y cochera", ubicacion: "Barrio El Yacht, Nordelta, Buenos Aires", m2: 580, rol: "Proyecto", anio: "2025", tipo: "residencial-nautico", categoria: "Terminados", imagen: "img/proyectos/2025-el-yacht-residencia-nordelta/1.jpg", imagenes: ["img/proyectos/2025-el-yacht-residencia-nordelta/1.jpg", "img/proyectos/2025-el-yacht-residencia-nordelta/2.jpg", "img/proyectos/2025-el-yacht-residencia-nordelta/3.jpg", "img/proyectos/2025-el-yacht-residencia-nordelta/4.jpg"] },
+    { cliente: "El Yacht", obra: "Residencia privada y cochera", ubicacion: "Barrio El Yacht, Nordelta, Buenos Aires", m2: 580, rol: "Proyecto", anio: "2025", tipo: "residencial-nautico", categoria: "Terminados", imagen: "img/proyectos/2025-el-yacht-residencia-nordelta/1.jpg", imagenes: ["img/proyectos/2025-el-yacht-residencia-nordelta/1.jpg", "img/proyectos/2025-el-yacht-residencia-nordelta/3.jpg", "img/proyectos/2025-el-yacht-residencia-nordelta/4.jpg"] },
     { cliente: "MSU Agro S.A.", obra: "Planta de acopio y producción de maní", ubicacion: "Rufino, Santa Fe", m2: 63000, rol: "Revisión de proyecto y dirección de obra", anio: "2024", tipo: "industrial", categoria: "Últimos concluidos", imagen: "img/proyectos/2024-msu-agro-planta-mani-rufino/1.jpg", imagenes: ["img/proyectos/2024-msu-agro-planta-mani-rufino/1.jpg", "img/proyectos/2024-msu-agro-planta-mani-rufino/2.jpg", "img/proyectos/2024-msu-agro-planta-mani-rufino/3.jpg"] },
     { cliente: "MSU Agro S.A.", obra: "Planta de clasificación de semillas", ubicacion: "Villa Cañás, Santa Fe", m2: 12000, rol: "Proyecto", anio: "2024", tipo: "industrial", categoria: "Últimos concluidos", imagen: "img/proyectos/2024-msu-agro-clasificacion-semillas-villa-canas/1.jpg", imagenes: ["img/proyectos/2024-msu-agro-clasificacion-semillas-villa-canas/1.jpg", "img/proyectos/2024-msu-agro-clasificacion-semillas-villa-canas/2.jpg", "img/proyectos/2024-msu-agro-clasificacion-semillas-villa-canas/3.jpg"] },
-    { cliente: "PBB Polisur S.A. (DOW Chemical)", obra: "Centro logístico — Naves 1 y 2", ubicacion: "Parque Industrial Escobar, Buenos Aires", m2: 62000, rol: "Anteproyecto y supervisión técnica / Owner representative", anio: "2024", tipo: "logistico", categoria: "Últimos concluidos", imagen: "img/proyectos/2024-pbb-polisur-centro-logistico-naves-1-2/1.jpg", imagenes: ["img/proyectos/2024-pbb-polisur-centro-logistico-naves-1-2/1.jpg", "img/proyectos/2024-pbb-polisur-centro-logistico-naves-1-2/2.jpg"] },
-    { cliente: "PBB Polisur S.A. (DOW Chemical)", obra: "Centro logístico", ubicacion: "Parque Industrial Pilar, Buenos Aires", m2: 51000, rol: "Anteproyecto y supervisión técnica / Owner representative", anio: "2024", tipo: "logistico", categoria: "Últimos concluidos", imagen: "img/proyectos/2024-pbb-polisur-centro-logistico-pilar/1.jpg", imagenes: ["img/proyectos/2024-pbb-polisur-centro-logistico-pilar/1.jpg", "img/proyectos/2024-pbb-polisur-centro-logistico-pilar/2.jpg"] },
+    { cliente: "PBB Polisur S.A. (DOW Chemical)", obra: "Centro logístico — Naves 1 y 2", ubicacion: "Parque Industrial Escobar, Buenos Aires", m2: 62000, rol: "Anteproyecto y supervisión técnica / Owner representative", anio: "2024", tipo: "logistico", categoria: "Últimos concluidos", imagen: "img/proyectos/2024-pbb-polisur-centro-logistico-naves-1-2/1.jpg", imagenes: ["img/proyectos/2024-pbb-polisur-centro-logistico-naves-1-2/1.jpg", "img/proyectos/2024-pbb-polisur-centro-logistico-naves-1-2/3.jpg"] },
+    { cliente: "PBB Polisur S.A. (DOW Chemical)", obra: "Centro logístico", ubicacion: "Parque Industrial Pilar, Buenos Aires", m2: 51000, rol: "Anteproyecto y supervisión técnica / Owner representative", anio: "2024", tipo: "logistico", categoria: "Últimos concluidos", imagen: "img/proyectos/2024-pbb-polisur-centro-logistico-pilar/1.jpg", imagenes: ["img/proyectos/2024-pbb-polisur-centro-logistico-pilar/1.jpg", "img/proyectos/2024-pbb-polisur-centro-logistico-pilar/3.jpg"] },
     { cliente: "PBB Polisur S.A. (DOW Chemical)", obra: "Nuevas oficinas corporativas — Interiorismo", ubicacion: "Bouchard 710, Puerto Madero, Buenos Aires", m2: 1800, rol: "Proyecto y supervisión de obra", anio: "2024", tipo: "oficinas", categoria: "Últimos concluidos", imagen: "img/proyectos/2024-pbb-polisur-oficinas-puerto-madero/1.jpg", imagenes: ["img/proyectos/2024-pbb-polisur-oficinas-puerto-madero/1.jpg", "img/proyectos/2024-pbb-polisur-oficinas-puerto-madero/2.jpg", "img/proyectos/2024-pbb-polisur-oficinas-puerto-madero/3.jpg"] },
     { cliente: "Plaza Logística S.A.", obra: "Ampliación centro de distribución — Naves 5 y 6", ubicacion: "Pacheco, Buenos Aires", m2: 50500, rol: "Proyecto y dirección ejecutiva", anio: "2023-2024", tipo: "logistico", categoria: "Últimos concluidos", imagen: "img/proyectos/2023-plaza-logistica-ampliacion-naves-5-6/1.jpg", imagenes: ["img/proyectos/2023-plaza-logistica-ampliacion-naves-5-6/1.jpg", "img/proyectos/2023-plaza-logistica-ampliacion-naves-5-6/2.jpg", "img/proyectos/2023-plaza-logistica-ampliacion-naves-5-6/3.jpg"] },
     { cliente: "Surfrigo", obra: "Ampliación cámara frigorífica y antecámara de acopio", ubicacion: "Ezeiza, Buenos Aires", m2: 15000, rol: "Proyecto y supervisión técnica", anio: "2024", tipo: "industrial", categoria: "Últimos concluidos", imagen: "img/proyectos/2024-surfrigo-ampliacion-camara-frigorifica/1.jpg" },
     { cliente: "Surfrigo", obra: "Nuevo centro de distribución y cámara frigorífica", ubicacion: "Rosario, Santa Fe", m2: 28000, rol: "Anteproyecto", anio: "2024", tipo: "logistico", categoria: "Últimos concluidos", imagen: "img/proyectos/2024-surfrigo-centro-distribucion-rosario/1.jpg" },
-    { cliente: "Pradecon Racing", obra: "Salón recreativo — Interiorismo", ubicacion: "Belén de Escobar, Buenos Aires", m2: 400, rol: "Proyecto ejecutivo", anio: "2023-2024", tipo: "oficinas", categoria: "Últimos concluidos", imagen: "img/proyectos/2023-pradecon-racing-salon-recreativo/1.jpg", imagenes: ["img/proyectos/2023-pradecon-racing-salon-recreativo/1.jpg", "img/proyectos/2023-pradecon-racing-salon-recreativo/2.jpg", "img/proyectos/2023-pradecon-racing-salon-recreativo/3.jpg", "img/proyectos/2023-pradecon-racing-salon-recreativo/4.jpg", "img/proyectos/2023-pradecon-racing-salon-recreativo/5.jpg"] },
-    { cliente: "Grupo Govan", obra: "Edificio corporativo", ubicacion: "Parque Industrial Escobar, Buenos Aires", m2: 12200, rol: "Proyecto", anio: "2023", tipo: "oficinas", categoria: "Terminados", imagen: "img/proyectos/2023-grupo-govan-edificio-corporativo/1.jpg", imagenes: ["img/proyectos/2023-grupo-govan-edificio-corporativo/1.jpg", "img/proyectos/2023-grupo-govan-edificio-corporativo/2.jpg", "img/proyectos/2023-grupo-govan-edificio-corporativo/3.jpg", "img/proyectos/2023-grupo-govan-edificio-corporativo/4.jpg"] },
+    { cliente: "Pradecon Racing", obra: "Salón recreativo — Interiorismo", ubicacion: "Belén de Escobar, Buenos Aires", m2: 400, rol: "Proyecto ejecutivo", anio: "2023-2024", tipo: "oficinas", categoria: "Últimos concluidos", imagen: "img/proyectos/2023-pradecon-racing-salon-recreativo/1.jpg", imagenes: ["img/proyectos/2023-pradecon-racing-salon-recreativo/1.jpg", "img/proyectos/2023-pradecon-racing-salon-recreativo/3.jpg", "img/proyectos/2023-pradecon-racing-salon-recreativo/4.jpg", "img/proyectos/2023-pradecon-racing-salon-recreativo/5.jpg"] },
+    { cliente: "Grupo Govan", obra: "Edificio corporativo", ubicacion: "Parque Industrial Escobar, Buenos Aires", m2: 12200, rol: "Proyecto", anio: "2023", tipo: "oficinas", categoria: "Terminados", imagen: "img/proyectos/2023-grupo-govan-edificio-corporativo/1.jpg", imagenes: ["img/proyectos/2023-grupo-govan-edificio-corporativo/1.jpg", "img/proyectos/2023-grupo-govan-edificio-corporativo/2.jpg", "img/proyectos/2023-grupo-govan-edificio-corporativo/3.jpg"] },
     { cliente: "Vanges S.A. para CCU", obra: "Nuevo centro logístico para CCU", ubicacion: "Benavídez, Buenos Aires", m2: 17300, rol: "Proyecto y dirección ejecutiva", anio: "2023", tipo: "logistico", categoria: "Terminados", imagen: "img/proyectos/2023-vanges-ccu-centro-logistico/1.jpg", imagenes: ["img/proyectos/2023-vanges-ccu-centro-logistico/1.jpg", "img/proyectos/2023-vanges-ccu-centro-logistico/2.jpg", "img/proyectos/2023-vanges-ccu-centro-logistico/3.jpg"] },
     { cliente: "Grupo Simpa", obra: "Complejo de oficinas Lumina San Isidro", ubicacion: "Martínez, Buenos Aires", m2: 84500, rol: "Proyecto y dirección ejecutiva", anio: "2018-2023", tipo: "oficinas", categoria: "Terminados", leed: "LEED Gold", imagen: "img/proyectos/2018-simpa-lumina-san-isidro/1.jpg", imagenes: ["img/proyectos/2018-simpa-lumina-san-isidro/1.jpg", "img/proyectos/2018-simpa-lumina-san-isidro/2.jpg", "img/proyectos/2018-simpa-lumina-san-isidro/3.jpg"] },
     { cliente: "MSU Agro S.A.", obra: "Nuevo centro de clasificación y acopio de semillas", ubicacion: "Pampa del Infierno, Chaco", m2: 17200, rol: "Proyecto", anio: "2022", tipo: "industrial", categoria: "Terminados", imagen: "img/proyectos/2022-msu-agro-clasificacion-acopio-chaco/1.jpg", imagenes: ["img/proyectos/2022-msu-agro-clasificacion-acopio-chaco/1.jpg", "img/proyectos/2022-msu-agro-clasificacion-acopio-chaco/2.jpg", "img/proyectos/2022-msu-agro-clasificacion-acopio-chaco/3.jpg"] },
@@ -238,16 +250,16 @@ const DATOS_EPARQ = {
     { cliente: "Cervecería y Maltería Quilmes", obra: "Ampliación del centro de distribución Mercado Central", ubicacion: "Mercado Central, Buenos Aires", m2: 8500, rol: "Proyecto y supervisión de obra", anio: "2018", tipo: "logistico", categoria: "Terminados", imagen: "img/proyectos/2018-quilmes-ampliacion-mercado-central/1.jpg", imagenes: ["img/proyectos/2018-quilmes-ampliacion-mercado-central/1.jpg", "img/proyectos/2018-quilmes-ampliacion-mercado-central/2.jpg", "img/proyectos/2018-quilmes-ampliacion-mercado-central/3.jpg"] },
     { cliente: "Grupo Simpa", obra: "Complejo de oficinas Lumina Olivos Office", ubicacion: "Vicente López, Buenos Aires", m2: 24500, rol: "Proyecto y dirección ejecutiva", anio: "2017", tipo: "oficinas", categoria: "Terminados", leed: "LEED Gold", imagen: "img/proyectos/2017-simpa-lumina-olivos-office/1.jpg", imagenes: ["img/proyectos/2017-simpa-lumina-olivos-office/1.jpg", "img/proyectos/2017-simpa-lumina-olivos-office/2.jpg", "img/proyectos/2017-simpa-lumina-olivos-office/3.jpg"] },
     { cliente: "Grupo Simpa", obra: "Complejo de oficinas Florida Office Center", ubicacion: "Vicente López, Buenos Aires", m2: 50000, rol: "Proyecto y dirección ejecutiva", anio: "2017", tipo: "oficinas", categoria: "Terminados", leed: "LEED Gold", imagen: "img/proyectos/2017-simpa-florida-office-center/1.jpg", imagenes: ["img/proyectos/2017-simpa-florida-office-center/1.jpg", "img/proyectos/2017-simpa-florida-office-center/2.jpg", "img/proyectos/2017-simpa-florida-office-center/3.jpg"] },
-    { cliente: "Cervecería y Maltería Quilmes", obra: "Centro operativo, ampliación de depósitos y edificios anexos", ubicacion: "Acheral, Tucumán", m2: 18000, rol: "Proyecto y supervisión de obra", anio: "2016", tipo: "industrial", categoria: "Terminados", imagen: "img/proyectos/2016-quilmes-centro-operativo-acheral/1.jpg", imagenes: ["img/proyectos/2016-quilmes-centro-operativo-acheral/1.jpg", "img/proyectos/2016-quilmes-centro-operativo-acheral/2.jpg", "img/proyectos/2016-quilmes-centro-operativo-acheral/3.jpg", "img/proyectos/2016-quilmes-centro-operativo-acheral/4.jpg"] },
+    { cliente: "Cervecería y Maltería Quilmes", obra: "Centro operativo, ampliación de depósitos y edificios anexos", ubicacion: "Acheral, Tucumán", m2: 18000, rol: "Proyecto y supervisión de obra", anio: "2016", tipo: "industrial", categoria: "Terminados", imagen: "img/proyectos/2016-quilmes-centro-operativo-acheral/1.jpg", imagenes: ["img/proyectos/2016-quilmes-centro-operativo-acheral/1.jpg", "img/proyectos/2016-quilmes-centro-operativo-acheral/2.jpg", "img/proyectos/2016-quilmes-centro-operativo-acheral/4.jpg"] },
     { cliente: "Mitre Construcciones (Grupo Marby S.A.)", obra: "Centro de operaciones para empresa Ashira", ubicacion: "Barracas, CABA", m2: 13800, rol: "Proyecto y dirección ejecutiva", anio: "2016", tipo: "oficinas", categoria: "Terminados", imagen: "img/proyectos/2016-mitre-ashira-barracas/1.jpg", imagenes: ["img/proyectos/2016-mitre-ashira-barracas/1.jpg", "img/proyectos/2016-mitre-ashira-barracas/2.jpg", "img/proyectos/2016-mitre-ashira-barracas/3.jpg"] },
     { cliente: "IPS S.A.I.C.F.I.", obra: "Ampliación del centro de distribución", ubicacion: "Loma Hermosa, Buenos Aires", m2: 4500, rol: "Proyecto y dirección ejecutiva", anio: "2016", tipo: "logistico", categoria: "Terminados", imagen: "img/proyectos/2016-ips-ampliacion-centro-distribucion/1.jpg", imagenes: ["img/proyectos/2016-ips-ampliacion-centro-distribucion/1.jpg", "img/proyectos/2016-ips-ampliacion-centro-distribucion/2.jpg", "img/proyectos/2016-ips-ampliacion-centro-distribucion/3.jpg"] },
     { cliente: "Cervecería y Maltería Quilmes", obra: "Ampliación y refuncionalización de la planta operativa", ubicacion: "Godoy Cruz, Mendoza", m2: 35000, rol: "Proyecto y supervisión de obra", anio: "2015", tipo: "industrial", categoria: "Terminados", imagen: "img/proyectos/2015-quilmes-planta-operativa-godoy-cruz/1.jpg", imagenes: ["img/proyectos/2015-quilmes-planta-operativa-godoy-cruz/1.jpg", "img/proyectos/2015-quilmes-planta-operativa-godoy-cruz/2.jpg", "img/proyectos/2015-quilmes-planta-operativa-godoy-cruz/3.jpg"] },
     { cliente: "Fideicomiso Prima Office", obra: "Proyecto mixto de oficinas y estudios", ubicacion: "Ayres del Pilar, Pilar, Buenos Aires", m2: 9000, rol: "Proyecto y supervisión de obra", anio: "2015", tipo: "oficinas", categoria: "Terminados", imagen: "img/proyectos/2015-fideicomiso-prima-office/1.jpg" },
     { cliente: "Grupo J. N. Royo S.A.", obra: "Centro logístico integral — Etapa 1", ubicacion: "Pacheco, Malvinas Argentinas, Buenos Aires", m2: 27900, rol: "Proyecto y dirección ejecutiva", anio: "2015", tipo: "logistico", categoria: "Terminados", imagen: "img/proyectos/2015-royo-centro-logistico-etapa-1/1.jpg" },
     { cliente: "Cervecería y Maltería Quilmes", obra: "Nuevo centro de distribución central y oficinas corporativas", ubicacion: "Mercado Central, Buenos Aires", m2: 35000, rol: "Proyecto y supervisión de obra", anio: "2013", tipo: "logistico", categoria: "Terminados", imagen: "img/proyectos/2013-quilmes-centro-distribucion-oficinas/1.jpg", imagenes: ["img/proyectos/2013-quilmes-centro-distribucion-oficinas/1.jpg", "img/proyectos/2013-quilmes-centro-distribucion-oficinas/2.jpg", "img/proyectos/2013-quilmes-centro-distribucion-oficinas/3.jpg"] },
-    { cliente: "Marinas H — Villas Náuticas", obra: "Barrio privado náutico", ubicacion: "Rincón de Milberg, Tigre, Buenos Aires", m2: 35000, rol: "Gerenciamiento de proyecto", anio: "2014-2020", tipo: "residencial-nautico", categoria: "Terminados", imagen: "img/proyectos/2014-marinas-h-villas-nauticas/1.jpg", imagenes: ["img/proyectos/2014-marinas-h-villas-nauticas/1.jpg", "img/proyectos/2014-marinas-h-villas-nauticas/2.jpg", "img/proyectos/2014-marinas-h-villas-nauticas/3.jpg"] },
+    { cliente: "Marinas H — Villas Náuticas", obra: "Barrio privado náutico", ubicacion: "Rincón de Milberg, Tigre, Buenos Aires", m2: 35000, rol: "Gerenciamiento de proyecto", anio: "2014-2020", tipo: "residencial-nautico", categoria: "Terminados", imagen: "img/proyectos/2014-marinas-h-villas-nauticas/1.jpg", imagenes: ["img/proyectos/2014-marinas-h-villas-nauticas/1.jpg", "img/proyectos/2014-marinas-h-villas-nauticas/3.jpg"] },
     { cliente: "Grupo Simpa", obra: "Complejo de oficinas Lumina Thames Office", ubicacion: "San Isidro, Buenos Aires", m2: 32000, rol: "Proyecto y dirección ejecutiva", anio: "2012", tipo: "oficinas", categoria: "Terminados", leed: "LEED Gold", imagen: "img/proyectos/2012-simpa-lumina-thames-office/1.jpg", imagenes: ["img/proyectos/2012-simpa-lumina-thames-office/1.jpg", "img/proyectos/2012-simpa-lumina-thames-office/2.jpg"] },
-    { cliente: "Unilever S.A.", obra: "Centro operativo Montevideo", ubicacion: "Montevideo, Uruguay", m2: 18900, rol: "Proyecto", anio: "2012", tipo: "industrial", categoria: "Terminados", imagen: "img/proyectos/2012-unilever-centro-operativo-montevideo/1.jpg", imagenes: ["img/proyectos/2012-unilever-centro-operativo-montevideo/1.jpg", "img/proyectos/2012-unilever-centro-operativo-montevideo/2.jpg", "img/proyectos/2012-unilever-centro-operativo-montevideo/3.jpg"] },
+    { cliente: "Unilever S.A.", obra: "Centro operativo Montevideo", ubicacion: "Montevideo, Uruguay", m2: 18900, rol: "Proyecto", anio: "2012", tipo: "industrial", categoria: "Terminados", imagen: "img/proyectos/2012-unilever-centro-operativo-montevideo/1.jpg", imagenes: ["img/proyectos/2012-unilever-centro-operativo-montevideo/1.jpg", "img/proyectos/2012-unilever-centro-operativo-montevideo/2.jpg", "img/proyectos/2012-unilever-centro-operativo-montevideo/4.jpg"] },
     { cliente: "Marine Park", obra: "Guardería náutica", ubicacion: "Rincón de Milberg, Tigre, Buenos Aires", m2: 7200, rol: "Proyecto y dirección ejecutiva", anio: "2012", tipo: "residencial-nautico", categoria: "Terminados", imagen: "img/proyectos/2012-marine-park-guarderia-nautica/1.jpg", imagenes: ["img/proyectos/2012-marine-park-guarderia-nautica/1.jpg", "img/proyectos/2012-marine-park-guarderia-nautica/2.jpg", "img/proyectos/2012-marine-park-guarderia-nautica/3.jpg", "img/proyectos/2012-marine-park-guarderia-nautica/4.jpg"] },
     { cliente: "Greending Ugarte", obra: "Complejo de oficinas corporativas", ubicacion: "Vicente López, Buenos Aires", m2: 8300, rol: "Proyecto y dirección ejecutiva", anio: "2011", tipo: "oficinas", categoria: "Terminados", leed: "LEED Gold", imagen: "img/proyectos/2011-greending-ugarte-oficinas/1.jpg", imagenes: ["img/proyectos/2011-greending-ugarte-oficinas/1.jpg", "img/proyectos/2011-greending-ugarte-oficinas/2.jpg", "img/proyectos/2011-greending-ugarte-oficinas/3.jpg"] },
     { cliente: "Grupo Simpa", obra: "Complejo de oficinas Lumina Panamericana", ubicacion: "Vicente López, Buenos Aires", m2: 39000, rol: "Proyecto y dirección ejecutiva", anio: "2011", tipo: "oficinas", categoria: "Terminados", leed: "LEED Gold", imagen: "img/proyectos/2011-simpa-lumina-panamericana/1.jpg", imagenes: ["img/proyectos/2011-simpa-lumina-panamericana/1.jpg", "img/proyectos/2011-simpa-lumina-panamericana/2.jpg"] },

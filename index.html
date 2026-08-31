@@ -26,6 +26,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
+
+  <!-- Función para el respaldo del logo (ver header, más abajo). Va acá,
+       sin "defer", para que ya exista si una foto del logo falla apenas
+       el navegador la empieza a cargar (no puede esperar a main.js). -->
+  <script>
+    function manejarErrorLogo(img) {
+      img.remove();
+      var marca = document.querySelector(".header__marca");
+      if (marca && !marca.querySelector("img")) {
+        var texto = marca.querySelector(".header__logo-texto");
+        if (texto) texto.style.display = "inline";
+      }
+    }
+  </script>
 </head>
 <body>
 
@@ -36,17 +50,24 @@
        HEADER / NAVEGACIÓN
        ================================================================ -->
   <header class="header" data-header>
-    <!-- Logo: si existe img/logo.png (con fondo transparente) se usa esa
-         imagen directo sobre el fondo del header; si el archivo no carga,
-         se muestra el texto "EPARQS" como respaldo automático. El CSS le
-         oscurece un poco el color cuando el header pasa a blanco, para que
-         siga leyéndose bien (ver img/LEEME-logo.txt). -->
+    <!-- Logo: dos versiones distintas, una para cada estado del header
+         (CSS decide cuál se ve, según la clase "header--con-fondo"):
+           - logo-hero.png    → sobre la foto de portada (fondo transparente)
+           - logo-header.jpg  → header con fondo blanco sólido (al scrollear)
+         Si algún archivo no carga, se muestra el texto "EPARQS" como
+         respaldo (ver img/LEEME-logo.txt). -->
     <a href="#inicio" class="header__marca">
       <img
-        src="img/logo.png"
+        src="img/logo-hero.png"
         alt="EPARQS — Escarrá Pradier & Asociados"
-        class="header__logo-img"
-        onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"
+        class="header__logo-img header__logo-img--claro"
+        onerror="manejarErrorLogo(this)"
+      />
+      <img
+        src="img/logo-header.png"
+        alt="EPARQS — Escarrá Pradier & Asociados"
+        class="header__logo-img header__logo-img--oscuro"
+        onerror="manejarErrorLogo(this)"
       />
       <span class="header__logo-texto" style="display:none;">EPARQS</span>
     </a>

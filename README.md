@@ -28,7 +28,8 @@ sitio-web/
 │   ├── proyectos/                → una carpeta por obra ("<año>-<obra>/"),
 │   │                                cada una con sus fotos + listado-de-fotos.txt
 │   ├── equipo/                    → fotos de los 3 socios
-│   ├── logo.png                   → logo real del estudio, fondo transparente (LEEME-logo.txt al lado)
+│   ├── logo-hero.png               → logo sobre la foto de portada (LEEME-logo.txt al lado)
+│   ├── logo-header.png             → logo con el header ya blanco (al scrollear)
 │   └── favicon.svg                → ícono de la pestaña del navegador
 ├── herramientas/
 │   ├── actualizar-fotos.js        → script que conecta las fotos de cada carpeta
@@ -84,7 +85,7 @@ Formatos que sirven: `.jpg`, `.jpeg`, `.png`, `.webp`. Proporción sugerida: hor
 - Proporción sugerida: vertical, 3:4 (por ejemplo 900x1200 px)
 
 ### Logo del header
-- Carpeta: `img/`, archivo `logo.png` (ya es el logo real del estudio, fondo transparente)
+- Carpeta: `img/`, dos archivos: `logo-hero.png` (sobre la foto de portada) y `logo-header.png` (header con fondo blanco) — ver `img/LEEME-logo.txt` para el detalle
 - Instrucciones para reemplazarlo si conseguís una versión mejor: [`img/LEEME-logo.txt`](img/LEEME-logo.txt)
 
 **Tip general:** comprimí las fotos antes de guardarlas (herramientas como [Squoosh](https://squoosh.app) o el propio exportador de tu editor). Con 51 proyectos, el peso de las imágenes es lo que más va a influir en la velocidad del sitio.

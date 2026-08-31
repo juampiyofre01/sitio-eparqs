@@ -237,17 +237,25 @@ textarea:focus-visible {
   height: 32px;
   width: auto;
   display: block;
-  /* Sombra suave en vez de una tarjeta de fondo: ayuda a que se lea sobre
-     zonas claras de la foto, sin encerrar el logo en una caja. */
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
-  transition: filter var(--transicion);
 }
 
-/* El logo tiene el texto en gris claro (pensado para ir sobre la foto).
-   Cuando el header pasa a fondo blanco sólido, ese gris se lava y cuesta
-   leerlo — lo oscurecemos un poco acá para que se siga viendo bien. */
-.header.header--con-fondo .header__logo-img {
-  filter: brightness(0.5);
+/* Logo claro (logo-hero.png): va sobre la foto de portada. Sombra suave
+   para que se distinga incluso sobre zonas claras de la foto. Se muestra
+   por default y se oculta cuando el header pasa a fondo blanco. */
+.header__logo-img--claro {
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+}
+.header.header--con-fondo .header__logo-img--claro {
+  display: none;
+}
+
+/* Logo oscuro (logo-header.jpg): pensado para fondo blanco. Oculto por
+   default, se muestra solo cuando el header pasa a fondo blanco sólido. */
+.header__logo-img--oscuro {
+  display: none;
+}
+.header.header--con-fondo .header__logo-img--oscuro {
+  display: block;
 }
 
 /* En el hero (fondo oscuro) la marca se ve blanca; JS controla la clase */
@@ -986,7 +994,7 @@ textarea:focus-visible {
    6. FOOTER
    ---------------------------------------------------------------------- */
 .footer {
-  background: var(--color-texto);
+  background: var(--color-acento);
   color: rgba(255, 255, 255, 0.8);
   padding: 3.5rem 0 2rem;
 }

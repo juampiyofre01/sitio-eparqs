@@ -448,6 +448,48 @@
           </div>
           <small style="margin-top:0.7rem;">Las fotos de cada socio se cambian reemplazando el archivo en <code>img/equipo/</code>, no acá.</small>
         </fieldset>
+
+        <fieldset class="seccion-form">
+          <legend>Contacto — mails y contactos directos</legend>
+          <div class="campo-form">
+            <label>A qué mail(es) llegan las consultas del formulario (uno por línea)</label>
+            <textarea data-c="contenido.contacto.emailsConsulta" data-tipo="lineas"></textarea>
+          </div>
+          <div class="fila-repetible">
+            <label>Contacto directo 1</label>
+            <input type="text" placeholder="Nombre" data-c="contenido.contacto.contactosDirectos.0.nombre" />
+            <input type="text" placeholder="Título (ej. Arq.)" data-c="contenido.contacto.contactosDirectos.0.titulo" style="margin-top:0.3rem" />
+            <input type="text" placeholder="Teléfono (como se muestra)" data-c="contenido.contacto.contactosDirectos.0.telefono" style="margin-top:0.3rem" />
+            <input type="text" placeholder="Teléfono para llamar (formato +54...)" data-c="contenido.contacto.contactosDirectos.0.telefonoHref" style="margin-top:0.3rem" />
+            <input type="text" placeholder="Email" data-c="contenido.contacto.contactosDirectos.0.email" style="margin-top:0.3rem" />
+          </div>
+          <div class="fila-repetible">
+            <label>Contacto directo 2</label>
+            <input type="text" placeholder="Nombre" data-c="contenido.contacto.contactosDirectos.1.nombre" />
+            <input type="text" placeholder="Título" data-c="contenido.contacto.contactosDirectos.1.titulo" style="margin-top:0.3rem" />
+            <input type="text" placeholder="Teléfono (como se muestra)" data-c="contenido.contacto.contactosDirectos.1.telefono" style="margin-top:0.3rem" />
+            <input type="text" placeholder="Teléfono para llamar (formato +54...)" data-c="contenido.contacto.contactosDirectos.1.telefonoHref" style="margin-top:0.3rem" />
+            <input type="text" placeholder="Email" data-c="contenido.contacto.contactosDirectos.1.email" style="margin-top:0.3rem" />
+          </div>
+          <small style="margin-top:0.7rem;">Para agregar un tercer contacto directo (no solo editar los 2 que ya hay), pedímelo — se puede sumar acá con una fila más.</small>
+        </fieldset>
+
+        <fieldset class="seccion-form">
+          <legend>Resto del equipo (además de los 3 socios)</legend>
+          <div class="campo-form">
+            <label>Asociados Senior (una persona por línea: "Nombre — Título")</label>
+            <textarea data-c="equipoAmpliado.0.personas" data-tipo="personas" style="min-height:5rem"></textarea>
+          </div>
+          <div class="campo-form">
+            <label>Semi Senior (una persona por línea: "Nombre — Título")</label>
+            <textarea data-c="equipoAmpliado.1.personas" data-tipo="personas" style="min-height:5rem"></textarea>
+          </div>
+          <div class="campo-form">
+            <label>Juniors (una persona por línea: "Nombre — Título")</label>
+            <textarea data-c="equipoAmpliado.2.personas" data-tipo="personas" style="min-height:6.5rem"></textarea>
+          </div>
+          <small>Para agregar/sacar una persona, agregá o borrá una línea completa. Para agregar una categoría nueva (que no sea Asociados Senior/Semi Senior/Juniors), pedímelo.</small>
+        </fieldset>
       </div>
     </details>
 
@@ -484,7 +526,7 @@
       <summary>Opción manual (copiar y pegar) — para cuando no se puede guardar directo</summary>
       <div class="salida">
         <p>
-          Generá el código: te arma 4 bloques (estudio, contenido, socios y proyectos), cada uno con su propio
+          Generá el código: te arma 5 bloques (estudio, contenido, socios, equipoAmpliado y proyectos), cada uno con su propio
           comentario <code>===== INICIO: ... =====</code> / <code>===== FIN: ... =====</code>. En
           <code>js/datos-proyectos.js</code>, por cada bloque buscá esas dos líneas (con el mismo nombre) y
           reemplazá todo lo que está entre ellas (inclusive) por el bloque que corresponda. Esta opción NO sube
@@ -526,8 +568,9 @@
             estudio: JSON.parse(JSON.stringify(DATOS_EPARQ.estudio)),
             contenido: JSON.parse(JSON.stringify(DATOS_EPARQ.contenido)),
             socios: JSON.parse(JSON.stringify(DATOS_EPARQ.socios)),
+            equipoAmpliado: JSON.parse(JSON.stringify(DATOS_EPARQ.equipoAmpliado || [])),
           }
-        : { estudio: {}, contenido: {}, socios: [] };
+        : { estudio: {}, contenido: {}, socios: [], equipoAmpliado: [] };
 
     /* ------------------------------------------------------------------
        ACCESO POR "RUTA" (ej. "contenido.hero.titulo" o "socios.0.nombre")
@@ -550,6 +593,9 @@
         const valor = obtenerPorRuta(contenidoEditable, el.dataset.c);
         if (el.dataset.tipo === "lineas") {
           el.value = Array.isArray(valor) ? valor.join("\n") : "";
+        } else if (el.dataset.tipo === "personas") {
+          // Arreglo de {nombre, titulo} <-> una línea "Nombre — Título" por persona
+          el.value = Array.isArray(valor) ? valor.map((p) => `${p.nombre || ""} — ${p.titulo || ""}`).join("\n") : "";
         } else {
           el.value = valor === null || valor === undefined ? "" : valor;
         }
@@ -565,6 +611,19 @@
             .map((l) => l.trim())
             .filter((l) => l.length > 0);
           asignarPorRuta(contenidoEditable, el.dataset.c, lineas);
+        } else if (el.dataset.tipo === "personas") {
+          const personas = el.value
+            .split("\n")
+            .map((l) => l.trim())
+            .filter((l) => l.length > 0)
+            .map((linea) => {
+              const partes = linea.split("—");
+              return {
+                nombre: (partes[0] || "").trim(),
+                titulo: (partes.slice(1).join("—") || "").trim(),
+              };
+            });
+          asignarPorRuta(contenidoEditable, el.dataset.c, personas);
         } else {
           asignarPorRuta(contenidoEditable, el.dataset.c, el.value.trim());
         }
@@ -607,6 +666,9 @@
     }
     function bloqueSocios() {
       return `  // ===== INICIO: socios (no toques esta línea) =====\n  socios: ${jsPretty(contenidoEditable.socios, 1)},\n  // ===== FIN: socios =====`;
+    }
+    function bloqueEquipoAmpliado() {
+      return `  // ===== INICIO: equipoAmpliado (no toques esta línea) =====\n  equipoAmpliado: ${jsPretty(contenidoEditable.equipoAmpliado, 1)},\n  // ===== FIN: equipoAmpliado =====`;
     }
 
     /** Reemplaza el texto entre dos comentarios marcadores (inclusive) por uno nuevo */
@@ -889,6 +951,7 @@
         bloqueEstudio(),
         bloqueContenidoGeneral(),
         bloqueSocios(),
+        bloqueEquipoAmpliado(),
         armarBloqueCodigo(),
       ].join("\n\n");
 
@@ -1037,6 +1100,7 @@
           textoNuevo = reemplazarBloque(textoNuevo, "// ===== INICIO: estudio", "// ===== FIN: estudio =====", bloqueEstudio());
           textoNuevo = reemplazarBloque(textoNuevo, "// ===== INICIO: contenido", "// ===== FIN: contenido =====", bloqueContenidoGeneral());
           textoNuevo = reemplazarBloque(textoNuevo, "// ===== INICIO: socios", "// ===== FIN: socios =====", bloqueSocios());
+          textoNuevo = reemplazarBloque(textoNuevo, "// ===== INICIO: equipoAmpliado", "// ===== FIN: equipoAmpliado =====", bloqueEquipoAmpliado());
           textoNuevo = reemplazarBloque(textoNuevo, "// ===== INICIO: proyectos", "// ===== FIN: proyectos =====", armarBloqueCodigo());
         } catch (e) {
           alert(

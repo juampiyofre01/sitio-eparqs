@@ -196,6 +196,9 @@
         </div>
 
         <div class="equipo__grilla" data-equipo-grilla></div>
+
+        <!-- Resto del equipo (Asociados Senior, Semi Senior, Juniors) -->
+        <div class="equipo__ampliado" data-equipo-ampliado></div>
       </div>
     </section>
 
@@ -215,6 +218,9 @@
                se actualizan solos acá y en el pie de página. -->
           <dl class="contacto__datos-lista" data-contacto-datos></dl>
 
+          <!-- Contactos directos (además de los datos generales de arriba) -->
+          <div class="contacto__directos" data-contacto-directos></div>
+
           <!-- Mapa embebido de Google Maps, sin necesidad de API key.
                La ubicación del pin sale de estudio.direccionParaMapa -->
           <div class="contacto__mapa">
@@ -230,10 +236,12 @@
         <div>
           <!--
             FORMULARIO DE CONTACTO
-            Sin backend: al enviar, abre el cliente de mail del usuario con
-            el mensaje prellenado (lo maneja js/main.js). Para recibir los
-            mensajes directo en una bandeja sin depender del cliente de mail
-            del visitante, ver la sección "Formulario de contacto" del
+            Sin backend: al enviar, abre el cliente de mail del VISITANTE
+            (no un envío automático) con el mensaje prellenado, dirigido a
+            los mails de contenido.contacto.emailsConsulta en
+            datos-proyectos.js — el visitante todavía tiene que apretar
+            "Enviar" en su propio programa de mail. Para que llegue solo,
+            sin ese paso, ver la sección "Formulario de contacto" del
             README.md — ahí se explica cómo conectar un servicio como
             Formspree en un par de pasos.
           -->

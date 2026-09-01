@@ -40,12 +40,19 @@
     }
 
     // --- Hero ---
+    // Si "titulo" queda vacío (a propósito, para no mostrar título), el
+    // <h1> se oculta del todo — nunca se muestra un texto de reemplazo.
     const elHeroTitulo = document.querySelector("[data-hero-titulo]");
     if (elHeroTitulo) {
-      elHeroTitulo.innerHTML = conAcentoItalica(c.hero.titulo);
-      elHeroTitulo.classList.remove("hero__titulo--chico", "hero__titulo--grande");
-      if (c.hero.tamanioTitulo === "chico") elHeroTitulo.classList.add("hero__titulo--chico");
-      if (c.hero.tamanioTitulo === "grande") elHeroTitulo.classList.add("hero__titulo--grande");
+      if (c.hero.titulo) {
+        elHeroTitulo.style.display = "";
+        elHeroTitulo.innerHTML = conAcentoItalica(c.hero.titulo);
+        elHeroTitulo.classList.remove("hero__titulo--chico", "hero__titulo--grande");
+        if (c.hero.tamanioTitulo === "chico") elHeroTitulo.classList.add("hero__titulo--chico");
+        if (c.hero.tamanioTitulo === "grande") elHeroTitulo.classList.add("hero__titulo--grande");
+      } else {
+        elHeroTitulo.style.display = "none";
+      }
     }
     setTexto("[data-hero-bajada]", c.hero.bajada);
     const listaServiciosHero = document.querySelector("[data-hero-servicios]");
@@ -109,17 +116,33 @@
     setTexto("[data-contacto-titulo]", c.contacto.titulo);
 
     // --- Datos de contacto (dirección / teléfono / mail) + mapa ---
+    // Solo la dirección acá — el teléfono/mail general quedó reemplazado
+    // por las tarjetas de "contactosDirectos" (Diego, Mariano) de abajo,
+    // para no duplicar datos. El footer sí sigue mostrando los 3 datos.
     const listaContacto = document.querySelector("[data-contacto-datos]");
     if (listaContacto) {
       listaContacto.innerHTML = `
         <div><dt>Dirección</dt><dd>${estudioInfo.direccion}</dd></div>
-        <div><dt>Teléfono</dt><dd><a href="tel:${estudioInfo.telefonoHref}">${estudioInfo.telefono}</a></dd></div>
-        <div><dt>Email</dt><dd><a href="mailto:${estudioInfo.email}">${estudioInfo.email}</a></dd></div>
       `;
     }
     const mapaIframe = document.querySelector("[data-contacto-mapa]");
     if (mapaIframe) {
       mapaIframe.src = "https://www.google.com/maps?q=" + encodeURIComponent(estudioInfo.direccionParaMapa) + "&output=embed";
+    }
+
+    // --- Contactos directos (además de los datos generales de arriba) ---
+    const contenedorDirectos = document.querySelector("[data-contacto-directos]");
+    if (contenedorDirectos && c.contacto.contactosDirectos && c.contacto.contactosDirectos.length) {
+      contenedorDirectos.innerHTML = c.contacto.contactosDirectos
+        .map(
+          (persona) => `
+        <div class="contacto__directo">
+          <p class="contacto__directo-nombre">${persona.titulo ? persona.titulo + " " : ""}${persona.nombre}</p>
+          <p class="contacto__directo-dato"><a href="tel:${persona.telefonoHref}">${persona.telefono}</a></p>
+          <p class="contacto__directo-dato"><a href="mailto:${persona.email}">${persona.email}</a></p>
+        </div>`
+        )
+        .join("");
     }
 
     // --- Footer (mismos datos de contacto, ya que no cambian entre secciones) ---
@@ -218,6 +241,25 @@
   }
 
   /* ------------------------------------------------------------------
+     RESTO DEL EQUIPO — lista agrupada por categoría (Asociados Senior,
+     Semi Senior, Juniors...), desde DATOS_EPARQ.equipoAmpliado
+     ------------------------------------------------------------------ */
+  const contenedorEquipoAmpliado = document.querySelector("[data-equipo-ampliado]");
+  if (contenedorEquipoAmpliado && typeof DATOS_EPARQ !== "undefined" && DATOS_EPARQ.equipoAmpliado) {
+    contenedorEquipoAmpliado.innerHTML = DATOS_EPARQ.equipoAmpliado
+      .map(
+        (grupo) => `
+      <div class="equipo__categoria">
+        <h4 class="equipo__categoria-titulo">${grupo.categoria}</h4>
+        <ul class="equipo__categoria-lista">
+          ${grupo.personas.map((p) => `<li><strong>${p.nombre}</strong><span>${p.titulo}</span></li>`).join("")}
+        </ul>
+      </div>`
+      )
+      .join("");
+  }
+
+  /* ------------------------------------------------------------------
      FORMULARIO DE CONTACTO (sin backend: abre el cliente de mail)
      Ver README.md para instrucciones de cómo migrar esto a Formspree.
      ------------------------------------------------------------------ */
@@ -236,7 +278,10 @@
         "Email: " + email + "\n\n" +
         mensaje;
 
-      const destinatario = DATOS_EPARQ.estudio.email;
+      // A quién le llegan las consultas: contenido.contacto.emailsConsulta
+      // en datos-proyectos.js (si está vacío, cae al mail general del estudio)
+      const emailsConsulta = DATOS_EPARQ.contenido.contacto.emailsConsulta;
+      const destinatario = emailsConsulta && emailsConsulta.length ? emailsConsulta.join(",") : DATOS_EPARQ.estudio.email;
       const enlaceMailto =
         "mailto:" + destinatario +
         "?subject=" + encodeURIComponent(asunto) +

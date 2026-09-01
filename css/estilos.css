@@ -908,6 +908,40 @@ textarea:focus-visible {
   color: var(--color-texto-suave);
 }
 
+/* Resto del equipo (Asociados Senior, Semi Senior, Juniors): lista simple
+   sin foto, agrupada por categoría, debajo de las tarjetas de los socios */
+.equipo__ampliado {
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--color-borde);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.equipo__categoria-titulo {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.equipo__categoria-lista li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--color-borde);
+  font-size: 0.92rem;
+}
+
+.equipo__categoria-lista li:last-child {
+  border-bottom: none;
+}
+
+.equipo__categoria-lista li span {
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+}
+
 /* ----------------------------------------------------------------------
    5.6 CONTACTO
    ---------------------------------------------------------------------- */
@@ -935,6 +969,33 @@ textarea:focus-visible {
 }
 
 .contacto__datos-lista dd a:hover {
+  color: var(--color-acento);
+}
+
+/* Contactos directos (ej. Diego, Mariano): además de los datos generales
+   de arriba, muestra el teléfono/mail de personas puntuales */
+.contacto__directos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: var(--color-fondo-alterno);
+  border: 1px solid var(--color-borde);
+}
+
+.contacto__directo-nombre {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.contacto__directo-dato {
+  font-size: 0.88rem;
+  color: var(--color-texto-suave);
+}
+
+.contacto__directo-dato a:hover {
   color: var(--color-acento);
 }
 
@@ -1056,6 +1117,7 @@ textarea:focus-visible {
   .estudio__grid { grid-template-columns: 1.2fr 1fr; align-items: start; }
   .servicios__grid { grid-template-columns: repeat(4, 1fr); }
   .portfolio__grilla { grid-template-columns: repeat(3, 1fr); }
+  .equipo__ampliado { grid-template-columns: repeat(3, 1fr); }
   .footer__grid { flex-direction: row; justify-content: space-between; }
   .modal__ficha { grid-template-columns: repeat(3, 1fr); }
 }

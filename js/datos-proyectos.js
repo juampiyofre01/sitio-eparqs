@@ -82,9 +82,9 @@ const DATOS_EPARQ = {
     desde: 1996,
     direccion: "Maure 1687, piso 8B (C1426), Ciudad Autónoma de Buenos Aires",
     direccionParaMapa: "Maure 1687, Buenos Aires, Argentina",
-    telefono: "+54 11 4774-3069",
-    telefonoHref: "+541147743069",
-    email: "estudio@eparquitectos.com.ar",
+    telefono: "+54 9 11 4528-0619",
+    telefonoHref: "+541145280619",
+    email: "mariano@webmigone.com.ar",
     servicios: [
       "Proyecto",
       "Dirección de obra",
@@ -105,14 +105,13 @@ const DATOS_EPARQ = {
   // ===== INICIO: contenido (no toques esta línea) =====
   contenido: {
     hero: {
-      titulo: "Arquitectura e ingeniería para la industria que construye *futuro*.",
       bajada: "Desde 1996 proyectamos y dirigimos obras industriales, logísticas y corporativas con visión integral, compromiso y excelencia técnica.",
       cta: "Conocé nuestro estudio",
       tamanioTitulo: "chico",
     },
     estudio: {
       eyebrow: "El estudio",
-      titulo: "Más de 25 años de trayectoria en obra industrial y corporativa",
+      titulo: "Más de 30 años de trayectoria en obra industrial y corporativa",
       parrafos: [
         "Somos un estudio de arquitectura con sede en Buenos Aires, establecido desde 1996. Proyectamos y dirigimos edificios industriales, centros logísticos, oficinas corporativas y desarrollos residenciales y náuticos para clientes locales e internacionales.",
         "Nuestro trabajo integra el diseño arquitectónico, la ingeniería y el interiorismo bajo un mismo equipo, lo que nos permite acompañar cada obra desde el anteproyecto hasta su puesta en marcha.",
@@ -124,9 +123,9 @@ const DATOS_EPARQ = {
           valor: "1996",
         },
         {
-          titulo: "Certificación",
-          valor: "LEED Gold",
-          nota: "trayectoria en varias obras",
+          titulo: "Experiencia",
+          valor: "+1.000.000 m²",
+          nota: "Proyectados",
         },
         {
           titulo: "Membresía",
@@ -134,9 +133,9 @@ const DATOS_EPARQ = {
           nota: "Sustainable Development Advisors",
         },
         {
-          titulo: "Áreas",
-          valor: "4",
-          nota: "Proyecto · Dirección · Gerenciamiento · Interiorismo",
+          titulo: "Certificación",
+          valor: "LEED Gold",
+          nota: "+300.000 m²",
         },
       ],
     },
@@ -179,6 +178,26 @@ const DATOS_EPARQ = {
     contacto: {
       eyebrow: "Contacto",
       titulo: "Hablemos de tu proyecto",
+      emailsConsulta: [
+        "escarrad@gmail.com",
+        "mariano@webmigone.com.ar",
+      ],
+      contactosDirectos: [
+        {
+          nombre: "Diego Escarrá",
+          titulo: "Arq.",
+          telefono: "+54 9 11 4425-8211",
+          telefonoHref: "+5491144258211",
+          email: "escarrad@gmail.com",
+        },
+        {
+          nombre: "Mariano Migone",
+          titulo: "Ing.",
+          telefono: "+54 9 11 4528-0619",
+          telefonoHref: "+5491145280619",
+          email: "mariano@webmigone.com.ar",
+        },
+      ],
     },
   },
   // ===== FIN: contenido =====
@@ -207,6 +226,59 @@ const DATOS_EPARQ = {
     },
   ],
   // ===== FIN: socios =====
+
+  // Resto del equipo (además de los 3 socios gerentes de arriba), agrupado
+  // por nivel — se muestra como lista simple, sin foto, debajo de las
+  // tarjetas de los socios. Para agregar/sacar categorías enteras hay que
+  // editar esto a mano; para agregar/sacar personas DENTRO de una
+  // categoría que ya existe, se puede usar herramientas/editor.html.
+  // ===== INICIO: equipoAmpliado (no toques esta línea) =====
+  equipoAmpliado: [
+    {
+      categoria: "Asociados Senior",
+      personas: [
+        {
+          nombre: "Bernardo García Hervás",
+          titulo: "Arq. — UBA, 1985",
+        },
+        {
+          nombre: "Pablo Medina",
+          titulo: "Arq. — UBA, 2003",
+        },
+      ],
+    },
+    {
+      categoria: "Semi Senior",
+      personas: [
+        {
+          nombre: "Constanza Migone",
+          titulo: "Arq. — UBA, 2016",
+        },
+      ],
+    },
+    {
+      categoria: "Juniors",
+      personas: [
+        {
+          nombre: "Sofía Gelly y Obes",
+          titulo: "Arq. — UBA, 2024",
+        },
+        {
+          nombre: "Juan Pablo Yofre",
+          titulo: "Ing. Civil — UBA, 2025",
+        },
+        {
+          nombre: "Felipe Bonadeo",
+          titulo: "Ing. Civil — UBA, 2026",
+        },
+        {
+          nombre: "Hernán Schumacher",
+          titulo: "Arq. — Belgrano, 2026",
+        },
+      ],
+    },
+  ],
+  // ===== FIN: equipoAmpliado =====
 
   // ---------------------------------------------------------------------
   // PROYECTOS — un solo arreglo con los 51 proyectos. El campo "categoria"
@@ -264,7 +336,7 @@ const DATOS_EPARQ = {
     { cliente: "Greending Ugarte", obra: "Complejo de oficinas corporativas", ubicacion: "Vicente López, Buenos Aires", m2: 8300, rol: "Proyecto y dirección ejecutiva", anio: "2011", tipo: "oficinas", categoria: "Terminados", leed: "LEED Gold", imagen: "img/proyectos/2011-greending-ugarte-oficinas/1.jpg", imagenes: ["img/proyectos/2011-greending-ugarte-oficinas/1.jpg", "img/proyectos/2011-greending-ugarte-oficinas/2.jpg", "img/proyectos/2011-greending-ugarte-oficinas/3.jpg"] },
     { cliente: "Grupo Simpa", obra: "Complejo de oficinas Lumina Panamericana", ubicacion: "Vicente López, Buenos Aires", m2: 39000, rol: "Proyecto y dirección ejecutiva", anio: "2011", tipo: "oficinas", categoria: "Terminados", leed: "LEED Gold", imagen: "img/proyectos/2011-simpa-lumina-panamericana/1.jpg", imagenes: ["img/proyectos/2011-simpa-lumina-panamericana/1.jpg", "img/proyectos/2011-simpa-lumina-panamericana/2.jpg"] },
     { cliente: "Colony Park", obra: "Barrio náutico", ubicacion: "Delta del Tigre, Buenos Aires", m2: null, nota_m2: "130 hectáreas", rol: "Proyecto y dirección ejecutiva", anio: "2011", tipo: "residencial-nautico", categoria: "Terminados", imagen: "img/proyectos/2011-colony-park-barrio-nautico/1.jpg", imagenes: ["img/proyectos/2011-colony-park-barrio-nautico/1.jpg", "img/proyectos/2011-colony-park-barrio-nautico/2.jpg", "img/proyectos/2011-colony-park-barrio-nautico/3.jpg", "img/proyectos/2011-colony-park-barrio-nautico/4.jpg"] },
-    { cliente: "Grupo Simpa", obra: "Complejo de oficinas Lumina Puerto de Olivos", ubicacion: "Olivos, Buenos Aires", m2: 17600, rol: "Co-proyecto y dirección ejecutiva", anio: "2009", tipo: "oficinas", categoria: "Terminados", leed: "LEED Gold", imagen: "img/proyectos/2009-simpa-lumina-puerto-olivos/1.jpg", imagenes: ["img/proyectos/2009-simpa-lumina-puerto-olivos/1.jpg", "img/proyectos/2009-simpa-lumina-puerto-olivos/2.jpg", "img/proyectos/2009-simpa-lumina-puerto-olivos/3.jpg"] },
+    { cliente: "Grupo Simpa", obra: "Complejo de oficinas Lumina Puerto de Olivos", ubicacion: "Olivos, Buenos Aires", m2: 17600, rol: "Co-proyecto y dirección ejecutiva", anio: "2009", tipo: "oficinas", categoria: "Terminados", leed: "LEED Gold", imagen: "img/proyectos/2009-simpa-lumina-puerto-olivos/1.jpg", imagenes: ["img/proyectos/2009-simpa-lumina-puerto-olivos/1.jpg", "img/proyectos/2009-simpa-lumina-puerto-olivos/2.jpg", "img/proyectos/2009-simpa-lumina-puerto-olivos/3.jpg", "img/proyectos/2009-simpa-lumina-puerto-olivos/4.jpg"] },
     { cliente: "Grupo Simpa", obra: "Complejo de oficinas Lumina Thames 333", ubicacion: "San Isidro, Buenos Aires", m2: 2400, rol: "Proyecto y dirección ejecutiva", anio: "2007", tipo: "oficinas", categoria: "Terminados", imagen: "img/proyectos/2007-simpa-lumina-thames-333/1.jpg", imagenes: ["img/proyectos/2007-simpa-lumina-thames-333/1.jpg", "img/proyectos/2007-simpa-lumina-thames-333/2.jpg", "img/proyectos/2007-simpa-lumina-thames-333/3.jpg"] },
     { cliente: "Grupo Simpa", obra: "Nuevo centro de distribución", ubicacion: "Parque Industrial Garín, Buenos Aires", m2: 12600, rol: "Proyecto y dirección ejecutiva", anio: "2007", tipo: "logistico", categoria: "Terminados", imagen: "img/proyectos/2007-simpa-centro-distribucion-garin/1.jpg", imagenes: ["img/proyectos/2007-simpa-centro-distribucion-garin/1.jpg", "img/proyectos/2007-simpa-centro-distribucion-garin/2.jpg", "img/proyectos/2007-simpa-centro-distribucion-garin/3.jpg"] },
     { cliente: "Videolar", obra: "Warehouse y acopio de materiales plásticos — Unidad I Manaos", ubicacion: "Manaus, Brasil", m2: 64000, rol: "Proyecto", anio: "2006", tipo: "industrial", categoria: "Terminados", imagen: "img/proyectos/2006-videolar-warehouse-manaos/1.jpg", imagenes: ["img/proyectos/2006-videolar-warehouse-manaos/1.jpg", "img/proyectos/2006-videolar-warehouse-manaos/2.jpg", "img/proyectos/2006-videolar-warehouse-manaos/3.jpg"] },

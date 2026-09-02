@@ -527,24 +527,66 @@ textarea:focus-visible {
 }
 
 .servicio {
+  position: relative;
+  overflow: hidden;
   background: var(--color-fondo);
   padding: 2.5rem 2rem;
+  transition: transform var(--transicion), box-shadow var(--transicion);
 }
 
+/* Trazo de acento que aparece arriba de la card al pasar el mouse */
+.servicio::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-acento);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.servicio:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-tarjeta);
+  z-index: 1;
+}
+
+.servicio:hover::before {
+  transform: scaleX(1);
+}
+
+/* El número pasa a ser una cifra grande "marca de agua" detrás del texto,
+   en vez de una etiqueta chica arriba del título — le da presencia visual
+   a cada card sin agregar elementos nuevos. */
 .servicio__numero {
-  font-size: 0.85rem;
+  position: absolute;
+  top: -0.6rem;
+  right: 1.1rem;
+  font-size: 5.5rem;
+  font-weight: 600;
+  line-height: 1;
   color: var(--color-acento);
-  letter-spacing: 0.08em;
-  margin-bottom: 1.25rem;
-  display: block;
+  opacity: 0.08;
+  transition: opacity var(--transicion);
+  pointer-events: none;
+  user-select: none;
+}
+
+.servicio:hover .servicio__numero {
+  opacity: 0.16;
 }
 
 .servicio h3 {
+  position: relative;
   font-size: 1.25rem;
   margin-bottom: 0.75rem;
 }
 
 .servicio p {
+  position: relative;
   color: var(--color-texto-suave);
   font-size: 0.98rem;
 }
@@ -552,90 +594,56 @@ textarea:focus-visible {
 /* ----------------------------------------------------------------------
    5.3 PORTFOLIO / OBRAS
    ---------------------------------------------------------------------- */
-.portfolio__filtros {
+
+/* Barra de categorías: una sola fila simple, con línea divisoria abajo y
+   la categoría activa marcada con un trazo azul (el acento de la marca)
+   en vez de un botón "pill" relleno — menos UI, más editorial. */
+.portfolio__tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 2.5rem;
-  margin-bottom: 2.75rem;
+  gap: 2rem;
+  border-bottom: 1px solid var(--color-borde);
 }
 
-.grupo-filtros__titulo {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-texto-suave);
-  margin-bottom: 0.6rem;
-}
-
-.grupo-filtros__botones {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.filtro-btn {
+.portfolio__tab {
   background: transparent;
-  border: 1px solid var(--color-borde);
-  border-radius: 999px;
-  padding: 0.45rem 1.1rem;
-  font-size: 0.85rem;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0 0 1rem;
+  margin-bottom: -1px;
+  font-size: 0.95rem;
   color: var(--color-texto-suave);
-  transition: all var(--transicion);
+  transition: color var(--transicion);
 }
 
-.filtro-btn:hover {
-  border-color: var(--color-texto);
+.portfolio__tab:hover {
   color: var(--color-texto);
 }
 
-.filtro-btn.activo {
-  background: var(--color-texto);
-  border-color: var(--color-texto);
-  color: var(--color-fondo);
+.portfolio__tab.activo {
+  color: var(--color-texto);
+  border-bottom-color: var(--color-acento);
+  font-weight: 500;
 }
 
-.portfolio__categoria {
-  margin-bottom: 3.5rem;
-}
-
-.portfolio__categoria-titulo {
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-texto-suave);
-  padding-bottom: 0.75rem;
-  margin-bottom: 1.75rem;
-  border-bottom: 1px solid var(--color-borde);
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
-}
-
-.portfolio__categoria-titulo .cantidad {
-  font-size: 0.85rem;
-  color: var(--color-acento);
-}
-
+/* La grilla vive fuera de .contenedor (ver index.html) para aprovechar más
+   ancho de pantalla; acá la centramos con un tope generoso para que en
+   monitores muy anchos las fotos no se estiren de más. */
 .portfolio__grilla {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.75rem;
+  gap: 2px;
+  max-width: 1800px;
+  margin: 2.5rem auto 0;
 }
 
 .tarjeta-obra {
-  background: var(--color-fondo);
-  border: 1px solid var(--color-borde);
+  position: relative;
   cursor: pointer;
-  transition: box-shadow var(--transicion), transform var(--transicion);
-  display: flex;
-  flex-direction: column;
-  text-align: left;
+  border: none;
+  padding: 0;
   width: 100%;
-}
-
-.tarjeta-obra:hover {
-  box-shadow: var(--sombra-tarjeta);
-  transform: translateY(-2px);
+  text-align: left;
 }
 
 .tarjeta-obra__imagen-wrap {
@@ -649,6 +657,11 @@ textarea:focus-visible {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.tarjeta-obra:hover .tarjeta-obra__imagen-wrap img {
+  transform: scale(1.04);
 }
 
 /* Placeholder de una imagen de obra: se muestra cuando la foto del proyecto
@@ -681,60 +694,52 @@ textarea:focus-visible {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
-  background: var(--color-fondo);
+  background: rgba(255, 255, 255, 0.92);
   color: var(--color-acento);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   padding: 0.3rem 0.6rem;
-  border: 1px solid var(--color-acento);
 }
 
-.tarjeta-obra__cuerpo {
-  padding: 1.25rem 1.4rem 1.5rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+/* Datos superpuestos abajo de la foto, sobre un degradado oscuro — mismo
+   lenguaje visual que el overlay de la portada (hero). Así cada obra se ve
+   como una pieza de portfolio y no como una card de catálogo. */
+.tarjeta-obra__overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 2.5rem 1.25rem 1.1rem;
+  background: linear-gradient(to top, rgba(15, 14, 12, 0.82), rgba(15, 14, 12, 0) 75%);
+  color: #fff;
 }
 
 .tarjeta-obra__cliente {
-  font-size: 0.78rem;
+  display: block;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-texto-suave);
-  margin-bottom: 0.4rem;
+  letter-spacing: 0.07em;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 0.3rem;
 }
 
 .tarjeta-obra__titulo {
-  font-size: 1.08rem;
-  margin-bottom: 0.6rem;
-}
-
-.tarjeta-obra__ubicacion {
-  font-size: 0.9rem;
-  color: var(--color-texto-suave);
-  margin-bottom: 0.9rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 0.45rem;
 }
 
 .tarjeta-obra__meta {
-  margin-top: auto;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  font-size: 0.85rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--color-borde);
-  color: var(--color-texto-suave);
-}
-
-.tarjeta-obra__meta strong {
-  color: var(--color-texto);
-  font-weight: 500;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .portfolio__vacio {
   color: var(--color-texto-suave);
-  padding: 2rem 0;
+  padding: 2rem 1.5rem;
   font-size: 0.95rem;
 }
 

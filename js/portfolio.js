@@ -1,7 +1,7 @@
 /*
  * ============================================================================
  *  PORTFOLIO — genera las tarjetas de obras a partir de DATOS_EPARQ,
- *  maneja los filtros (categoría + tipo) y el modal con la ficha ampliada.
+ *  maneja las categorías (tabs) y el modal con la ficha ampliada.
  *  Este archivo se ejecuta solo; no necesita configuración.
  * ============================================================================
  */
@@ -9,26 +9,20 @@
 (function () {
   "use strict";
 
-  // Orden fijo en el que se muestran las categorías en el portfolio,
-  // sin importar el orden en que estén los proyectos en datos-proyectos.js
-  const ORDEN_CATEGORIAS = ["En ejecución", "Últimos concluidos", "Terminados"];
+  // Las 3 categorías del portfolio público. El campo "tipo" de cada
+  // proyecto (editable desde herramientas/editor.html) ya trae directo una
+  // de estas 3 claves. Si un proyecto trajera un valor no reconocido, cae
+  // automáticamente en "Otros" (ver categoriaDe) en vez de desaparecer.
+  const CATEGORIAS_OBRAS = [
+    { clave: "logistico-industrial", etiqueta: "Logístico / Industrial" },
+    { clave: "residencial-oficinas", etiqueta: "Residencial / Oficinas" },
+    { clave: "otros", etiqueta: "Otros" },
+  ];
 
-  const NOMBRES_TIPO = {
-    industrial: "Industrial",
-    logistico: "Logístico",
-    oficinas: "Oficinas",
-    "residencial-nautico": "Residencial / Náutico",
-  };
-
-  // Estado actual de los filtros. "todas"/"todos" significa sin filtrar.
-  const estadoFiltros = {
-    categoria: "todas",
-    tipo: "todos",
-  };
+  let categoriaActiva = CATEGORIAS_OBRAS[0].clave;
 
   const contenedorPortfolio = document.querySelector("[data-portfolio-grilla]");
-  const contenedorFiltrosCategoria = document.querySelector("[data-filtros-categoria]");
-  const contenedorFiltrosTipo = document.querySelector("[data-filtros-tipo]");
+  const contenedorTabs = document.querySelector("[data-portfolio-tabs]");
   const modal = document.querySelector("[data-modal]");
 
   if (!contenedorPortfolio) return; // por si este script se carga en otra página sin portfolio
@@ -41,7 +35,13 @@
     return numero.toLocaleString("es-AR");
   }
 
-  // DATOS_EPARQ.proyectos ya trae el campo "categoria" en cada proyecto;
+  // A qué categoría del portfolio pertenece un proyecto, según su "tipo".
+  function categoriaDe(proyecto) {
+    const esValida = CATEGORIAS_OBRAS.some((cat) => cat.clave === proyecto.tipo);
+    return esValida ? proyecto.tipo : "otros";
+  }
+
+  // DATOS_EPARQ.proyectos ya trae el campo "tipo" en cada proyecto;
   // acá solo le sumamos un id único para identificar la tarjeta en el DOM.
   const TODOS_LOS_PROYECTOS = DATOS_EPARQ.proyectos.map((proyecto, indice) => ({
     ...proyecto,
@@ -49,8 +49,10 @@
   }));
 
   /**
-   * Crea el bloque HTML (nodo) de una tarjeta de obra.
-   * Incluye el manejo de la imagen con fallback a placeholder.
+   * Crea el bloque HTML (nodo) de una tarjeta de obra: la foto ocupa todo
+   * el espacio disponible y los datos van superpuestos abajo, sobre un
+   * degradado oscuro — así cada obra se ve como una pieza de portfolio,
+   * no como una card de catálogo con recuadro blanco.
    */
   function crearTarjeta(proyecto) {
     const tarjeta = document.createElement("button");
@@ -68,14 +70,13 @@
           <span>${proyecto.obra}</span>
         </div>
         ${proyecto.leed ? `<span class="tarjeta-obra__leed">${proyecto.leed}</span>` : ""}
-      </div>
-      <div class="tarjeta-obra__cuerpo">
-        <span class="tarjeta-obra__cliente">${proyecto.cliente}</span>
-        <h4 class="tarjeta-obra__titulo">${proyecto.obra}</h4>
-        <p class="tarjeta-obra__ubicacion">${proyecto.ubicacion}</p>
-        <div class="tarjeta-obra__meta">
-          <span>${m2Texto}</span>
-          <strong>${proyecto.anio}</strong>
+        <div class="tarjeta-obra__overlay">
+          <span class="tarjeta-obra__cliente">${proyecto.cliente}</span>
+          <h4 class="tarjeta-obra__titulo">${proyecto.obra}</h4>
+          <div class="tarjeta-obra__meta">
+            <span>${proyecto.ubicacion}</span>
+            <span>${m2Texto}</span>
+          </div>
         </div>
       </div>
     `;
@@ -105,88 +106,42 @@
   }
 
   /**
-   * Filtra TODOS_LOS_PROYECTOS según el estado actual de los filtros.
-   */
-  function filtrarProyectos() {
-    return TODOS_LOS_PROYECTOS.filter((proyecto) => {
-      const pasaCategoria = estadoFiltros.categoria === "todas" || proyecto.categoria === estadoFiltros.categoria;
-      const pasaTipo = estadoFiltros.tipo === "todos" || proyecto.tipo === estadoFiltros.tipo;
-      return pasaCategoria && pasaTipo;
-    });
-  }
-
-  /**
-   * Vuelve a dibujar toda la grilla del portfolio agrupada por categoría,
-   * respetando el orden de ORDEN_CATEGORIAS.
+   * Vuelve a dibujar la grilla del portfolio con los proyectos de la
+   * categoría activa (sin agrupar por estado de obra: eso ya no se muestra).
    */
   function renderizarPortfolio() {
-    const proyectosFiltrados = filtrarProyectos();
+    const proyectosFiltrados = TODOS_LOS_PROYECTOS.filter((p) => categoriaDe(p) === categoriaActiva);
     contenedorPortfolio.innerHTML = "";
 
-    let huboResultados = false;
-
-    ORDEN_CATEGORIAS.forEach((categoria) => {
-      const proyectosDeCategoria = proyectosFiltrados.filter((p) => p.categoria === categoria);
-      if (proyectosDeCategoria.length === 0) return;
-
-      huboResultados = true;
-
-      const bloqueCategoria = document.createElement("div");
-      bloqueCategoria.className = "portfolio__categoria";
-      bloqueCategoria.innerHTML = `
-        <h3 class="portfolio__categoria-titulo">
-          ${categoria}
-          <span class="cantidad">(${proyectosDeCategoria.length})</span>
-        </h3>
-        <div class="portfolio__grilla"></div>
-      `;
-
-      const grilla = bloqueCategoria.querySelector(".portfolio__grilla");
-      proyectosDeCategoria.forEach((proyecto) => {
-        grilla.appendChild(crearTarjeta(proyecto));
-      });
-
-      contenedorPortfolio.appendChild(bloqueCategoria);
-    });
-
-    if (!huboResultados) {
-      contenedorPortfolio.innerHTML = `<p class="portfolio__vacio">No hay obras que coincidan con estos filtros.</p>`;
+    if (proyectosFiltrados.length === 0) {
+      contenedorPortfolio.innerHTML = `<p class="portfolio__vacio">No hay obras cargadas en esta categoría todavía.</p>`;
+      return;
     }
+
+    proyectosFiltrados.forEach((proyecto) => {
+      contenedorPortfolio.appendChild(crearTarjeta(proyecto));
+    });
   }
 
   /**
-   * Arma los botones de filtro (categoría y tipo) una sola vez al cargar.
+   * Arma la barra de las 3 categorías, una sola vez al cargar.
    */
-  function inicializarFiltros() {
-    // Filtro por categoría: "Todas" + las 3 categorías, en orden fijo
-    const opcionesCategoria = [{ valor: "todas", etiqueta: "Todas" }].concat(
-      ORDEN_CATEGORIAS.map((categoria) => ({ valor: categoria, etiqueta: categoria }))
-    );
-    renderizarBotonesFiltro(contenedorFiltrosCategoria, opcionesCategoria, "categoria");
-
-    // Filtro por tipo: "Todos" + los tipos que realmente existen en los datos
-    const tiposPresentes = Array.from(new Set(TODOS_LOS_PROYECTOS.map((p) => p.tipo)));
-    const opcionesTipo = [{ valor: "todos", etiqueta: "Todos" }].concat(
-      tiposPresentes.map((clave) => ({ valor: clave, etiqueta: NOMBRES_TIPO[clave] || clave }))
-    );
-    renderizarBotonesFiltro(contenedorFiltrosTipo, opcionesTipo, "tipo");
-  }
-
-  function renderizarBotonesFiltro(contenedor, opciones, tipoDeFiltro) {
-    if (!contenedor) return;
-    contenedor.innerHTML = "";
-    opciones.forEach((opcion) => {
+  function inicializarTabs() {
+    if (!contenedorTabs) return;
+    contenedorTabs.innerHTML = "";
+    CATEGORIAS_OBRAS.forEach((categoria) => {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "filtro-btn" + (opcion.valor === estadoFiltros[tipoDeFiltro] ? " activo" : "");
-      btn.textContent = opcion.etiqueta;
+      btn.className = "portfolio__tab" + (categoria.clave === categoriaActiva ? " activo" : "");
+      btn.textContent = categoria.etiqueta;
       btn.addEventListener("click", function () {
-        estadoFiltros[tipoDeFiltro] = opcion.valor;
-        contenedor.querySelectorAll(".filtro-btn").forEach((b) => b.classList.remove("activo"));
+        if (categoria.clave === categoriaActiva) return;
+        categoriaActiva = categoria.clave;
+        contenedorTabs.querySelectorAll(".portfolio__tab").forEach((b) => b.classList.remove("activo"));
         btn.classList.add("activo");
         renderizarPortfolio();
       });
-      contenedor.appendChild(btn);
+      contenedorTabs.appendChild(btn);
     });
   }
 
@@ -279,6 +234,6 @@
   }
 
   // Inicialización
-  inicializarFiltros();
+  inicializarTabs();
   renderizarPortfolio();
 })();

@@ -160,6 +160,9 @@
 
     <!-- ================================================================
          OBRAS / PORTFOLIO — generado dinámicamente desde js/datos-proyectos.js
+         La grilla de fotos queda A PROPÓSITO fuera de .contenedor: así las
+         imágenes aprovechan todo el ancho de pantalla (efecto portfolio
+         editorial), en vez de quedar encerradas con marco blanco a los lados.
          ================================================================ -->
     <section id="obras" class="seccion">
       <div class="contenedor">
@@ -169,20 +172,13 @@
           <p data-obras-bajada></p>
         </div>
 
-        <div class="portfolio__filtros">
-          <div class="grupo-filtros">
-            <div class="grupo-filtros__titulo">Categoría</div>
-            <div class="grupo-filtros__botones" data-filtros-categoria></div>
-          </div>
-          <div class="grupo-filtros">
-            <div class="grupo-filtros__titulo">Tipo de obra</div>
-            <div class="grupo-filtros__botones" data-filtros-tipo></div>
-          </div>
-        </div>
-
-        <!-- Acá portfolio.js inyecta las categorías y tarjetas -->
-        <div data-portfolio-grilla></div>
+        <!-- Acá portfolio.js inyecta las 3 categorías (Logístico/Industrial,
+             Residencial/Oficinas, Otros) como una barra simple de tabs -->
+        <div class="portfolio__tabs" data-portfolio-tabs></div>
       </div>
+
+      <!-- Acá portfolio.js inyecta las tarjetas de obras -->
+      <div class="portfolio__grilla" data-portfolio-grilla></div>
     </section>
 
     <!-- ================================================================

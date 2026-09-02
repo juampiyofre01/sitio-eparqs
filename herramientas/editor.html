@@ -547,11 +547,13 @@
     "use strict";
 
     const CATEGORIAS = ["En ejecución", "Últimos concluidos", "Terminados"];
+    // Estas 3 opciones son las mismas 3 categorías que se muestran como tabs
+    // en la web (ver js/portfolio.js) — lo que se elige acá define directo
+    // en qué apartado del portfolio aparece la obra.
     const TIPOS = [
-      { valor: "industrial", etiqueta: "Industrial" },
-      { valor: "logistico", etiqueta: "Logístico" },
-      { valor: "oficinas", etiqueta: "Oficinas" },
-      { valor: "residencial-nautico", etiqueta: "Residencial / Náutico" },
+      { valor: "logistico-industrial", etiqueta: "Logístico / Industrial" },
+      { valor: "residencial-oficinas", etiqueta: "Residencial / Oficinas" },
+      { valor: "otros", etiqueta: "Otros" },
     ];
     const CAMPOS_ORDEN = ["cliente", "obra", "ubicacion", "m2", "nota_m2", "rol", "anio", "tipo", "categoria", "leed", "imagen", "imagenes"];
 
@@ -901,7 +903,7 @@
         m2: null,
         rol: "",
         anio: new Date().getFullYear().toString(),
-        tipo: "industrial",
+        tipo: "logistico-industrial",
         categoria: "En ejecución",
         imagen: "", // se completa solo, según la carpeta de fotos
       });

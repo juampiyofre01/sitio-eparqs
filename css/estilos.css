@@ -694,12 +694,23 @@ textarea:focus-visible {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
   background: rgba(255, 255, 255, 0.92);
   color: var(--color-acento);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   padding: 0.3rem 0.6rem;
+}
+
+.tarjeta-obra__leed img {
+  width: 16px;
+  height: 16px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 /* Datos superpuestos abajo de la foto, sobre un degradado oscuro — mismo
@@ -857,6 +868,16 @@ textarea:focus-visible {
 
 .modal__ficha dd {
   font-size: 1rem;
+}
+
+.leed-icono {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 0.4rem;
+  margin-top: -0.15rem;
 }
 
 /* ----------------------------------------------------------------------

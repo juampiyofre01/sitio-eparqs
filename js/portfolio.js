@@ -69,7 +69,7 @@
         <div class="placeholder-imagen" style="display:none;">
           <span>${proyecto.obra}</span>
         </div>
-        ${proyecto.leed ? `<span class="tarjeta-obra__leed">${proyecto.leed}</span>` : ""}
+        ${proyecto.leed ? `<span class="tarjeta-obra__leed"><img src="img/leed-gold-usgbc.jpg" alt="" onerror="this.remove()" />${proyecto.leed}</span>` : ""}
         <div class="tarjeta-obra__overlay">
           <span class="tarjeta-obra__cliente">${proyecto.cliente}</span>
           <h4 class="tarjeta-obra__titulo">${proyecto.obra}</h4>
@@ -166,7 +166,8 @@
     const filaLeed = modal.querySelector("[data-modal-fila-leed]");
     if (proyecto.leed) {
       filaLeed.style.display = "";
-      modal.querySelector("[data-modal-leed]").textContent = proyecto.leed;
+      modal.querySelector("[data-modal-leed]").innerHTML =
+        `<img src="img/leed-gold-usgbc.jpg" alt="" class="leed-icono" onerror="this.remove()" />${proyecto.leed}`;
     } else {
       filaLeed.style.display = "none";
     }

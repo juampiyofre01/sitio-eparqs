@@ -163,6 +163,14 @@
     modal.querySelector("[data-modal-anio]").textContent = proyecto.anio;
     modal.querySelector("[data-modal-categoria]").textContent = proyecto.categoria;
 
+    const filaColaboracion = modal.querySelector("[data-modal-fila-colaboracion]");
+    if (proyecto.colaboracion) {
+      filaColaboracion.style.display = "";
+      modal.querySelector("[data-modal-colaboracion]").textContent = proyecto.colaboracion;
+    } else {
+      filaColaboracion.style.display = "none";
+    }
+
     const filaLeed = modal.querySelector("[data-modal-fila-leed]");
     if (proyecto.leed) {
       filaLeed.style.display = "";

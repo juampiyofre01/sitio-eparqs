@@ -141,7 +141,7 @@
     color: var(--color-texto);
   }
   input:focus, select:focus { outline: 2px solid var(--color-acento); outline-offset: 1px; }
-  td.col-obra input, td.col-ubicacion input, td.col-rol input { min-width: 170px; }
+  td.col-obra input, td.col-ubicacion input, td.col-rol input, td.col-colaboracion input { min-width: 170px; }
   td.col-m2 input, td.col-anio input { min-width: 65px; }
   td.col-eliminar { text-align: center; }
   td.col-eliminar button { padding: 0.35rem 0.6rem; font-size: 0.78rem; }
@@ -522,6 +522,7 @@
             <th>m²</th>
             <th>Nota m²</th>
             <th>Rol</th>
+            <th>Colaboración</th>
             <th>Año</th>
             <th>Tipo</th>
             <th>LEED</th>
@@ -566,7 +567,7 @@
       { valor: "residencial-oficinas", etiqueta: "Residencial / Oficinas" },
       { valor: "otros", etiqueta: "Otros" },
     ];
-    const CAMPOS_ORDEN = ["cliente", "obra", "ubicacion", "m2", "nota_m2", "rol", "anio", "tipo", "categoria", "leed", "imagen", "imagenes"];
+    const CAMPOS_ORDEN = ["cliente", "obra", "ubicacion", "m2", "nota_m2", "rol", "colaboracion", "anio", "tipo", "categoria", "leed", "imagen", "imagenes"];
 
     // Copia de trabajo de los proyectos. Cada uno conserva "imagen"/"imagenes"
     // tal cual estaban cargados, sin que la tabla los muestre ni los edite
@@ -787,12 +788,15 @@
         ["m2", "col-m2"],
         ["nota_m2", "col-nota"],
         ["rol", "col-rol"],
+        ["colaboracion", "col-colaboracion", "(vacío = sin colaboración)"],
         ["anio", "col-anio"],
       ];
-      columnasTexto.forEach(([campo, clase]) => {
+      columnasTexto.forEach(([campo, clase, placeholder]) => {
         const td = document.createElement("td");
         td.className = clase;
-        td.appendChild(crearInputTexto(proyecto[campo], campo));
+        const input = crearInputTexto(proyecto[campo], campo);
+        if (placeholder) input.placeholder = placeholder;
+        td.appendChild(input);
         fila.appendChild(td);
       });
 
@@ -895,8 +899,10 @@
         const notaM2 = fila.querySelector('input[data-campo="nota_m2"]').value.trim();
         if (notaM2) proyecto.nota_m2 = notaM2; else delete proyecto.nota_m2;
         proyecto.rol = fila.querySelector('input[data-campo="rol"]').value.trim();
+        const colaboracion = fila.querySelector('input[data-campo="colaboracion"]').value.trim();
+        if (colaboracion) proyecto.colaboracion = colaboracion; else delete proyecto.colaboracion;
         proyecto.anio = fila.querySelector('input[data-campo="anio"]').value.trim();
-        proyecto.tipo = fila.querySelector("td:nth-child(9) select").value;
+        proyecto.tipo = fila.querySelector("td:nth-child(10) select").value;
         const leed = fila.querySelector('input[data-campo="leed"]').value.trim();
         if (leed) proyecto.leed = leed; else delete proyecto.leed;
       });

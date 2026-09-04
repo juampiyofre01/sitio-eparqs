@@ -981,8 +981,8 @@ textarea:focus-visible {
 .persona-chica__foto-wrap {
   position: relative;
   flex-shrink: 0;
-  width: 62px;
-  height: 62px;
+  width: 74px;
+  height: 74px;
   border-radius: 50%;
   overflow: hidden;
   background: #ece9e4;
@@ -1003,7 +1003,7 @@ textarea:focus-visible {
 }
 
 .persona-chica__foto-placeholder span {
-  font-size: 1.02rem;
+  font-size: 1.22rem;
   font-weight: 500;
   color: #c9c5bd;
 }
@@ -1024,20 +1024,15 @@ textarea:focus-visible {
   color: var(--color-texto-suave);
 }
 
-/* Jerarquía visual: las fotos son más grandes cuanto más senior es la
-   categoría (Asociados Senior > Semi Senior > Juniors) */
+/* Jerarquía visual: las fotos de Asociados Senior son más grandes que
+   las del resto (Staff, Asesores), para reflejar la jerarquía. */
 .equipo__categoria--senior .persona-chica__foto-wrap {
-  width: 82px;
-  height: 82px;
+  width: 98px;
+  height: 98px;
 }
 
 .equipo__categoria--senior .persona-chica__foto-placeholder span {
-  font-size: 1.26rem;
-}
-
-.equipo__categoria--semi .persona-chica__foto-wrap {
-  width: 72px;
-  height: 72px;
+  font-size: 1.51rem;
 }
 
 /* ----------------------------------------------------------------------
@@ -1178,6 +1173,16 @@ textarea:focus-visible {
 .footer__datos li {
   margin-bottom: 0.4rem;
   font-size: 0.92rem;
+}
+
+.footer__instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer__icono-instagram {
+  flex-shrink: 0;
 }
 
 .footer__datos a:hover {

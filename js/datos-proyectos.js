@@ -95,6 +95,7 @@ const DATOS_EPARQ = {
       },
     ],
     email: "estudio@eparquitectos.com.ar",
+    instagram: "https://www.instagram.com/eparqs_?utm_source=qr",
     servicios: [
       "Proyecto",
       "Dirección de obra",
@@ -209,38 +210,41 @@ const DATOS_EPARQ = {
   socios: [
     {
       nombre: "Diego Escarrá",
-      titulo: "Arquitecto — UBA, 1980",
+      titulo: "Arquitecto — UBA",
       rol: "Diseño de edificios de distinta escala; apasionado por la sustentabilidad, el paisajismo y el medio ambiente.",
       foto: "img/equipo/diego-escarra.jpg",
     },
     {
       nombre: "Marlene Pradier",
-      titulo: "Arquitecta — UBA, 1984",
+      titulo: "Arquitecta — UBA",
       rol: "Lidera el equipo de interiorismo; experiencia en diseño arquitectónico, funcionalidad y estética.",
       foto: "img/equipo/marlene-pradier.jpg",
     },
     {
       nombre: "Mariano Migone",
-      titulo: "Ingeniero Civil — UCA, 1986",
+      titulo: "Ingeniero Civil — UCA",
       rol: "Lidera los proyectos desde lo estructural; especialista en análisis de propuestas y proveedores.",
       foto: "img/equipo/mariano-migone.jpg",
     },
   ],
   // ===== FIN: socios =====
 
-  // Resto del equipo (además de los 3 socios gerentes de arriba), agrupado
-  // por nivel — se muestra debajo de las tarjetas de los socios, con las
-  // fotos más grandes cuanto más senior es la categoría. Para agregar/sacar
-  // categorías enteras hay que editar esto a mano; para agregar/sacar
-  // personas DENTRO de una categoría que ya existe, se puede usar
-  // herramientas/editor.html.
+  // Resto del equipo (además de los 3 socios gerentes de arriba) — se
+  // muestra debajo de las tarjetas de los socios, en 3 columnas: Asociados
+  // Senior (fotos más grandes, para reflejar la jerarquía), Staff, y
+  // Asesores (profesionales externos que colaboran con el estudio). Para
+  // agregar/sacar categorías enteras hay que editar esto a mano; para
+  // agregar/sacar personas DENTRO de una categoría que ya existe, se puede
+  // usar herramientas/editor.html.
   //
-  //   foto → ruta a la foto en img/equipo/. Por ahora todos tienen un
-  //          placeholder generado (círculo con sus iniciales, mismo criterio
-  //          visual que si no hubiera foto). Para poner la foto real, ni
-  //          hace falta tocar este archivo: solo guardá la foto en
-  //          img/equipo/ CON EL MISMO NOMBRE que el placeholder actual
-  //          (pisándolo) y se actualiza sola.
+  //   titulo → (opcional) título/especialidad de la persona. Si todavía no
+  //            tiene (ej. no se recibió aún), se omite el campo directamente
+  //            — dejarlo como "" también funciona igual de bien.
+  //   foto   → (opcional) ruta a la foto en img/equipo/. Mientras no haya
+  //            foto, se muestra un círculo con las iniciales. Para poner la
+  //            foto real, ni hace falta tocar este archivo: solo guardá la
+  //            foto en img/equipo/ CON EL MISMO NOMBRE que el placeholder
+  //            actual (pisándolo) y se actualiza sola.
   // ===== INICIO: equipoAmpliado (no toques esta línea) =====
   equipoAmpliado: [
     {
@@ -248,57 +252,74 @@ const DATOS_EPARQ = {
       personas: [
         {
           nombre: "Ricardo Peterson",
-          titulo: "Arq. — UBA, 1984",
+          titulo: "Arq. — UBA",
+          foto: "img/equipo/ricardo-peterson.jpg",
         },
         {
           nombre: "Bernardo García Hervás",
-          titulo: "Arq. — UBA, 1985",
+          titulo: "Arq. — UBA",
           foto: "img/equipo/bernardo-garcia-hervas.jpg",
         },
         {
           nombre: "Pablo Medina",
-          titulo: "Arq. — UBA, 2003",
+          titulo: "Arq. — UBA",
           foto: "img/equipo/pablo-medina.jpg",
         },
       ],
     },
     {
-      categoria: "Semi Senior",
+      categoria: "Staff",
       personas: [
         {
           nombre: "Constanza Migone",
-          titulo: "Arq. — UBA, 2016",
+          titulo: "Arq. — UBA",
           foto: "img/equipo/constanza-migone.jpg",
         },
-      ],
-    },
-    {
-      categoria: "Juniors",
-      personas: [
         {
           nombre: "Sofía Gelly y Obes",
-          titulo: "Arq. — UBA, 2024",
+          titulo: "Arq. — UBA",
           foto: "img/equipo/sofia-gelly-y-obes.jpg",
         },
         {
           nombre: "Juan Pablo Yofre",
-          titulo: "Ing. Civil — UBA, 2025",
           foto: "img/equipo/juan-pablo-yofre.jpg",
         },
         {
           nombre: "Felipe Bonadeo",
-          titulo: "Ing. Civil — UBA, 2026",
           foto: "img/equipo/felipe-bonadeo.jpg",
         },
         {
           nombre: "Hernán Schumacher",
-          titulo: "Arq. — Belgrano, 2026",
           foto: "img/equipo/hernan-schumacher.jpg",
         },
         {
           nombre: "Agustín Paz Naón",
-          titulo: "Ingeniería Civil — UBA",
           foto: "img/equipo/agustin-paz-naon.jpg",
+        },
+      ],
+    },
+    {
+      categoria: "Asesores",
+      personas: [
+        {
+          nombre: "Ing. Esteban Facchini",
+          titulo: "Inst. Eléctricas industriales",
+        },
+        {
+          nombre: "Ing. Edgardo Fernández",
+          titulo: "Inst. Termomecánicas y ASHRAE",
+        },
+        {
+          nombre: "Técnico Sebastián Calvo",
+          titulo: "Inst. Sanitarias",
+        },
+        {
+          nombre: "Ing. Leandro Fazzari",
+          titulo: "Inst. para incendio y gases",
+        },
+        {
+          nombre: "Agr. Agustín Turano",
+          titulo: "Agrimensor, topografía y geodesia",
         },
       ],
     },

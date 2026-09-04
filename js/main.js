@@ -42,7 +42,10 @@
     // --- Hero ---
     // Si "titulo" queda vacío (a propósito, para no mostrar título), el
     // <h1> se oculta del todo — nunca se muestra un texto de reemplazo.
+    // La línea divisoria (el trazo debajo del título) se oculta con él,
+    // ya que sin título queda flotando sin sentido.
     const elHeroTitulo = document.querySelector("[data-hero-titulo]");
+    const elHeroDivisor = document.querySelector(".hero__divisor");
     if (elHeroTitulo) {
       if (c.hero.titulo) {
         elHeroTitulo.style.display = "";
@@ -50,8 +53,10 @@
         elHeroTitulo.classList.remove("hero__titulo--chico", "hero__titulo--grande");
         if (c.hero.tamanioTitulo === "chico") elHeroTitulo.classList.add("hero__titulo--chico");
         if (c.hero.tamanioTitulo === "grande") elHeroTitulo.classList.add("hero__titulo--grande");
+        if (elHeroDivisor) elHeroDivisor.style.display = "";
       } else {
         elHeroTitulo.style.display = "none";
+        if (elHeroDivisor) elHeroDivisor.style.display = "none";
       }
     }
     setTexto("[data-hero-bajada]", c.hero.bajada);
@@ -162,10 +167,22 @@
       const lineaTelefono = estudioInfo.telefono
         ? `<li><a href="tel:${estudioInfo.telefonoHref}">${estudioInfo.telefono}</a></li>`
         : "";
+      // El Instagram también es opcional (estudio.instagram) — ícono +
+      // "EPARQS", como último dato de la lista.
+      const iconoInstagram = `
+        <svg class="footer__icono-instagram" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>`;
+      const lineaInstagram = estudioInfo.instagram
+        ? `<li><a class="footer__instagram" href="${estudioInfo.instagram}" target="_blank" rel="noopener">${iconoInstagram}EPARQS</a></li>`
+        : "";
       listaFooter.innerHTML = `
         ${estudioInfo.sedes.map((sede) => `<li><a href="${enlaceMaps(sede.direccion)}" target="_blank" rel="noopener">${sede.direccion}</a></li>`).join("")}
         ${lineaTelefono}
         <li><a href="mailto:${estudioInfo.email}">${estudioInfo.email}</a></li>
+        ${lineaInstagram}
       `;
     }
   }
@@ -218,9 +235,15 @@
    * Iniciales de un nombre completo (ej. "Diego Escarrá" -> "DE"),
    * usadas como placeholder circular mientras no hay foto real.
    */
+  // Prefijos de título que no cuentan como parte del nombre a la hora de
+  // sacar las iniciales (ej. "Ing. Leandro Fazzari" → "LF", no "IL").
+  const PREFIJOS_TITULO = ["técnico", "técnica"];
+
   function inicialesDe(nombre) {
-    return nombre
+    const palabras = nombre
       .split(" ")
+      .filter((palabra) => palabra && !palabra.endsWith(".") && !PREFIJOS_TITULO.includes(palabra.toLowerCase()));
+    return palabras
       .map((palabra) => palabra[0])
       .join("")
       .slice(0, 2)
@@ -268,17 +291,16 @@
      ------------------------------------------------------------------ */
   const contenedorEquipoAmpliado = document.querySelector("[data-equipo-ampliado]");
   if (contenedorEquipoAmpliado && typeof DATOS_EPARQ !== "undefined" && DATOS_EPARQ.equipoAmpliado) {
-    // Clase de tamaño según la categoría — si en el futuro se agrega una
-    // categoría con otro nombre, cae en "junior" (el tamaño más chico).
+    // Clase de tamaño según la categoría: solo "Asociados Senior" tiene
+    // fotos más grandes, para reflejar la jerarquía. El resto (Staff,
+    // Asesores, o cualquier categoría nueva) usa el tamaño base.
     const CLASE_POR_CATEGORIA = {
       "Asociados Senior": "equipo__categoria--senior",
-      "Semi Senior": "equipo__categoria--semi",
-      Juniors: "equipo__categoria--junior",
     };
 
     contenedorEquipoAmpliado.innerHTML = DATOS_EPARQ.equipoAmpliado
       .map((grupo) => {
-        const claseTamano = CLASE_POR_CATEGORIA[grupo.categoria] || "equipo__categoria--junior";
+        const claseTamano = CLASE_POR_CATEGORIA[grupo.categoria] || "";
         const personasHtml = grupo.personas
           .map((p) => {
             const iniciales = inicialesDe(p.nombre);
@@ -286,12 +308,15 @@
               ? `<img src="${p.foto}" alt="Foto de ${p.nombre}" loading="lazy" />
                  <div class="persona-chica__foto-placeholder" style="display:none;"><span>${iniciales}</span></div>`
               : `<div class="persona-chica__foto-placeholder"><span>${iniciales}</span></div>`;
+            // El título es opcional (por ejemplo, alguien que todavía no se
+            // recibió) — si no hay, no se muestra ese renglón en blanco.
+            const tituloHtml = p.titulo ? `<span>${p.titulo}</span>` : "";
             return `
           <li class="persona-chica">
             <div class="persona-chica__foto-wrap">${fotoHtml}</div>
             <div class="persona-chica__datos">
               <strong>${p.nombre}</strong>
-              <span>${p.titulo}</span>
+              ${tituloHtml}
             </div>
           </li>`;
           })

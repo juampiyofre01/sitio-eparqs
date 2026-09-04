@@ -209,24 +209,12 @@
             <h2 data-contacto-titulo></h2>
           </div>
 
-          <!-- Dirección, teléfono y mail salen de "estudio" en
-               js/datos-proyectos.js — se editan ahí, una sola vez, y
-               se actualizan solos acá y en el pie de página. -->
+          <!-- Las 2 sedes salen de estudio.sedes en js/datos-proyectos.js
+               — se editan ahí, una sola vez. -->
           <dl class="contacto__datos-lista" data-contacto-datos></dl>
 
           <!-- Contactos directos (además de los datos generales de arriba) -->
           <div class="contacto__directos" data-contacto-directos></div>
-
-          <!-- Mapa embebido de Google Maps, sin necesidad de API key.
-               La ubicación del pin sale de estudio.direccionParaMapa -->
-          <div class="contacto__mapa">
-            <iframe
-              data-contacto-mapa
-              title="Ubicación de EPARQS en el mapa"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-          </div>
         </div>
 
         <div>

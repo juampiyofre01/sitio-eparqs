@@ -276,8 +276,21 @@
             <input type="text" data-c="estudio.nombre" />
           </div>
           <div class="campo-form">
-            <label>Dirección</label>
-            <input type="text" data-c="estudio.direccion" />
+            <label>Sede 1 — Nombre corto (ej. "CABA")</label>
+            <input type="text" data-c="estudio.sedes.0.nombre" />
+          </div>
+          <div class="campo-form">
+            <label>Sede 1 — Dirección</label>
+            <input type="text" data-c="estudio.sedes.0.direccion" />
+          </div>
+          <div class="campo-form">
+            <label>Sede 2 — Nombre corto (ej. "San Isidro")</label>
+            <input type="text" data-c="estudio.sedes.1.nombre" />
+          </div>
+          <div class="campo-form">
+            <label>Sede 2 — Dirección</label>
+            <input type="text" data-c="estudio.sedes.1.direccion" />
+            <small>Para agregar una tercera sede, pedímelo.</small>
           </div>
           <div class="campo-form">
             <label>Teléfono (como se muestra)</label>
@@ -460,16 +473,12 @@
             <label>Contacto directo 1</label>
             <input type="text" placeholder="Nombre" data-c="contenido.contacto.contactosDirectos.0.nombre" />
             <input type="text" placeholder="Título (ej. Arq.)" data-c="contenido.contacto.contactosDirectos.0.titulo" style="margin-top:0.3rem" />
-            <input type="text" placeholder="Teléfono (como se muestra)" data-c="contenido.contacto.contactosDirectos.0.telefono" style="margin-top:0.3rem" />
-            <input type="text" placeholder="Teléfono para llamar (formato +54...)" data-c="contenido.contacto.contactosDirectos.0.telefonoHref" style="margin-top:0.3rem" />
             <input type="text" placeholder="Email" data-c="contenido.contacto.contactosDirectos.0.email" style="margin-top:0.3rem" />
           </div>
           <div class="fila-repetible">
             <label>Contacto directo 2</label>
             <input type="text" placeholder="Nombre" data-c="contenido.contacto.contactosDirectos.1.nombre" />
             <input type="text" placeholder="Título" data-c="contenido.contacto.contactosDirectos.1.titulo" style="margin-top:0.3rem" />
-            <input type="text" placeholder="Teléfono (como se muestra)" data-c="contenido.contacto.contactosDirectos.1.telefono" style="margin-top:0.3rem" />
-            <input type="text" placeholder="Teléfono para llamar (formato +54...)" data-c="contenido.contacto.contactosDirectos.1.telefonoHref" style="margin-top:0.3rem" />
             <input type="text" placeholder="Email" data-c="contenido.contacto.contactosDirectos.1.email" style="margin-top:0.3rem" />
           </div>
           <small style="margin-top:0.7rem;">Para agregar un tercer contacto directo (no solo editar los 2 que ya hay), pedímelo — se puede sumar acá con una fila más.</small>
@@ -489,6 +498,7 @@
             <label>Juniors (una persona por línea: "Nombre — Título")</label>
             <textarea data-c="equipoAmpliado.2.personas" data-tipo="personas" style="min-height:6.5rem"></textarea>
           </div>
+          <small>Para sumarle una foto a alguien, agregá al final de su línea " | " y el nombre del archivo dentro de <code>img/equipo/</code> (ej. "Pablo Medina — Arq. — UBA, 2003 | pablo-medina.jpg"). Sin esa parte, se muestra un círculo con las iniciales.</small>
           <small>Para agregar/sacar una persona, agregá o borrá una línea completa. Para agregar una categoría nueva (que no sea Asociados Senior/Semi Senior/Juniors), pedímelo.</small>
         </fieldset>
       </div>
@@ -597,8 +607,11 @@
         if (el.dataset.tipo === "lineas") {
           el.value = Array.isArray(valor) ? valor.join("\n") : "";
         } else if (el.dataset.tipo === "personas") {
-          // Arreglo de {nombre, titulo} <-> una línea "Nombre — Título" por persona
-          el.value = Array.isArray(valor) ? valor.map((p) => `${p.nombre || ""} — ${p.titulo || ""}`).join("\n") : "";
+          // Arreglo de {nombre, titulo, foto} <-> una línea "Nombre — Título"
+          // por persona, con "| archivo.jpg" opcional al final si tiene foto.
+          el.value = Array.isArray(valor)
+            ? valor.map((p) => `${p.nombre || ""} — ${p.titulo || ""}${p.foto ? " | " + p.foto : ""}`).join("\n")
+            : "";
         } else {
           el.value = valor === null || valor === undefined ? "" : valor;
         }
@@ -620,11 +633,17 @@
             .map((l) => l.trim())
             .filter((l) => l.length > 0)
             .map((linea) => {
-              const partes = linea.split("—");
-              return {
+              // "| archivo.jpg" opcional al final = foto. Se separa ANTES
+              // de partir por "—" para no confundir el guión largo del
+              // título con el separador de la foto.
+              const [nombreYTitulo, foto] = linea.split("|");
+              const partes = nombreYTitulo.split("—");
+              const persona = {
                 nombre: (partes[0] || "").trim(),
                 titulo: (partes.slice(1).join("—") || "").trim(),
               };
+              if (foto && foto.trim()) persona.foto = "img/equipo/" + foto.trim().replace(/^img\/equipo\//, "");
+              return persona;
             });
           asignarPorRuta(contenidoEditable, el.dataset.c, personas);
         } else {

@@ -48,7 +48,7 @@ No hay carpeta de "distribución" ni proceso de compilación: lo que ves en esta
 
 ## 2. Cómo previsualizar el sitio localmente
 
-**Opción más simple:** hacé doble clic en `index.html`. Se abre en tu navegador y funciona completo (navegación, filtros, formulario), sin necesidad de instalar nada ni de tener conexión a internet (salvo para ver la tipografía de Google Fonts y el mapa).
+**Opción más simple:** hacé doble clic en `index.html`. Se abre en tu navegador y funciona completo (navegación, filtros, formulario), sin necesidad de instalar nada ni de tener conexión a internet (salvo para ver la tipografía de Google Fonts).
 
 Esto funciona porque los datos de los proyectos están embebidos en `js/datos-proyectos.js` en vez de cargarse con `fetch()` desde un `.json` — si hubiéramos usado `fetch()`, abrir el archivo por doble clic fallaría por una restricción de seguridad del navegador (CORS) al leer archivos locales.
 
@@ -105,7 +105,7 @@ Abrilo con cualquier editor de texto (Bloc de notas alcanza, aunque un editor ti
 | Los 4 servicios (título y texto de cada uno) | `contenido.servicios` |
 | La bajada de la sección "Obras" | `contenido.obras` |
 | Los títulos de "Equipo" y "Contacto" | `contenido.equipo` / `contenido.contacto` |
-| Dirección, teléfono, mail, nombre del estudio | `estudio` (se usa en el header, el mapa, "Contacto" y el pie de página — **cambiarlo ahí actualiza los 4 lugares a la vez**, no hace falta repetirlo) |
+| Las 2 sedes, teléfono, mail, nombre del estudio | `estudio` (se usa en el header, "Contacto" y el pie de página — **cambiarlo ahí actualiza esos lugares a la vez**, no hace falta repetirlo) |
 | Los 3 socios | `socios` |
 | Los proyectos del portfolio | `proyectos` (ver sección 5) — o con el editor visual |
 

@@ -17,3 +17,35 @@ Recomendaciones:
 - Foto de rostro/medio cuerpo, fondo simple y prolijo — el sitio es
   sobrio, así que conviene evitar fondos muy cargados.
 - Peso sugerido: menos de 300 KB por foto.
+
+
+RESTO DEL EQUIPO (Asociados Senior, Semi Senior, Juniors)
+===========================================================
+
+Estas fotos también van en esta misma carpeta (img/equipo/). Por ahora
+cada persona ya tiene un placeholder generado (círculo con sus
+iniciales) guardado con estos nombres exactos:
+
+    Bernardo García Hervás -> img/equipo/bernardo-garcia-hervas.jpg
+    Pablo Medina           -> img/equipo/pablo-medina.jpg
+    Constanza Migone       -> img/equipo/constanza-migone.jpg
+    Sofía Gelly y Obes     -> img/equipo/sofia-gelly-y-obes.jpg
+    Juan Pablo Yofre       -> img/equipo/juan-pablo-yofre.jpg
+    Felipe Bonadeo         -> img/equipo/felipe-bonadeo.jpg
+    Hernán Schumacher      -> img/equipo/hernan-schumacher.jpg
+    Agustín Paz Naón       -> img/equipo/agustin-paz-naon.jpg
+
+Para poner la foto real de alguien, ni hace falta tocar el editor ni
+datos-proyectos.js: simplemente guardá la foto ACÁ, con ese mismo
+nombre de archivo (pisando el placeholder), y se actualiza sola.
+
+Si en el futuro se suma una persona nueva al equipo, ahí sí hay que
+agregarla a mano (o pedirme que genere su placeholder) — ver la
+sección "personas" en herramientas/editor.html, donde se puede sumar
+una foto a cualquier persona agregando al final de su línea " | " y
+el nombre del archivo (ej. "Nombre — Título | nombre-archivo.jpg").
+
+Estas fotos se muestran como círculo, más chicas que las de los 3
+socios de arriba, y el tamaño varía según la categoría (Asociados
+Senior > Semi Senior > Juniors) — formato cuadrado (1:1), foto de
+rostro, mismos criterios de fondo simple y prolijo que las de arriba.

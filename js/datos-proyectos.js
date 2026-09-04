@@ -81,11 +81,17 @@ const DATOS_EPARQ = {
     nombre: "Escarrá Pradier & Asociados",
     abreviatura: "EPARQS",
     desde: 1996,
-    direccion: "Maure 1687, piso 8B (C1426), Ciudad Autónoma de Buenos Aires",
-    direccionParaMapa: "Maure 1687, Buenos Aires, Argentina",
-    telefono: "+54 9 11 4528-0619",
-    telefonoHref: "+541145280619",
-    email: "mariano@webmigone.com.ar",
+    sedes: [
+      {
+        nombre: "CABA",
+        direccion: "Maure 1687, piso 8B (C1426), Ciudad Autónoma de Buenos Aires",
+      },
+      {
+        nombre: "San Isidro",
+        direccion: "Av. Sucre 1869, oficina 28, San Isidro, Provincia de Buenos Aires",
+      },
+    ],
+    email: "estudio@eparquitectos.com.ar",
     servicios: [
       "Proyecto",
       "Dirección de obra",
@@ -179,24 +185,15 @@ const DATOS_EPARQ = {
     contacto: {
       eyebrow: "Contacto",
       titulo: "Hablemos de tu proyecto",
-      // Clave que da Web3Forms (ver README.md, sección 6) — no hace falta
-      // crear ninguna cuenta, solo tu mail. Mientras esté vacía "", el botón
-      // de "Enviar consulta" avisa que todavía no está conectado, en vez de
-      // fallar en silencio.
-      formularioClave: "",
       contactosDirectos: [
         {
           nombre: "Diego Escarrá",
           titulo: "Arq.",
-          telefono: "+54 9 11 4425-8211",
-          telefonoHref: "+5491144258211",
           email: "escarrad@gmail.com",
         },
         {
           nombre: "Mariano Migone",
           titulo: "Ing.",
-          telefono: "+54 9 11 4528-0619",
-          telefonoHref: "+5491145280619",
           email: "mariano@webmigone.com.ar",
         },
       ],
@@ -230,10 +227,18 @@ const DATOS_EPARQ = {
   // ===== FIN: socios =====
 
   // Resto del equipo (además de los 3 socios gerentes de arriba), agrupado
-  // por nivel — se muestra como lista simple, sin foto, debajo de las
-  // tarjetas de los socios. Para agregar/sacar categorías enteras hay que
-  // editar esto a mano; para agregar/sacar personas DENTRO de una
-  // categoría que ya existe, se puede usar herramientas/editor.html.
+  // por nivel — se muestra debajo de las tarjetas de los socios, con las
+  // fotos más grandes cuanto más senior es la categoría. Para agregar/sacar
+  // categorías enteras hay que editar esto a mano; para agregar/sacar
+  // personas DENTRO de una categoría que ya existe, se puede usar
+  // herramientas/editor.html.
+  //
+  //   foto → ruta a la foto en img/equipo/. Por ahora todos tienen un
+  //          placeholder generado (círculo con sus iniciales, mismo criterio
+  //          visual que si no hubiera foto). Para poner la foto real, ni
+  //          hace falta tocar este archivo: solo guardá la foto en
+  //          img/equipo/ CON EL MISMO NOMBRE que el placeholder actual
+  //          (pisándolo) y se actualiza sola.
   // ===== INICIO: equipoAmpliado (no toques esta línea) =====
   equipoAmpliado: [
     {
@@ -242,10 +247,12 @@ const DATOS_EPARQ = {
         {
           nombre: "Bernardo García Hervás",
           titulo: "Arq. — UBA, 1985",
+          foto: "img/equipo/bernardo-garcia-hervas.jpg",
         },
         {
           nombre: "Pablo Medina",
           titulo: "Arq. — UBA, 2003",
+          foto: "img/equipo/pablo-medina.jpg",
         },
       ],
     },
@@ -255,6 +262,7 @@ const DATOS_EPARQ = {
         {
           nombre: "Constanza Migone",
           titulo: "Arq. — UBA, 2016",
+          foto: "img/equipo/constanza-migone.jpg",
         },
       ],
     },
@@ -264,22 +272,27 @@ const DATOS_EPARQ = {
         {
           nombre: "Sofía Gelly y Obes",
           titulo: "Arq. — UBA, 2024",
+          foto: "img/equipo/sofia-gelly-y-obes.jpg",
         },
         {
           nombre: "Juan Pablo Yofre",
           titulo: "Ing. Civil — UBA, 2025",
+          foto: "img/equipo/juan-pablo-yofre.jpg",
         },
         {
           nombre: "Felipe Bonadeo",
           titulo: "Ing. Civil — UBA, 2026",
+          foto: "img/equipo/felipe-bonadeo.jpg",
         },
         {
           nombre: "Hernán Schumacher",
           titulo: "Arq. — Belgrano, 2026",
+          foto: "img/equipo/hernan-schumacher.jpg",
         },
         {
           nombre: "Agustín Paz Naón",
           titulo: "Ingeniería Civil — UBA",
+          foto: "img/equipo/agustin-paz-naon.jpg",
         },
       ],
     },

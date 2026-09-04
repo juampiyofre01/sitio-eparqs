@@ -350,17 +350,18 @@ textarea:focus-visible {
   position: absolute;
   inset: 0;
   z-index: -1;
-  /* Viñeta: oscuro arriba (para que el logo se lea sin importar qué haya
-     en la foto justo ahí), más clarito en el medio (para que la foto
-     respire), y oscuro de nuevo abajo (para el título y el botón). */
+  /* Viñeta: oscuro solo en una franja fina arriba (el header ya tiene su
+     propio scrim independiente, ver .header::before, así que acá no hace
+     falta oscurecer de más) y otra abajo (para el título y el botón) — el
+     centro queda bien claro para que la foto se vea con su color real. */
   background:
-    linear-gradient(90deg, rgba(10,10,9,0.1) 0%, rgba(10,10,9,0.4) 100%),
+    linear-gradient(90deg, rgba(10,10,9,0.05) 0%, rgba(10,10,9,0.22) 100%),
     linear-gradient(
       180deg,
-      rgba(8,8,7,0.72) 0%,
-      rgba(8,8,7,0.32) 18%,
-      rgba(10,10,9,0.38) 55%,
-      rgba(8,8,7,0.85) 100%
+      rgba(8,8,7,0.5) 0%,
+      rgba(8,8,7,0.1) 15%,
+      rgba(10,10,9,0.1) 60%,
+      rgba(8,8,7,0.78) 100%
     );
 }
 
@@ -696,18 +697,18 @@ textarea:focus-visible {
   right: 0.75rem;
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.42rem;
   background: rgba(255, 255, 255, 0.92);
   color: var(--color-acento);
-  font-size: 0.72rem;
+  font-size: 0.86rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  padding: 0.3rem 0.6rem;
+  padding: 0.36rem 0.72rem;
 }
 
 .tarjeta-obra__leed img {
-  width: 16px;
-  height: 16px;
+  width: 19px;
+  height: 19px;
   object-fit: cover;
   border-radius: 50%;
   display: block;
@@ -950,22 +951,83 @@ textarea:focus-visible {
   margin-bottom: 1rem;
 }
 
-.equipo__categoria-lista li {
+.equipo__categoria-lista {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid var(--color-borde);
-  font-size: 0.92rem;
 }
 
-.equipo__categoria-lista li:last-child {
+.persona-chica {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.persona-chica:last-child {
   border-bottom: none;
 }
 
-.equipo__categoria-lista li span {
-  font-size: 0.85rem;
+.persona-chica__foto-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #ece9e4;
+}
+
+.persona-chica__foto-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.persona-chica__foto-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.persona-chica__foto-placeholder span {
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: #c9c5bd;
+}
+
+.persona-chica__datos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.persona-chica__datos strong {
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.persona-chica__datos span {
+  font-size: 0.82rem;
   color: var(--color-texto-suave);
+}
+
+/* Jerarquía visual: las fotos son más grandes cuanto más senior es la
+   categoría (Asociados Senior > Semi Senior > Juniors) */
+.equipo__categoria--senior .persona-chica__foto-wrap {
+  width: 82px;
+  height: 82px;
+}
+
+.equipo__categoria--senior .persona-chica__foto-placeholder span {
+  font-size: 1.26rem;
+}
+
+.equipo__categoria--semi .persona-chica__foto-wrap {
+  width: 72px;
+  height: 72px;
 }
 
 /* ----------------------------------------------------------------------
@@ -1023,18 +1085,6 @@ textarea:focus-visible {
 
 .contacto__directo-dato a:hover {
   color: var(--color-acento);
-}
-
-.contacto__mapa {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  border: 1px solid var(--color-borde);
-}
-
-.contacto__mapa iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
 }
 
 .formulario label {

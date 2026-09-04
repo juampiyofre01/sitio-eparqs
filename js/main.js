@@ -115,19 +115,27 @@
     setTexto("[data-contacto-eyebrow]", c.contacto.eyebrow);
     setTexto("[data-contacto-titulo]", c.contacto.titulo);
 
-    // --- Datos de contacto (dirección / teléfono / mail) + mapa ---
-    // Solo la dirección acá — el teléfono/mail general quedó reemplazado
-    // por las tarjetas de "contactosDirectos" (Diego, Mariano) de abajo,
-    // para no duplicar datos. El footer sí sigue mostrando los 3 datos.
+    // --- Datos de contacto (las 2 sedes) ---
+    // El teléfono/mail general quedó reemplazado por las tarjetas de
+    // "contactosDirectos" (Diego, Mariano) de abajo, para no duplicar
+    // datos. El footer sí sigue mostrando teléfono (si hay) y mail,
+    // además de ambas direcciones.
+    // Cada dirección lleva un link a Google Maps (no hace falta API key).
+    function enlaceMaps(direccion) {
+      return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(direccion);
+    }
+
     const listaContacto = document.querySelector("[data-contacto-datos]");
     if (listaContacto) {
-      listaContacto.innerHTML = `
-        <div><dt>Dirección</dt><dd>${estudioInfo.direccion}</dd></div>
-      `;
-    }
-    const mapaIframe = document.querySelector("[data-contacto-mapa]");
-    if (mapaIframe) {
-      mapaIframe.src = "https://www.google.com/maps?q=" + encodeURIComponent(estudioInfo.direccionParaMapa) + "&output=embed";
+      listaContacto.innerHTML = estudioInfo.sedes
+        .map(
+          (sede) => `
+        <div>
+          <dt>${sede.nombre}</dt>
+          <dd><a href="${enlaceMaps(sede.direccion)}" target="_blank" rel="noopener">${sede.direccion}</a></dd>
+        </div>`
+        )
+        .join("");
     }
 
     // --- Contactos directos (además de los datos generales de arriba) ---
@@ -138,7 +146,6 @@
           (persona) => `
         <div class="contacto__directo">
           <p class="contacto__directo-nombre">${persona.titulo ? persona.titulo + " " : ""}${persona.nombre}</p>
-          <p class="contacto__directo-dato"><a href="tel:${persona.telefonoHref}">${persona.telefono}</a></p>
           <p class="contacto__directo-dato"><a href="mailto:${persona.email}">${persona.email}</a></p>
         </div>`
         )
@@ -150,9 +157,14 @@
     setTexto("[data-footer-nombre-copy]", estudioInfo.nombre);
     const listaFooter = document.querySelector("[data-footer-datos]");
     if (listaFooter) {
+      // El teléfono es opcional: si "estudio.telefono" está vacío (todavía
+      // no lo tenemos), esa línea se omite en vez de mostrarse en blanco.
+      const lineaTelefono = estudioInfo.telefono
+        ? `<li><a href="tel:${estudioInfo.telefonoHref}">${estudioInfo.telefono}</a></li>`
+        : "";
       listaFooter.innerHTML = `
-        <li>${estudioInfo.direccion}</li>
-        <li><a href="tel:${estudioInfo.telefonoHref}">${estudioInfo.telefono}</a></li>
+        ${estudioInfo.sedes.map((sede) => `<li><a href="${enlaceMaps(sede.direccion)}" target="_blank" rel="noopener">${sede.direccion}</a></li>`).join("")}
+        ${lineaTelefono}
         <li><a href="mailto:${estudioInfo.email}">${estudioInfo.email}</a></li>
       `;
     }
@@ -202,18 +214,26 @@
   const spanAnio = document.querySelector("[data-anio-actual]");
   if (spanAnio) spanAnio.textContent = new Date().getFullYear();
 
+  /**
+   * Iniciales de un nombre completo (ej. "Diego Escarrá" -> "DE"),
+   * usadas como placeholder circular mientras no hay foto real.
+   */
+  function inicialesDe(nombre) {
+    return nombre
+      .split(" ")
+      .map((palabra) => palabra[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase();
+  }
+
   /* ------------------------------------------------------------------
      EQUIPO — genera las 3 tarjetas de socios desde DATOS_EPARQ.socios
      ------------------------------------------------------------------ */
   const contenedorEquipo = document.querySelector("[data-equipo-grilla]");
   if (contenedorEquipo && typeof DATOS_EPARQ !== "undefined") {
     DATOS_EPARQ.socios.forEach((socio) => {
-      const iniciales = socio.nombre
-        .split(" ")
-        .map((palabra) => palabra[0])
-        .join("")
-        .slice(0, 2)
-        .toUpperCase();
+      const iniciales = inicialesDe(socio.nombre);
 
       const tarjeta = document.createElement("article");
       tarjeta.className = "persona";
@@ -242,21 +262,59 @@
 
   /* ------------------------------------------------------------------
      RESTO DEL EQUIPO — lista agrupada por categoría (Asociados Senior,
-     Semi Senior, Juniors...), desde DATOS_EPARQ.equipoAmpliado
+     Semi Senior, Juniors...), desde DATOS_EPARQ.equipoAmpliado. Las fotos
+     son opcionales (círculo con iniciales mientras no haya foto real) y
+     su tamaño depende de la categoría, para reflejar la jerarquía.
      ------------------------------------------------------------------ */
   const contenedorEquipoAmpliado = document.querySelector("[data-equipo-ampliado]");
   if (contenedorEquipoAmpliado && typeof DATOS_EPARQ !== "undefined" && DATOS_EPARQ.equipoAmpliado) {
+    // Clase de tamaño según la categoría — si en el futuro se agrega una
+    // categoría con otro nombre, cae en "junior" (el tamaño más chico).
+    const CLASE_POR_CATEGORIA = {
+      "Asociados Senior": "equipo__categoria--senior",
+      "Semi Senior": "equipo__categoria--semi",
+      Juniors: "equipo__categoria--junior",
+    };
+
     contenedorEquipoAmpliado.innerHTML = DATOS_EPARQ.equipoAmpliado
-      .map(
-        (grupo) => `
-      <div class="equipo__categoria">
+      .map((grupo) => {
+        const claseTamano = CLASE_POR_CATEGORIA[grupo.categoria] || "equipo__categoria--junior";
+        const personasHtml = grupo.personas
+          .map((p) => {
+            const iniciales = inicialesDe(p.nombre);
+            const fotoHtml = p.foto
+              ? `<img src="${p.foto}" alt="Foto de ${p.nombre}" loading="lazy" />
+                 <div class="persona-chica__foto-placeholder" style="display:none;"><span>${iniciales}</span></div>`
+              : `<div class="persona-chica__foto-placeholder"><span>${iniciales}</span></div>`;
+            return `
+          <li class="persona-chica">
+            <div class="persona-chica__foto-wrap">${fotoHtml}</div>
+            <div class="persona-chica__datos">
+              <strong>${p.nombre}</strong>
+              <span>${p.titulo}</span>
+            </div>
+          </li>`;
+          })
+          .join("");
+
+        return `
+      <div class="equipo__categoria ${claseTamano}">
         <h4 class="equipo__categoria-titulo">${grupo.categoria}</h4>
-        <ul class="equipo__categoria-lista">
-          ${grupo.personas.map((p) => `<li><strong>${p.nombre}</strong><span>${p.titulo}</span></li>`).join("")}
-        </ul>
-      </div>`
-      )
+        <ul class="equipo__categoria-lista">${personasHtml}</ul>
+      </div>`;
+      })
       .join("");
+
+    // Si una foto de equipoAmpliado no existe todavía, mostramos el
+    // círculo de iniciales (mismo mecanismo que en las obras y los socios).
+    contenedorEquipoAmpliado.querySelectorAll(".persona-chica__foto-wrap img").forEach((img) => {
+      img.addEventListener("error", function () {
+        const wrap = img.parentElement;
+        img.remove();
+        const placeholder = wrap.querySelector(".persona-chica__foto-placeholder");
+        if (placeholder) placeholder.style.display = "flex";
+      });
+    });
   }
 
   /* ------------------------------------------------------------------

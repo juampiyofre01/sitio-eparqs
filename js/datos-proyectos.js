@@ -179,10 +179,11 @@ const DATOS_EPARQ = {
     contacto: {
       eyebrow: "Contacto",
       titulo: "Hablemos de tu proyecto",
-      emailsConsulta: [
-        "escarrad@gmail.com",
-        "mariano@webmigone.com.ar",
-      ],
+      // Clave que da Web3Forms (ver README.md, sección 6) — no hace falta
+      // crear ninguna cuenta, solo tu mail. Mientras esté vacía "", el botón
+      // de "Enviar consulta" avisa que todavía no está conectado, en vez de
+      // fallar en silencio.
+      formularioClave: "",
       contactosDirectos: [
         {
           nombre: "Diego Escarrá",

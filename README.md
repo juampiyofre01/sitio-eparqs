@@ -191,19 +191,18 @@ Si en algún momento el estudio suma un quinto servicio central, se agrega de la
 
 ---
 
-## 6. El formulario de contacto (y cómo pasarlo a Formspree)
+## 6. El formulario de contacto (Web3Forms)
 
-Ahora mismo, el formulario de la sección "Contacto" no tiene backend: al enviarlo, abre el programa de mail del visitante (Outlook, Gmail configurado en la compu, etc.) con el mensaje ya redactado. Es 100% funcional y no requiere configuración, pero depende de que el visitante tenga un cliente de mail configurado en su dispositivo.
+El formulario de la sección "Contacto" envía las consultas directo a una bandeja de mail usando [Web3Forms](https://web3forms.com), un servicio gratuito (hasta 250 mensajes por mes) que **no pide crear ninguna cuenta** — es solo un mail y una clave. El código ya está armado — solo falta conectar la clave:
 
-Si más adelante preferís que los mensajes lleguen directo a una bandeja de entrada (sin ese paso intermedio), podés conectar un servicio gratuito como [Formspree](https://formspree.io):
+1. Entrá a [web3forms.com](https://web3forms.com), poné el mail donde querés recibir las consultas y creá la clave ("Access Key"). Te la mandan a ese mail — no hay usuario ni contraseña que crear.
+2. Pegá esa clave en `contenido.contacto.formularioClave`, en `js/datos-proyectos.js` (o desde `herramientas/editor.html`, campo "Clave del formulario de contacto").
 
-1. Creá una cuenta gratuita en Formspree y un formulario nuevo — te van a dar una URL tipo `https://formspree.io/f/xxxxxxx`.
-2. En `index.html`, buscá la etiqueta `<form class="formulario" data-formulario-contacto>` (sección Contacto) y:
-   - Agregale el atributo `action="https://formspree.io/f/xxxxxxx"` (con tu URL) y `method="POST"`.
-   - Quitale el atributo `data-formulario-contacto` (así `main.js` deja de interceptar el envío).
-3. En `js/main.js`, podés borrar el bloque completo `FORMULARIO DE CONTACTO (sin backend...)` ya que no hace falta más.
+Listo — no hay ningún panel al que volver a entrar. Los mensajes llegan directo a esa casilla, como cualquier mail.
 
-Con eso, el formulario pasa a enviarse directo a Formspree y los mensajes llegan a tu mail sin que el visitante tenga que hacer nada más.
+Mientras `formularioClave` esté vacío, el botón "Enviar consulta" le avisa al visitante que el formulario todavía no está conectado, en vez de fallar en silencio.
+
+**Si en algún momento quieren que las consultas lleguen a más de un mail** (por ejemplo Diego y Mariano juntos), lo más simple es configurar una regla de reenvío automático en esa casilla — no hace falta tocar el sitio ni Web3Forms para eso.
 
 ---
 

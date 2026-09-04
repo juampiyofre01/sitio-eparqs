@@ -1077,6 +1077,20 @@ textarea:focus-visible {
   color: var(--color-texto-suave);
 }
 
+.formulario__estado {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.formulario__estado--ok {
+  color: var(--color-acento);
+}
+
+.formulario__estado--error {
+  color: #b3261e;
+}
+
 /* ----------------------------------------------------------------------
    6. FOOTER
    ---------------------------------------------------------------------- */

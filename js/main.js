@@ -260,34 +260,62 @@
   }
 
   /* ------------------------------------------------------------------
-     FORMULARIO DE CONTACTO (sin backend: abre el cliente de mail)
-     Ver README.md para instrucciones de cómo migrar esto a Formspree.
+     FORMULARIO DE CONTACTO (vía Web3Forms, sin backend propio ni cuenta)
+     La clave de Web3Forms vive en contenido.contacto.formularioClave
+     (datos-proyectos.js, o desde herramientas/editor.html). Ver README.md,
+     sección 6, para conseguir esa clave (no hace falta crear cuenta, solo
+     tu mail — te la mandan por correo).
      ------------------------------------------------------------------ */
+  const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
   const formulario = document.querySelector("[data-formulario-contacto]");
   if (formulario) {
-    formulario.addEventListener("submit", function (evento) {
+    const clave = DATOS_EPARQ.contenido.contacto.formularioClave;
+    const elEstado = formulario.querySelector("[data-formulario-estado]");
+    const botonEnviar = formulario.querySelector('button[type="submit"]');
+
+    formulario.addEventListener("submit", async function (evento) {
       evento.preventDefault();
 
-      const nombre = formulario.nombre.value.trim();
-      const email = formulario.email.value.trim();
-      const mensaje = formulario.mensaje.value.trim();
+      if (!clave) {
+        mostrarEstado("El formulario todavía no está conectado. Mientras tanto, escribinos directo a " + DATOS_EPARQ.estudio.email + ".", "error");
+        return;
+      }
 
-      const asunto = "Consulta desde la web — " + nombre;
-      const cuerpo =
-        "Nombre: " + nombre + "\n" +
-        "Email: " + email + "\n\n" +
-        mensaje;
+      const textoOriginal = botonEnviar.textContent;
+      botonEnviar.disabled = true;
+      botonEnviar.textContent = "Enviando...";
+      mostrarEstado("", "");
 
-      // A quién le llegan las consultas: contenido.contacto.emailsConsulta
-      // en datos-proyectos.js (si está vacío, cae al mail general del estudio)
-      const emailsConsulta = DATOS_EPARQ.contenido.contacto.emailsConsulta;
-      const destinatario = emailsConsulta && emailsConsulta.length ? emailsConsulta.join(",") : DATOS_EPARQ.estudio.email;
-      const enlaceMailto =
-        "mailto:" + destinatario +
-        "?subject=" + encodeURIComponent(asunto) +
-        "&body=" + encodeURIComponent(cuerpo);
+      // Armamos el cuerpo en JSON (formato que pide Web3Forms) a partir
+      // de los campos del formulario, sumando la clave y un asunto fijo.
+      const datosFormulario = new FormData(formulario);
+      const payload = { access_key: clave, subject: "Consulta desde la web" };
+      datosFormulario.forEach((valor, campo) => { payload[campo] = valor; });
 
-      window.location.href = enlaceMailto;
+      try {
+        const respuesta = await fetch(WEB3FORMS_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok || !resultado.success) throw new Error(resultado.message || "Web3Forms respondió con error");
+
+        formulario.reset();
+        mostrarEstado("¡Gracias! Tu consulta fue enviada, te vamos a responder a la brevedad.", "ok");
+      } catch (error) {
+        mostrarEstado("No pudimos enviar el mensaje. Escribinos directo a " + DATOS_EPARQ.estudio.email + ".", "error");
+      } finally {
+        botonEnviar.disabled = false;
+        botonEnviar.textContent = textoOriginal;
+      }
     });
+
+    function mostrarEstado(texto, tipo) {
+      if (!elEstado) return;
+      elEstado.textContent = texto;
+      elEstado.className = "formulario__estado" + (tipo ? " formulario__estado--" + tipo : "");
+    }
   }
 })();

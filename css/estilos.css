@@ -477,6 +477,42 @@ textarea:focus-visible {
 }
 
 /* ----------------------------------------------------------------------
+   5.0 CLIENTES (franja de logos)
+   ---------------------------------------------------------------------- */
+.seccion--clientes {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.clientes__eyebrow {
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-texto-suave);
+  margin-bottom: 2rem;
+}
+
+.seccion--clientes .contenedor {
+  max-width: 1650px;
+}
+
+.clientes__fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem 3.5rem;
+}
+
+.clientes__fila img {
+  max-height: 45px;
+  width: auto;
+  max-width: 172px;
+  object-fit: contain;
+}
+
+/* ----------------------------------------------------------------------
    5.1 EL ESTUDIO
    ---------------------------------------------------------------------- */
 .estudio__grid {
@@ -640,11 +676,53 @@ textarea:focus-visible {
    ancho de pantalla; acá la centramos con un tope generoso para que en
    monitores muy anchos las fotos no se estiren de más. */
 .portfolio__grilla {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr;
   gap: 2px;
   max-width: 1800px;
   margin: 2.5rem auto 0;
+}
+
+/* Cuando hay más de 3 filas, portfolio.js le pone un alto máximo y esta
+   clase — el degradado hacia blanco insinúa que hay más para ver abajo. */
+.portfolio__grilla--recortada {
+  overflow: hidden;
+}
+
+.portfolio__grilla--recortada::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, var(--color-fondo) 85%);
+  pointer-events: none;
+}
+
+.portfolio__ver-mas-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.portfolio__ver-mas {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.8rem;
+  border: 1px solid var(--color-borde);
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: border-color var(--transicion), color var(--transicion);
+}
+
+.portfolio__ver-mas:hover {
+  border-color: var(--color-acento);
+  color: var(--color-acento);
 }
 
 .tarjeta-obra {

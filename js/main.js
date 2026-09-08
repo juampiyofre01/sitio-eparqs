@@ -73,6 +73,27 @@
       }
     }
 
+    // --- Clientes (franja de logos) ---
+    // Si el arreglo de items queda vacío, se oculta toda la sección en vez
+    // de mostrar una franja en blanco.
+    const seccionClientes = document.querySelector("[data-seccion-clientes]");
+    if (seccionClientes && c.clientes) {
+      if (c.clientes.items && c.clientes.items.length) {
+        setTexto("[data-clientes-eyebrow]", c.clientes.eyebrow);
+        const filaClientes = document.querySelector("[data-clientes-fila]");
+        if (filaClientes) {
+          filaClientes.innerHTML = c.clientes.items
+            .map((cliente) => {
+              const estilo = cliente.escala ? ` style="max-height:${(45 * cliente.escala).toFixed(0)}px;max-width:${(172 * cliente.escala).toFixed(0)}px"` : "";
+              return `<img src="${cliente.logo}" alt="${escaparHtml(cliente.nombre)}" loading="lazy" title="${escaparHtml(cliente.nombre)}"${estilo} />`;
+            })
+            .join("");
+        }
+      } else {
+        seccionClientes.style.display = "none";
+      }
+    }
+
     // --- El estudio ---
     setTexto("[data-estudio-eyebrow]", c.estudio.eyebrow);
     setTexto("[data-estudio-titulo]", c.estudio.titulo);

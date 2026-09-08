@@ -23,7 +23,10 @@
 
   const contenedorPortfolio = document.querySelector("[data-portfolio-grilla]");
   const contenedorTabs = document.querySelector("[data-portfolio-tabs]");
+  const contenedorVerMas = document.querySelector("[data-portfolio-ver-mas]");
   const modal = document.querySelector("[data-modal]");
+
+  const FILAS_VISIBLES = 3;
 
   if (!contenedorPortfolio) return; // por si este script se carga en otra página sin portfolio
 
@@ -109,9 +112,18 @@
    * Vuelve a dibujar la grilla del portfolio con los proyectos de la
    * categoría activa (sin agrupar por estado de obra: eso ya no se muestra).
    */
+  // Cuántas filas se muestran ahora mismo en la categoría activa. Empieza
+  // en FILAS_VISIBLES y crece de a FILAS_VISIBLES cada vez que se aprieta
+  // "Ver más proyectos", hasta que entran todas.
+  let filasVisiblesActuales = FILAS_VISIBLES;
+
   function renderizarPortfolio() {
     const proyectosFiltrados = TODOS_LOS_PROYECTOS.filter((p) => categoriaDe(p) === categoriaActiva);
     contenedorPortfolio.innerHTML = "";
+    contenedorPortfolio.classList.remove("portfolio__grilla--recortada");
+    contenedorPortfolio.style.maxHeight = "";
+    if (contenedorVerMas) contenedorVerMas.innerHTML = "";
+    filasVisiblesActuales = FILAS_VISIBLES;
 
     if (proyectosFiltrados.length === 0) {
       contenedorPortfolio.innerHTML = `<p class="portfolio__vacio">No hay obras cargadas en esta categoría todavía.</p>`;
@@ -121,7 +133,58 @@
     proyectosFiltrados.forEach((proyecto) => {
       contenedorPortfolio.appendChild(crearTarjeta(proyecto));
     });
+
+    recortarGrillaSiHaceFalta();
   }
+
+  /**
+   * Recorta la grilla a "filasVisiblesActuales" filas (con degradado hacia
+   * blanco) y agrega el botón "Ver más proyectos" si todavía queda algo
+   * afuera. Cada click suma FILAS_VISIBLES más y vuelve a calcular — así
+   * el botón reaparece cada 3 filas hasta mostrar todo. También se
+   * recalcula en cada resize, porque la cantidad de columnas por fila
+   * cambia según el ancho de pantalla.
+   */
+  function recortarGrillaSiHaceFalta() {
+    const tarjetas = Array.from(contenedorPortfolio.children).filter((el) => el.classList.contains("tarjeta-obra"));
+    if (contenedorVerMas) contenedorVerMas.innerHTML = "";
+    contenedorPortfolio.classList.remove("portfolio__grilla--recortada");
+    contenedorPortfolio.style.maxHeight = "";
+    if (tarjetas.length === 0) return;
+
+    const primeraFilaTop = tarjetas[0].offsetTop;
+    const columnas = tarjetas.filter((t) => t.offsetTop === primeraFilaTop).length;
+    const totalFilas = Math.ceil(tarjetas.length / columnas);
+    if (totalFilas <= filasVisiblesActuales) return; // entra todo, no hace falta recortar
+
+    const itemsVisibles = columnas * filasVisiblesActuales;
+    const gapPx = parseFloat(getComputedStyle(contenedorPortfolio).rowGap) || 0;
+    const alturaFila = tarjetas[0].offsetHeight;
+    const alturaMax = alturaFila * filasVisiblesActuales + gapPx * (filasVisiblesActuales - 1);
+
+    contenedorPortfolio.style.maxHeight = alturaMax + "px";
+    contenedorPortfolio.classList.add("portfolio__grilla--recortada");
+
+    if (!contenedorVerMas) return;
+    const boton = document.createElement("button");
+    boton.type = "button";
+    boton.className = "portfolio__ver-mas";
+    boton.innerHTML = `Ver más proyectos <span aria-hidden="true">&darr;</span>`;
+    boton.addEventListener("click", function () {
+      filasVisiblesActuales += FILAS_VISIBLES;
+      recortarGrillaSiHaceFalta();
+    });
+    contenedorVerMas.appendChild(boton);
+  }
+
+  // El ancho de pantalla cambia la cantidad de columnas por fila, así que
+  // recalculamos el recorte al redimensionar (respeta cuántas filas ya
+  // había desplegado el usuario).
+  let temporizadorResize;
+  window.addEventListener("resize", function () {
+    clearTimeout(temporizadorResize);
+    temporizadorResize = setTimeout(recortarGrillaSiHaceFalta, 150);
+  });
 
   /**
    * Arma la barra de las 3 categorías, una sola vez al cargar.

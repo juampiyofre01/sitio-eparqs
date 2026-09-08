@@ -337,6 +337,19 @@
         </fieldset>
 
         <fieldset class="seccion-form">
+          <legend>Clientes (franja de logos)</legend>
+          <div class="campo-form">
+            <label>Título chico arriba de los logos</label>
+            <input type="text" data-c="contenido.clientes.eyebrow" />
+          </div>
+          <div class="campo-form">
+            <label>Clientes (uno por línea: Nombre | archivo-del-logo.svg)</label>
+            <textarea data-c="contenido.clientes.items" data-tipo="clientes" style="min-height:9rem"></textarea>
+            <small>El archivo va en <code>img/clientes/</code> — para agregar un cliente nuevo, guardá ahí su logo y sumá una línea. Si un logo se ve chico al lado de los demás, agregá un número al final (ej: " | 1.25" lo agranda 25%). Para sacar la sección entera, dejá esta lista vacía.</small>
+          </div>
+        </fieldset>
+
+        <fieldset class="seccion-form">
           <legend>El estudio</legend>
           <div class="campo-form">
             <label>Etiqueta pequeña</label>
@@ -618,6 +631,14 @@
           el.value = Array.isArray(valor)
             ? valor.map((p) => `${p.nombre || ""} — ${p.titulo || ""}${p.foto ? " | " + p.foto : ""}`).join("\n")
             : "";
+        } else if (el.dataset.tipo === "clientes") {
+          // Arreglo de {nombre, logo, escala} <-> una línea "Nombre | archivo.svg"
+          // por cliente, con "| 1.25" opcional al final si tiene escala.
+          el.value = Array.isArray(valor)
+            ? valor
+                .map((c) => `${c.nombre || ""} | ${(c.logo || "").replace(/^img\/clientes\//, "")}${c.escala ? " | " + c.escala : ""}`)
+                .join("\n")
+            : "";
         } else {
           el.value = valor === null || valor === undefined ? "" : valor;
         }
@@ -652,6 +673,22 @@
               return persona;
             });
           asignarPorRuta(contenidoEditable, el.dataset.c, personas);
+        } else if (el.dataset.tipo === "clientes") {
+          const clientes = el.value
+            .split("\n")
+            .map((l) => l.trim())
+            .filter((l) => l.length > 0)
+            .map((linea) => {
+              const [nombre, archivo, escala] = linea.split("|");
+              const cliente = {
+                nombre: (nombre || "").trim(),
+                logo: "img/clientes/" + (archivo || "").trim().replace(/^img\/clientes\//, ""),
+              };
+              const escalaNum = escala ? parseFloat(escala.trim()) : NaN;
+              if (!isNaN(escalaNum) && escalaNum > 0) cliente.escala = escalaNum;
+              return cliente;
+            });
+          asignarPorRuta(contenidoEditable, el.dataset.c, clientes);
         } else {
           asignarPorRuta(contenidoEditable, el.dataset.c, el.value.trim());
         }

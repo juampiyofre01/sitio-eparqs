@@ -124,6 +124,18 @@
     </section>
 
     <!-- ================================================================
+         CLIENTES — franja de logos, como señal de confianza. Se completa
+         solo desde js/datos-proyectos.js → contenido.clientes. Si el
+         arreglo queda vacío, toda la sección se oculta sola.
+         ================================================================ -->
+    <section id="clientes" class="seccion seccion--clientes" data-seccion-clientes>
+      <div class="contenedor">
+        <p class="clientes__eyebrow" data-clientes-eyebrow></p>
+        <div class="clientes__fila" data-clientes-fila></div>
+      </div>
+    </section>
+
+    <!-- ================================================================
          EL ESTUDIO — reseña institucional. Todo el texto de acá abajo
          (eyebrow, título, párrafos y los 4 datos destacados) se completa
          solo desde js/datos-proyectos.js → contenido.estudio
@@ -179,6 +191,12 @@
 
       <!-- Acá portfolio.js inyecta las tarjetas de obras -->
       <div class="portfolio__grilla" data-portfolio-grilla></div>
+
+      <!-- Si hay más de 3 filas, portfolio.js recorta la grilla y agrega acá
+           el botón "Ver más proyectos" para desplegar el resto -->
+      <div class="contenedor">
+        <div class="portfolio__ver-mas-wrap" data-portfolio-ver-mas></div>
+      </div>
     </section>
 
     <!-- ================================================================

@@ -119,6 +119,32 @@ const DATOS_EPARQ = {
       cta: "Conocé nuestro estudio",
       tamanioTitulo: "chico",
     },
+    // Franja de logos de clientes, entre la portada y "El estudio". Cada
+    // logo va en img/clientes/ — para agregar o sacar uno, sumás o borrás
+    // un bloque acá (y el archivo en esa carpeta). Si dejás el arreglo
+    // vacío [], la sección entera se oculta sola.
+    //   escala → (opcional) número como 1.25 para agrandar ese logo un 25%
+    //            respecto al resto (útil cuando el archivo tiene mucho
+    //            espacio en blanco alrededor y se ve chico al lado de otros).
+    clientes: {
+      eyebrow: "Empresas que confiaron en nosotros",
+      items: [
+        { nombre: "Mercedes-Benz", logo: "img/clientes/mercedes-benz.svg", escala: 1.25 },
+        { nombre: "Quilmes", logo: "img/clientes/quilmes.png", escala: 1.25 },
+        { nombre: "Plaza Logística", logo: "img/clientes/plaza-logistica.svg" },
+        { nombre: "DOW", logo: "img/clientes/dow.svg" },
+        { nombre: "OCASA", logo: "img/clientes/ocasa.svg" },
+        { nombre: "CCU", logo: "img/clientes/ccu.svg" },
+        { nombre: "Unilever", logo: "img/clientes/unilever.svg" },
+        { nombre: "MSU Agro", logo: "img/clientes/msu-agro.svg" },
+        { nombre: "Grupo Simpa", logo: "img/clientes/grupo-simpa.png" },
+        { nombre: "Grupo Corven", logo: "img/clientes/grupo-corven.png" },
+        { nombre: "Galletitas Trío", logo: "img/clientes/galletitas-trio.png" },
+        { nombre: "Yazaki", logo: "img/clientes/yazaki.svg" },
+        { nombre: "Grupo Govan", logo: "img/clientes/grupo-govan.png" },
+        { nombre: "Surfrigo", logo: "img/clientes/surfrigo.svg" },
+      ],
+    },
     estudio: {
       eyebrow: "El estudio",
       titulo: "Más de 30 años de trayectoria en obra industrial y corporativa",

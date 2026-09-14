@@ -73,6 +73,52 @@
       }
     }
 
+    // --- Hero: videos de fondo (opcional) ---
+    // Si contenido.hero.videos tiene elementos, se monta un único <video>
+    // (loop, mudo, arranca solo) que tapa la foto de portada, con un
+    // selector abajo para elegir la obra. Un solo <video> en el DOM (en vez
+    // de uno por obra) para no descargar de más: al elegir otra obra
+    // simplemente le cambiamos el src. Si el arreglo queda vacío, no se
+    // toca nada y se ve la foto de siempre.
+    const contenedorHeroVideos = document.querySelector("[data-hero-videos]");
+    const selectorHeroVideos = document.querySelector("[data-hero-selector]");
+    const heroVideos = c.hero.videos;
+    if (contenedorHeroVideos && selectorHeroVideos) {
+      if (Array.isArray(heroVideos) && heroVideos.length) {
+        const heroImg = document.querySelector(".hero__fondo > img");
+        const elVideo = document.createElement("video");
+        elVideo.autoplay = true;
+        elVideo.muted = true;
+        elVideo.loop = true;
+        elVideo.playsInline = true;
+        if (heroImg) elVideo.poster = heroImg.getAttribute("src");
+        contenedorHeroVideos.appendChild(elVideo);
+
+        function elegirHeroVideo(indice) {
+          const video = heroVideos[indice];
+          if (!video) return;
+          elVideo.src = video.archivo;
+          elVideo.play().catch(() => {});
+          selectorHeroVideos.querySelectorAll("button").forEach((boton, i) => {
+            boton.classList.toggle("activo", i === indice);
+          });
+        }
+
+        // El selector solo tiene sentido con más de una obra para elegir.
+        if (heroVideos.length > 1) {
+          selectorHeroVideos.innerHTML = heroVideos.map((video) => `<button type="button">${escaparHtml(video.nombre)}</button>`).join("");
+          selectorHeroVideos.querySelectorAll("button").forEach((boton, i) => {
+            boton.addEventListener("click", () => elegirHeroVideo(i));
+          });
+        } else {
+          selectorHeroVideos.style.display = "none";
+        }
+        elegirHeroVideo(0);
+      } else {
+        selectorHeroVideos.style.display = "none";
+      }
+    }
+
     // --- Clientes (franja de logos) ---
     // Si el arreglo de items queda vacío, se oculta toda la sección en vez
     // de mostrar una franja en blanco.

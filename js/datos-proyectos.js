@@ -118,6 +118,12 @@ const DATOS_EPARQ = {
     hero: {
       cta: "Conocé nuestro estudio",
       tamanioTitulo: "chico",
+      // Videos de fondo del hero, en loop (mudos, arrancan solos), con un
+      // selector para elegir la obra. El archivo va en video/ — subilo ya
+      // comprimido para web (liviano: unos 5-10 MB por cada 20 segundos,
+      // no el archivo crudo del drone). Si el arreglo queda vacío, se
+      // muestra la foto de siempre (img/hero/portada.jpg) sin cambios.
+      videos: [{ nombre: "Mercedes-Benz", archivo: "video/mercedes-benz-hero.mp4" }],
     },
     // Franja de logos de clientes, entre la portada y "El estudio". Cada
     // logo va en img/clientes/ — para agregar o sacar uno, sumás o borrás

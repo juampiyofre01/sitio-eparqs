@@ -334,6 +334,15 @@
             <label>Texto del botón (vacío = sin botón)</label>
             <input type="text" data-c="contenido.hero.cta" />
           </div>
+          <div class="campo-form">
+            <label>Videos de fondo (uno por línea: Nombre de la obra | archivo.mp4)</label>
+            <textarea data-c="contenido.hero.videos" data-tipo="videosHero" style="min-height:6rem"></textarea>
+            <small
+              >El archivo va en <code>video/</code> — subilo ya comprimido para web (liviano, no el crudo del drone). Con más de un video aparece un
+              selector para elegir la obra; con uno solo, se reproduce directo. Si dejás esta lista vacía, se muestra la foto de portada de
+              siempre.</small
+            >
+          </div>
         </fieldset>
 
         <fieldset class="seccion-form">
@@ -639,6 +648,9 @@
                 .map((c) => `${c.nombre || ""} | ${(c.logo || "").replace(/^img\/clientes\//, "")}${c.escala ? " | " + c.escala : ""}`)
                 .join("\n")
             : "";
+        } else if (el.dataset.tipo === "videosHero") {
+          // Arreglo de {nombre, archivo} <-> una línea "Nombre | archivo.mp4" por video.
+          el.value = Array.isArray(valor) ? valor.map((v) => `${v.nombre || ""} | ${(v.archivo || "").replace(/^video\//, "")}`).join("\n") : "";
         } else {
           el.value = valor === null || valor === undefined ? "" : valor;
         }
@@ -689,6 +701,19 @@
               return cliente;
             });
           asignarPorRuta(contenidoEditable, el.dataset.c, clientes);
+        } else if (el.dataset.tipo === "videosHero") {
+          const videos = el.value
+            .split("\n")
+            .map((l) => l.trim())
+            .filter((l) => l.length > 0)
+            .map((linea) => {
+              const [nombre, archivo] = linea.split("|");
+              return {
+                nombre: (nombre || "").trim(),
+                archivo: "video/" + (archivo || "").trim().replace(/^video\//, ""),
+              };
+            });
+          asignarPorRuta(contenidoEditable, el.dataset.c, videos);
         } else {
           asignarPorRuta(contenidoEditable, el.dataset.c, el.value.trim());
         }

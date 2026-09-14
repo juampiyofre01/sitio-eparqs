@@ -346,6 +346,16 @@ textarea:focus-visible {
   max-width: 320px;
 }
 
+/* Si contenido.hero.videos tiene elementos, acá se monta un único <video>
+   (ver main.js) que tapa la foto de portada de abajo. Si queda vacío, esta
+   capa no tiene contenido y la foto se ve normal, sin cambios. */
+.hero__videos video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .hero__overlay {
   position: absolute;
   inset: 0;
@@ -474,6 +484,40 @@ textarea:focus-visible {
   background: var(--color-acento);
   margin: 0 0.9rem;
   flex-shrink: 0;
+}
+
+/* Selector de obra cuando hay más de un video de fondo (ver
+   contenido.hero.videos en datos-proyectos.js). Si hay un solo video, o
+   ninguno, queda vacío y no se muestra (ver main.js). */
+.hero__selector {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.hero__selector button {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transicion), border-color var(--transicion), color var(--transicion);
+}
+
+.hero__selector button:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  color: #fff;
+}
+
+.hero__selector button.activo {
+  background: var(--color-fondo);
+  border-color: var(--color-fondo);
+  color: var(--color-texto);
 }
 
 /* ----------------------------------------------------------------------

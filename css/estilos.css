@@ -195,9 +195,11 @@ textarea:focus-visible {
   transition: background var(--transicion), box-shadow var(--transicion), padding var(--transicion);
 }
 
-/* Franja oscura fija detrás del header, independiente de la foto de
-   portada: así el logo y el menú se leen bien sin importar qué imagen
-   uses de fondo (no depende de que esa zona de la foto sea oscura). */
+/* Franja oscura detrás del header, independiente de la foto/video de
+   portada: así el logo y el menú se leen bien sin importar qué imagen uses
+   de fondo (no depende de que esa zona de la foto sea oscura). Oculta por
+   default (para que se vea bien la foto/video, sin nada oscureciéndola) y
+   aparece solo al pasar el mouse por esa franja, igual que en mraa.com.ar. */
 .header::before {
   content: "";
   position: absolute;
@@ -206,7 +208,12 @@ textarea:focus-visible {
   z-index: -1;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
   pointer-events: none;
+  opacity: 0;
   transition: opacity var(--transicion);
+}
+
+.header:hover::before {
+  opacity: 1;
 }
 
 .header.header--con-fondo::before {
@@ -367,19 +374,11 @@ textarea:focus-visible {
   position: absolute;
   inset: 0;
   z-index: -1;
-  /* Viñeta: oscuro solo en una franja fina arriba, para que el menú y el
-     título se lean bien (el header además tiene su propio scrim
-     independiente, ver .header::before). Del resto para abajo queda
-     totalmente clara, así la foto/video de fondo se ve con su luz real. */
-  background:
-    linear-gradient(90deg, rgba(10,10,9,0.05) 0%, rgba(10,10,9,0.22) 100%),
-    linear-gradient(
-      180deg,
-      rgba(8,8,7,0.55) 0%,
-      rgba(8,8,7,0.15) 18%,
-      rgba(8,8,7,0) 32%,
-      rgba(8,8,7,0) 100%
-    );
+  /* Sin oscurecer nada por default, para que la foto/video de fondo se vea
+     con toda su luz — el contraste para el menú lo da .header::before, que
+     solo aparece al pasar el mouse por esa franja (ver más arriba). Queda
+     nomás este tinte horizontal, muy sutil, como leve efecto de profundidad. */
+  background: linear-gradient(90deg, rgba(10, 10, 9, 0.05) 0%, rgba(10, 10, 9, 0.22) 100%);
 }
 
 .hero__contenido {

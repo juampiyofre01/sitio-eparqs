@@ -96,12 +96,6 @@ const DATOS_EPARQ = {
     ],
     email: "estudio@eparquitectos.com.ar",
     instagram: "https://www.instagram.com/eparqs_?utm_source=qr",
-    servicios: [
-      "Proyecto",
-      "Dirección de obra",
-      "Gerenciamiento",
-      "Interiorismo",
-    ],
     descripcion: "Estudio de arquitectura establecido desde 1996, dedicado al diseño arquitectónico, la ingeniería y el interiorismo para clientes locales e internacionales. Nuestra obra abarca edificios industriales, centros logísticos, oficinas corporativas y desarrollos residenciales y náuticos. Somos miembros de Sustainable Development Advisors (SDA) y contamos con una extensa trayectoria en edificios certificados LEED por el USGBC.",
   },
   // ===== FIN: estudio =====
@@ -116,14 +110,17 @@ const DATOS_EPARQ = {
   // ===== INICIO: contenido (no toques esta línea) =====
   contenido: {
     hero: {
-      cta: "Conocé nuestro estudio",
+      cta: "",
       tamanioTitulo: "chico",
       // Videos de fondo del hero, en loop (mudos, arrancan solos), con un
       // selector para elegir la obra. El archivo va en video/ — subilo ya
       // comprimido para web (liviano: unos 5-10 MB por cada 20 segundos,
       // no el archivo crudo del drone). Si el arreglo queda vacío, se
       // muestra la foto de siempre (img/hero/portada.jpg) sin cambios.
-      videos: [{ nombre: "Mercedes-Benz", archivo: "video/mercedes-benz-hero.mp4" }],
+      //   poster → (opcional) una foto que sea el primer cuadro del video,
+      //            para que no se vea la portada vieja ni un parpadeo negro
+      //            mientras el video todavía está cargando.
+      videos: [{ nombre: "Mercedes-Benz", archivo: "video/mercedes-benz-hero.mp4", poster: "video/mercedes-benz-hero-poster.jpg" }],
     },
     // Franja de logos de clientes, entre la portada y "El estudio". Cada
     // logo va en img/clientes/ — para agregar o sacar uno, sumás o borrás

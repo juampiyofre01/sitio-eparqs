@@ -335,11 +335,13 @@
             <input type="text" data-c="contenido.hero.cta" />
           </div>
           <div class="campo-form">
-            <label>Videos de fondo (uno por línea: Nombre de la obra | archivo.mp4)</label>
+            <label>Videos de fondo (uno por línea: Nombre de la obra | archivo.mp4 | poster.jpg)</label>
             <textarea data-c="contenido.hero.videos" data-tipo="videosHero" style="min-height:6rem"></textarea>
             <small
-              >El archivo va en <code>video/</code> — subilo ya comprimido para web (liviano, no el crudo del drone). Con más de un video aparece un
-              selector para elegir la obra; con uno solo, se reproduce directo. Si dejás esta lista vacía, se muestra la foto de portada de
+              >El archivo va en <code>video/</code> — subilo ya comprimido para web (liviano, no el crudo del drone). El poster es opcional: una foto
+              que sea el primer cuadro del video, para que no haya parpadeo mientras carga (sin uno, se ve la portada vieja un instante). Con más de
+              un video aparece un selector para elegir la obra; con uno solo, se reproduce directo. Si dejás esta lista vacía, se muestra la foto de
+              portada de
               siempre.</small
             >
           </div>
@@ -649,8 +651,13 @@
                 .join("\n")
             : "";
         } else if (el.dataset.tipo === "videosHero") {
-          // Arreglo de {nombre, archivo} <-> una línea "Nombre | archivo.mp4" por video.
-          el.value = Array.isArray(valor) ? valor.map((v) => `${v.nombre || ""} | ${(v.archivo || "").replace(/^video\//, "")}`).join("\n") : "";
+          // Arreglo de {nombre, archivo, poster} <-> una línea "Nombre | archivo.mp4"
+          // por video, con "| poster.jpg" opcional al final si tiene poster.
+          el.value = Array.isArray(valor)
+            ? valor
+                .map((v) => `${v.nombre || ""} | ${(v.archivo || "").replace(/^video\//, "")}${v.poster ? " | " + v.poster.replace(/^video\//, "") : ""}`)
+                .join("\n")
+            : "";
         } else {
           el.value = valor === null || valor === undefined ? "" : valor;
         }
@@ -707,11 +714,13 @@
             .map((l) => l.trim())
             .filter((l) => l.length > 0)
             .map((linea) => {
-              const [nombre, archivo] = linea.split("|");
-              return {
+              const [nombre, archivo, poster] = linea.split("|");
+              const video = {
                 nombre: (nombre || "").trim(),
                 archivo: "video/" + (archivo || "").trim().replace(/^video\//, ""),
               };
+              if (poster && poster.trim()) video.poster = "video/" + poster.trim().replace(/^video\//, "");
+              return video;
             });
           asignarPorRuta(contenidoEditable, el.dataset.c, videos);
         } else {

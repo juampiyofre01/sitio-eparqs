@@ -60,10 +60,6 @@
       }
     }
     setTexto("[data-hero-bajada]", c.hero.bajada);
-    const listaServiciosHero = document.querySelector("[data-hero-servicios]");
-    if (listaServiciosHero) {
-      listaServiciosHero.innerHTML = estudioInfo.servicios.map((s) => `<li>${s}</li>`).join("");
-    }
     const botonCta = document.querySelector("[data-hero-cta]");
     if (botonCta) {
       if (c.hero.cta) {
@@ -91,12 +87,17 @@
         elVideo.muted = true;
         elVideo.loop = true;
         elVideo.playsInline = true;
-        if (heroImg) elVideo.poster = heroImg.getAttribute("src");
         contenedorHeroVideos.appendChild(elVideo);
 
         function elegirHeroVideo(indice) {
           const video = heroVideos[indice];
           if (!video) return;
+          // El poster (idealmente el primer cuadro del propio video, ver
+          // "poster" en datos-proyectos.js) tapa la foto de portada vieja
+          // mientras el video todavía está cargando, para que no haya
+          // parpadeo. Si ese video no tiene poster propio, usamos la foto
+          // de portada como respaldo antes que dejarlo en negro.
+          elVideo.poster = video.poster || (heroImg ? heroImg.getAttribute("src") : "");
           elVideo.src = video.archivo;
           elVideo.play().catch(() => {});
           selectorHeroVideos.querySelectorAll("button").forEach((boton, i) => {

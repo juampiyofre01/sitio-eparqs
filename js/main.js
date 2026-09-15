@@ -183,10 +183,15 @@
     setTexto("[data-obras-eyebrow]", c.obras.eyebrow);
     setTexto("[data-obras-titulo]", c.obras.titulo);
     setTexto("[data-obras-bajada]", c.obras.bajada);
+    // El "download" recién se agrega acá, junto con el href real, y no
+    // viene puesto en el HTML — así, si por cualquier motivo este script
+    // tarda en correr, el botón no puede terminar bajando la página actual
+    // en vez del PDF.
     const botonAntecedentes = document.querySelector("[data-obras-antecedentes]");
     if (botonAntecedentes) {
       if (c.obras.pdfAntecedentes) {
         botonAntecedentes.href = c.obras.pdfAntecedentes;
+        botonAntecedentes.setAttribute("download", "");
       } else {
         botonAntecedentes.style.display = "none";
       }

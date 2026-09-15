@@ -209,6 +209,10 @@ const DATOS_EPARQ = {
       eyebrow: "Portfolio",
       titulo: "Obras",
       bajada: "Una selección de proyectos en ejecución y concluidos, para clientes como Mercedes-Benz, Quilmes, Plaza Logística, DOW, OCASA, CCU-Servimar, Unilever, Garbarino, MSU Agro y Grupo Simpa, entre otros.",
+      // Botón para descargar el PDF de antecedentes del estudio, al lado del
+      // encabezado de esta sección. El archivo va en archivos/. Si dejás
+      // este campo vacío, el botón se oculta solo.
+      pdfAntecedentes: "archivos/antecedentes-eparqs.pdf",
     },
     equipo: {
       eyebrow: "Equipo",

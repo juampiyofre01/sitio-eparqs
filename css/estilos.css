@@ -154,6 +154,21 @@ textarea:focus-visible {
   font-size: 1.05rem;
 }
 
+/* Fila del encabezado de Obras + botón de descarga de antecedentes, uno al
+   lado del otro en desktop; en pantallas angostas el botón cae debajo. */
+.obras__encabezado-fila {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.obras__antecedentes {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .boton {
   display: inline-block;
   padding: 0.85rem 1.75rem;

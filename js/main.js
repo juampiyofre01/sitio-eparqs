@@ -183,6 +183,14 @@
     setTexto("[data-obras-eyebrow]", c.obras.eyebrow);
     setTexto("[data-obras-titulo]", c.obras.titulo);
     setTexto("[data-obras-bajada]", c.obras.bajada);
+    const botonAntecedentes = document.querySelector("[data-obras-antecedentes]");
+    if (botonAntecedentes) {
+      if (c.obras.pdfAntecedentes) {
+        botonAntecedentes.href = c.obras.pdfAntecedentes;
+      } else {
+        botonAntecedentes.style.display = "none";
+      }
+    }
     setTexto("[data-equipo-eyebrow]", c.equipo.eyebrow);
     setTexto("[data-equipo-titulo]", c.equipo.titulo);
     setTexto("[data-contacto-eyebrow]", c.contacto.eyebrow);

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://eparqs.com.ar/sitemap.xml

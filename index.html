@@ -274,16 +274,6 @@
             <button type="submit" class="boton">Enviar consulta</button>
             <p class="formulario__nota">Al enviar se abre tu programa de mail, con la consulta ya cargada.</p>
             <p class="formulario__estado" data-formulario-estado></p>
-
-            <!-- Respaldo para cuando el navegador no tiene ningún programa
-                 de mail configurado para abrir mailto: (pasa seguido con
-                 Gmail usado solo desde el navegador, sin nada instalado).
-                 Queda oculto hasta que se envía el formulario. -->
-            <div class="formulario__respaldo" data-formulario-respaldo hidden>
-              <p>¿No se abrió tu programa de mail? Copiá el mensaje y mandalo vos directo a <a data-formulario-respaldo-mailto href="#"></a>:</p>
-              <textarea data-formulario-respaldo-texto readonly rows="5"></textarea>
-              <button type="button" class="boton" data-formulario-respaldo-copiar>Copiar mensaje</button>
-            </div>
           </form>
         </div>
       </div>

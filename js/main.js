@@ -435,10 +435,6 @@
   if (formulario) {
     const emailDestino = DATOS_EPARQ.contenido.contacto.emailFormulario;
     const elEstado = formulario.querySelector("[data-formulario-estado]");
-    const elRespaldo = formulario.querySelector("[data-formulario-respaldo]");
-    const elRespaldoMailto = formulario.querySelector("[data-formulario-respaldo-mailto]");
-    const elRespaldoTexto = formulario.querySelector("[data-formulario-respaldo-texto]");
-    const botonCopiar = formulario.querySelector("[data-formulario-respaldo-copiar]");
 
     formulario.addEventListener("submit", function (evento) {
       evento.preventDefault();
@@ -456,35 +452,9 @@
       const cuerpo = `${mensaje}\n\n—\n${nombre}\n${email}`;
       const linkMailto = `mailto:${emailDestino}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
 
-      // No hay forma de saber desde JS si el navegador realmente tiene un
-      // programa de mail para abrir esto (si no tiene ninguno configurado,
-      // "mailto:" simplemente no hace nada, sin avisar). Por eso, además
-      // de intentarlo, siempre mostramos el respaldo para copiar y pegar
-      // a mano — así nadie se queda sin forma de mandar la consulta.
       window.location.href = linkMailto;
-      mostrarEstado("Intentamos abrir tu programa de mail con la consulta ya cargada.", "ok");
-
-      if (elRespaldo && elRespaldoMailto && elRespaldoTexto) {
-        elRespaldoMailto.href = "mailto:" + emailDestino;
-        elRespaldoMailto.textContent = emailDestino;
-        elRespaldoTexto.value = cuerpo;
-        elRespaldo.hidden = false;
-      }
+      mostrarEstado("Se abrió tu programa de mail con la consulta ya cargada — solo falta que la envíes desde ahí.", "ok");
     });
-
-    if (botonCopiar && elRespaldoTexto) {
-      botonCopiar.addEventListener("click", async function () {
-        const textoOriginal = botonCopiar.textContent;
-        try {
-          await navigator.clipboard.writeText(elRespaldoTexto.value);
-          botonCopiar.textContent = "¡Copiado!";
-        } catch (error) {
-          elRespaldoTexto.select();
-          botonCopiar.textContent = "Seleccionado — Ctrl+C para copiar";
-        }
-        setTimeout(() => { botonCopiar.textContent = textoOriginal; }, 2500);
-      });
-    }
 
     function mostrarEstado(texto, tipo) {
       if (!elEstado) return;

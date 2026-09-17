@@ -221,6 +221,10 @@ const DATOS_EPARQ = {
     contacto: {
       eyebrow: "Contacto",
       titulo: "Hablemos de tu proyecto",
+      // Clave de Web3Forms — las consultas del formulario llegan a
+      // eparqs@gmail.com (casilla temporal, hasta que estén los mails con
+      // dominio propio). Ver README.md, sección 6, para cambiarla.
+      formularioClave: "410e93ce-360d-48da-99cb-445434a68feb",
       contactosDirectos: [
         {
           nombre: "Diego Escarrá",

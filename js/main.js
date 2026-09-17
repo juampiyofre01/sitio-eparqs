@@ -453,7 +453,7 @@
       // Armamos el cuerpo en JSON (formato que pide Web3Forms) a partir
       // de los campos del formulario, sumando la clave y un asunto fijo.
       const datosFormulario = new FormData(formulario);
-      const payload = { access_key: clave, subject: "Consulta desde la web" };
+      const payload = { access_key: clave, subject: "CONSULTA DESDE WEB EPARQS" };
       datosFormulario.forEach((valor, campo) => { payload[campo] = valor; });
 
       try {

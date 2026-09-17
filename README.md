@@ -191,19 +191,18 @@ Si en algún momento el estudio suma un quinto servicio central, se agrega de la
 
 ---
 
-## 6. El formulario de contacto (mailto:)
+## 6. El formulario de contacto (Web3Forms)
 
-El formulario de la sección "Contacto" no manda el mensaje solo: arma un link `mailto:` con lo que la persona escribió y le abre su propio programa de mail (Gmail, Outlook, Apple Mail, el que tenga configurado en su computadora/celular) con el destinatario, asunto y cuerpo ya cargados — la persona solo tiene que apretar "Enviar" ahí. No depende de ningún servicio externo ni cuenta que mantener.
+El formulario de la sección "Contacto" envía las consultas directo a una bandeja de mail usando [Web3Forms](https://web3forms.com), un servicio gratuito (hasta 250 mensajes por mes) que **no pide crear ninguna cuenta** — es solo un mail y una clave. El código ya está armado — solo falta conectar la clave:
 
-Para cambiar a qué mail llegan las consultas:
+1. Entrá a [web3forms.com](https://web3forms.com), poné el mail donde querés recibir las consultas y creá la clave ("Access Key"). Te la mandan a ese mail — no hay usuario ni contraseña que crear.
+2. Pegá esa clave en `contenido.contacto.formularioClave`, en `js/datos-proyectos.js` (o desde `herramientas/editor.html`, campo "Clave del formulario de contacto").
 
-1. Editá `contenido.contacto.emailFormulario`, en `js/datos-proyectos.js` (o desde `herramientas/editor.html`, sección "Contacto").
+Listo — no hay ningún panel al que volver a entrar. Los mensajes llegan directo a esa casilla, como cualquier mail.
 
-Mientras `emailFormulario` esté vacío, el botón "Enviar consulta" le avisa al visitante que el formulario todavía no está conectado, en vez de fallar en silencio.
+Mientras `formularioClave` esté vacío, el botón "Enviar consulta" le avisa al visitante que el formulario todavía no está conectado, en vez de fallar en silencio.
 
-**Si en algún momento quieren que las consultas lleguen a más de un mail** (por ejemplo Diego y Mariano juntos), lo más simple es configurar una regla de reenvío automático en esa casilla — no hace falta tocar el sitio para eso.
-
-Ojo: como depende del programa de mail del visitante, si alguien no tiene uno configurado en el navegador/dispositivo que está usando, no le va a abrir nada. Es la limitación típica de `mailto:` — mucho más simple que un formulario con backend, pero no 100% infalible en todos los dispositivos.
+**Si en algún momento quieren que las consultas lleguen a más de un mail** (por ejemplo Diego y Mariano juntos), lo más simple es configurar una regla de reenvío automático en esa casilla — no hace falta tocar el sitio ni Web3Forms para eso.
 
 ---
 

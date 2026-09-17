@@ -252,11 +252,12 @@
           <!--
             FORMULARIO DE CONTACTO
             Envía las consultas directo a una bandeja de mail vía Web3Forms
-            (sin backend propio ni servicio externo). El destinatario se
-            configura en contenido.contacto.emailFormulario, en
-            datos-proyectos.js (o desde herramientas/editor.html). Mientras
-            ese campo esté vacío, el formulario avisa que todavía no está
-            conectado en vez de fallar en silencio.
+            (sin backend propio y sin cuenta que mantener). La clave se
+            configura en contenido.contacto.formularioClave, en
+            datos-proyectos.js (o desde herramientas/editor.html) — ver
+            README.md, sección 6, para conseguirla (solo hace falta tu mail,
+            no una cuenta). Mientras ese campo esté vacío, el formulario
+            avisa que todavía no está conectado en vez de fallar en silencio.
           -->
           <form class="formulario" data-formulario-contacto>
             <div class="campo">
@@ -271,8 +272,10 @@
               <label for="campo-mensaje">Mensaje</label>
               <textarea id="campo-mensaje" name="mensaje" required></textarea>
             </div>
+            <!-- Campo trampa para bots (convención de Web3Forms): queda oculto para personas -->
+            <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
             <button type="submit" class="boton">Enviar consulta</button>
-            <p class="formulario__nota">Al enviar se abre tu programa de mail, con la consulta ya cargada.</p>
+            <p class="formulario__nota">Tu consulta nos llega directo, sin que tengas que abrir tu propio mail.</p>
             <p class="formulario__estado" data-formulario-estado></p>
           </form>
         </div>

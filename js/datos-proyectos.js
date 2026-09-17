@@ -221,6 +221,12 @@ const DATOS_EPARQ = {
     contacto: {
       eyebrow: "Contacto",
       titulo: "Hablemos de tu proyecto",
+      // A dónde van las consultas del formulario: le abre al visitante su
+      // propio programa de mail, con este destinatario y los datos del
+      // formulario ya cargados en el asunto/cuerpo. Es la casilla temporal
+      // mientras no estén armados los mails con el dominio propio
+      // (estudio@eparqs.com.ar) — cuando estén, solo hay que cambiar esto.
+      emailFormulario: "eparqs@gmail.com",
       contactosDirectos: [
         {
           nombre: "Diego Escarrá",

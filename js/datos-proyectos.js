@@ -94,7 +94,7 @@ const DATOS_EPARQ = {
         direccion: "Av. Sucre 1869, oficina 28, San Isidro, Provincia de Buenos Aires",
       },
     ],
-    email: "estudio@eparquitectos.com.ar",
+    email: "eparqs@gmail.com",
     instagram: "https://www.instagram.com/eparqs_?utm_source=qr",
     descripcion: "Estudio de arquitectura establecido desde 1996, dedicado al diseño arquitectónico, la ingeniería y el interiorismo para clientes locales e internacionales. Nuestra obra abarca edificios industriales, centros logísticos, oficinas corporativas y desarrollos residenciales y náuticos. Somos miembros de Sustainable Development Advisors (SDA) y contamos con una extensa trayectoria en edificios certificados LEED por el USGBC.",
   },

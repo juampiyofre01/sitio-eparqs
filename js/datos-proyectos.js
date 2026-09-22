@@ -110,42 +110,76 @@ const DATOS_EPARQ = {
   // ===== INICIO: contenido (no toques esta línea) =====
   contenido: {
     hero: {
-      cta: "",
       tamanioTitulo: "chico",
-      // Videos de fondo del hero, en loop (mudos, arrancan solos), con un
-      // selector para elegir la obra. El archivo va en video/ — subilo ya
-      // comprimido para web (liviano: unos 5-10 MB por cada 20 segundos,
-      // no el archivo crudo del drone). Si el arreglo queda vacío, se
-      // muestra la foto de siempre (img/hero/portada.jpg) sin cambios.
-      //   poster → (opcional) una foto que sea el primer cuadro del video,
-      //            para que no se vea la portada vieja ni un parpadeo negro
-      //            mientras el video todavía está cargando.
-      videos: [{ nombre: "Mercedes-Benz", archivo: "video/mercedes-benz-hero.mp4", poster: "video/mercedes-benz-hero-poster.jpg" }],
+      videos: [
+        {
+          nombre: "Mercedes-Benz",
+          archivo: "video/mercedes-benz-hero.mp4",
+          poster: "video/mercedes-benz-hero-poster.jpg",
+        },
+      ],
     },
-    // Franja de logos de clientes, entre la portada y "El estudio". Cada
-    // logo va en img/clientes/ — para agregar o sacar uno, sumás o borrás
-    // un bloque acá (y el archivo en esa carpeta). Si dejás el arreglo
-    // vacío [], la sección entera se oculta sola.
-    //   escala → (opcional) número como 1.25 para agrandar ese logo un 25%
-    //            respecto al resto (útil cuando el archivo tiene mucho
-    //            espacio en blanco alrededor y se ve chico al lado de otros).
     clientes: {
       eyebrow: "Empresas que confiaron en nosotros",
       items: [
-        { nombre: "Mercedes-Benz", logo: "img/clientes/mercedes-benz.svg", escala: 1.25 },
-        { nombre: "Quilmes", logo: "img/clientes/quilmes.png", escala: 1.25 },
-        { nombre: "Plaza Logística", logo: "img/clientes/plaza-logistica.svg" },
-        { nombre: "DOW", logo: "img/clientes/dow.svg" },
-        { nombre: "OCASA", logo: "img/clientes/ocasa.svg" },
-        { nombre: "CCU", logo: "img/clientes/ccu.svg" },
-        { nombre: "Unilever", logo: "img/clientes/unilever.svg" },
-        { nombre: "MSU Agro", logo: "img/clientes/msu-agro.svg" },
-        { nombre: "Grupo Simpa", logo: "img/clientes/grupo-simpa.png" },
-        { nombre: "Grupo Corven", logo: "img/clientes/grupo-corven.png" },
-        { nombre: "Galletitas Trío", logo: "img/clientes/galletitas-trio.png" },
-        { nombre: "Yazaki", logo: "img/clientes/yazaki.svg" },
-        { nombre: "Grupo Govan", logo: "img/clientes/grupo-govan.png" },
-        { nombre: "Surfrigo", logo: "img/clientes/surfrigo.svg" },
+        {
+          nombre: "Mercedes-Benz",
+          logo: "img/clientes/mercedes-benz.svg",
+          escala: 1.25,
+        },
+        {
+          nombre: "Quilmes",
+          logo: "img/clientes/quilmes.png",
+          escala: 1.25,
+        },
+        {
+          nombre: "Plaza Logística",
+          logo: "img/clientes/plaza-logistica.svg",
+        },
+        {
+          nombre: "DOW",
+          logo: "img/clientes/dow.svg",
+        },
+        {
+          nombre: "OCASA",
+          logo: "img/clientes/ocasa.svg",
+        },
+        {
+          nombre: "CCU",
+          logo: "img/clientes/ccu.svg",
+        },
+        {
+          nombre: "Unilever",
+          logo: "img/clientes/unilever.svg",
+        },
+        {
+          nombre: "MSU Agro",
+          logo: "img/clientes/msu-agro.svg",
+        },
+        {
+          nombre: "Grupo Simpa",
+          logo: "img/clientes/grupo-simpa.png",
+        },
+        {
+          nombre: "Grupo Corven",
+          logo: "img/clientes/grupo-corven.png",
+        },
+        {
+          nombre: "Galletitas Trío",
+          logo: "img/clientes/galletitas-trio.png",
+        },
+        {
+          nombre: "Yazaki",
+          logo: "img/clientes/yazaki.svg",
+        },
+        {
+          nombre: "Grupo Govan",
+          logo: "img/clientes/grupo-govan.png",
+        },
+        {
+          nombre: "Surfrigo",
+          logo: "img/clientes/surfrigo.svg",
+        },
       ],
     },
     estudio: {
@@ -209,9 +243,6 @@ const DATOS_EPARQ = {
       eyebrow: "Portfolio",
       titulo: "Obras",
       bajada: "Una selección de proyectos en ejecución y concluidos, para clientes como Mercedes-Benz, Quilmes, Plaza Logística, DOW, OCASA, CCU-Servimar, Unilever, Garbarino, MSU Agro y Grupo Simpa, entre otros.",
-      // Botón para descargar el PDF de antecedentes del estudio, al lado del
-      // encabezado de esta sección. El archivo va en archivos/. Si dejás
-      // este campo vacío, el botón se oculta solo.
       pdfAntecedentes: "archivos/antecedentes-eparqs.pdf",
     },
     equipo: {
@@ -221,9 +252,6 @@ const DATOS_EPARQ = {
     contacto: {
       eyebrow: "Contacto",
       titulo: "Hablemos de tu proyecto",
-      // Clave de Web3Forms — las consultas del formulario llegan a
-      // eparqs@gmail.com (casilla temporal, hasta que estén los mails con
-      // dominio propio). Ver README.md, sección 6, para cambiarla.
       formularioClave: "410e93ce-360d-48da-99cb-445434a68feb",
       contactosDirectos: [
         {
@@ -381,7 +409,7 @@ const DATOS_EPARQ = {
   // ===== INICIO: proyectos (no toques esta línea) =====
   proyectos: [
     { cliente: "OCASA", obra: "Centro de distribución", ubicacion: "Pilar, Buenos Aires", m2: 41000, rol: "Proyecto y dirección ejecutiva", anio: "2025", tipo: "logistico-industrial", categoria: "En ejecución", imagen: "img/proyectos/2025-ocasa-centro-distribucion-pilar/1.jpg", imagenes: ["img/proyectos/2025-ocasa-centro-distribucion-pilar/1.jpg", "img/proyectos/2025-ocasa-centro-distribucion-pilar/2.jpg", "img/proyectos/2025-ocasa-centro-distribucion-pilar/3.jpg"] },
-    { cliente: "Mercedes-Benz Camiones y Buses", obra: "Nueva planta de producción de camiones y buses — Warehouse", ubicacion: "RN 9 Colectora Sur, Zárate, Buenos Aires", m2: 43000, nota_m2: "43.000 m² cubiertos + 45.000 m² de pavimentos", rol: "Proyecto y dirección de obra", anio: "2023-2025", tipo: "logistico-industrial", categoria: "Últimos concluidos", imagen: "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/1.jpg", imagenes: ["img/proyectos/2023-mercedes-benz-camiones-buses-zarate/1.jpg", "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/2.jpg", "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/3.jpg", "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/4.jpg", "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/5.jpg", "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/6.jpg"] },
+    { cliente: "Mercedes-Benz Camiones y Buses", obra: "Nueva planta de producción de camiones y buses — Warehouse", ubicacion: "RN 9 Colectora Sur, Zárate, Buenos Aires", m2: 43000, nota_m2: "43.000 m² cubiertos + 45.000 m² de pavimentos", rol: "Proyecto y dirección de obra", anio: "2023-2025", tipo: "logistico-industrial", categoria: "Terminados", imagen: "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/1.jpg", imagenes: ["img/proyectos/2023-mercedes-benz-camiones-buses-zarate/1.jpg", "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/2.jpg", "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/3.jpg", "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/4.jpg", "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/5.jpg", "img/proyectos/2023-mercedes-benz-camiones-buses-zarate/6.jpg"] },
     { cliente: "Yazaki Group", obra: "Expansión centro de autopartes", ubicacion: "Loma Verde / Escobar, Buenos Aires", m2: 6000, rol: "Proyecto y dirección ejecutiva", anio: "2025", tipo: "logistico-industrial", categoria: "En ejecución", imagen: "img/proyectos/2025-yazaki-expansion-autopartes/1.jpg", imagenes: ["img/proyectos/2025-yazaki-expansion-autopartes/1.jpg", "img/proyectos/2025-yazaki-expansion-autopartes/2.jpeg"] },
     { cliente: "Grupo Corven", obra: "Nueva planta automotriz — CHERY", ubicacion: "Otamendi, Campana, Buenos Aires", m2: 43000, rol: "Proyecto y dirección ejecutiva", anio: "2026", tipo: "logistico-industrial", categoria: "En ejecución", imagen: "img/proyectos/2026-corven-planta-automotriz-otamendi/1.jpg", imagenes: ["img/proyectos/2026-corven-planta-automotriz-otamendi/1.jpg", "img/proyectos/2026-corven-planta-automotriz-otamendi/2.jpg", "img/proyectos/2026-corven-planta-automotriz-otamendi/3.jpg"] },
     { cliente: "Galletitas Trío", obra: "Nueva planta de producción de galletitas", ubicacion: "Polo Industrial Ezeiza, Buenos Aires", m2: 21000, rol: "Proyecto y dirección ejecutiva", anio: "2026", tipo: "logistico-industrial", categoria: "En ejecución", imagen: "img/proyectos/2026-corven-galletitas-trio-ezeiza/Render aereo 1.png", imagenes: ["img/proyectos/2026-corven-galletitas-trio-ezeiza/Render aereo 1.png", "img/proyectos/2026-corven-galletitas-trio-ezeiza/Render aereo 2.png", "img/proyectos/2026-corven-galletitas-trio-ezeiza/Render docks.png", "img/proyectos/2026-corven-galletitas-trio-ezeiza/Render peatonal.png"] },
@@ -435,6 +463,7 @@ const DATOS_EPARQ = {
     { cliente: "Privado", obra: "Edificio de vivienda", ubicacion: "Huergo 286, Buenos Aires, Argentina", m2: 1270, rol: "Proyecto y dirección", anio: "2011", tipo: "residencial-oficinas", categoria: "Terminados", imagen: "img/proyectos/2011-huergo-286/1.jpg", imagenes: ["img/proyectos/2011-huergo-286/1.jpg", "img/proyectos/2011-huergo-286/2.jpg", "img/proyectos/2011-huergo-286/3.jpg"] },
     { cliente: "Privado", obra: "Edificio de vivienda", ubicacion: "Ciudad de la Paz 1234, Buenos Aires, Argentina", m2: 1300, rol: "Proyecto y dirección", anio: "2013", tipo: "residencial-oficinas", categoria: "Terminados", imagen: "img/proyectos/2013-ciudad-de-la-paz-1234/1.jpg", imagenes: ["img/proyectos/2013-ciudad-de-la-paz-1234/1.jpg", "img/proyectos/2013-ciudad-de-la-paz-1234/2.jpg", "img/proyectos/2013-ciudad-de-la-paz-1234/3.jpg", "img/proyectos/2013-ciudad-de-la-paz-1234/4.jpg"] },
     { cliente: "Privado", obra: "Edificio de vivienda", ubicacion: "Ortega y Gasset 1745, Buenos Aires, Argentina", m2: 1840, rol: "Proyecto y dirección", anio: "2013", tipo: "residencial-oficinas", categoria: "Terminados", imagen: "img/proyectos/2013-ortega-y-gasset-1745/1.jpg", imagenes: ["img/proyectos/2013-ortega-y-gasset-1745/1.jpg", "img/proyectos/2013-ortega-y-gasset-1745/2.jpg", "img/proyectos/2013-ortega-y-gasset-1745/3.jpg"] },
+    { cliente: "Cutuli Hnos.", obra: "Centro de distribución", ubicacion: "Sargento Cabral, Don Torcuato", m2: 6800, rol: "Proyecto y dirección", anio: "2026", tipo: "logistico-industrial", categoria: "En ejecución", imagen: "img/proyectos/2026-centro-de-distribucion/1.png", imagenes: ["img/proyectos/2026-centro-de-distribucion/1.png", "img/proyectos/2026-centro-de-distribucion/2.png", "img/proyectos/2026-centro-de-distribucion/3.png"] },
   ],
   // ===== FIN: proyectos =====
 };

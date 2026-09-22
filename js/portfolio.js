@@ -44,6 +44,16 @@
     return esValida ? proyecto.tipo : "otros";
   }
 
+  // El año más reciente que aparece en "anio" (que puede ser un año suelto,
+  // ej. "2026", o un rango, ej. "2023-2025" — en ese caso usamos el último).
+  // Sirve para ordenar las obras sin depender de en qué orden se cargaron
+  // en el editor: un proyecto nuevo aparece solo en el lugar que le
+  // corresponde por fecha, no siempre al final.
+  function ultimoAnioDe(proyecto) {
+    const coincidencias = String(proyecto.anio || "").match(/\d{4}/g);
+    return coincidencias ? Math.max(...coincidencias.map(Number)) : 0;
+  }
+
   // DATOS_EPARQ.proyectos ya trae el campo "tipo" en cada proyecto;
   // acá solo le sumamos un id único para identificar la tarjeta en el DOM.
   const TODOS_LOS_PROYECTOS = DATOS_EPARQ.proyectos.map((proyecto, indice) => ({
@@ -118,7 +128,9 @@
   let filasVisiblesActuales = FILAS_VISIBLES;
 
   function renderizarPortfolio() {
-    const proyectosFiltrados = TODOS_LOS_PROYECTOS.filter((p) => categoriaDe(p) === categoriaActiva);
+    const proyectosFiltrados = TODOS_LOS_PROYECTOS.filter((p) => categoriaDe(p) === categoriaActiva).sort(
+      (a, b) => ultimoAnioDe(b) - ultimoAnioDe(a)
+    );
     contenedorPortfolio.innerHTML = "";
     contenedorPortfolio.classList.remove("portfolio__grilla--recortada");
     contenedorPortfolio.style.maxHeight = "";

@@ -24,7 +24,14 @@
   <meta property="og:locale" content="es_AR" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <!-- El SVG es el que usan los navegadores modernos (se ve nítido a
+       cualquier tamaño). Los PNG son respaldo para buscadores/navegadores
+       que todavía no soportan favicon en SVG, y el apple-touch-icon es
+       el ícono que usa iOS al guardar el sitio en la pantalla de inicio. -->
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="img/favicon-192.png" />
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
   <link rel="stylesheet" href="css/estilos.css" />
 
   <!-- Tipografía (Google Fonts). Si el sitio se abre sin internet, el CSS

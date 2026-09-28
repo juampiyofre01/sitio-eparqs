@@ -341,6 +341,11 @@ const DATOS_EPARQ = {
           foto: "img/equipo/constanza-migone.jpg",
         },
         {
+          nombre: "Alejandro Casali",
+          titulo: "Arq. — UNLP",
+          foto: "img/equipo/alejandro-casali.jpg",
+        },
+        {
           nombre: "Sofía Gelly y Obes",
           titulo: "Arq. — UBA",
           foto: "img/equipo/sofia-gelly-y-obes.jpg",
